@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace CardDungeonBlazor.Data.Migrations
+namespace CardDungeonBlazor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210708133325_InitialCreate")]
+    [Migration("20210709063047_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

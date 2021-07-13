@@ -1,4 +1,5 @@
-﻿using CardDungeonBlazor.Data.Models.Common;
+﻿using CardDungeonBlazor.Data.Models.CardModels;
+using CardDungeonBlazor.Data.Models.Common;
 using CardDungeonBlazor.Data.Models.User;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,9 @@ namespace CardDungeonBlazor.Data.Models.CardModles
 
         public string Description { get; set; }
 
-        public CardType CardType { get; set; }
+        public int CardTypeId { get; set; }
+
+        public virtual CardType CardType { get; set; }
 
         public int Value { get; set; }
 
