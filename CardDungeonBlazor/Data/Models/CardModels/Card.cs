@@ -21,7 +21,8 @@ namespace CardDungeonBlazor.Data.Models.CardModles
 
         public int CardTypeId { get; set; }
 
-        public virtual CardType CardType { get; set; }
+
+        public virtual ICollection<CardType> CardTypes { get; set; }
 
         public int Value { get; set; }
 

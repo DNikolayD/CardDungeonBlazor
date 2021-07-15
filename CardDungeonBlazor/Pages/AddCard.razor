@@ -1,7 +1,7 @@
 ﻿@page "/cards/add"
 @using CardDungeonBlazor.Models;
 @using CardDungeonBlazor.Controls;
-@using CardDungeonBlazor.Data
+@inject CardDungeonBlazor.Data.ApplicationDbContext dbcontext;
 
 <h1>Add card to the database</h1>
 
@@ -45,11 +45,10 @@
 </div>
 
 @code{
-    readonly ApplicationDbContext data;
     AddCardFormModel model = new AddCardFormModel();
     Task Submit()
     {
-        CardsControler cardsControler = new CardsControler(data);
+        CardsControler cardsControler = new CardsControler(dbcontext);
         cardsControler.Add(model);
         return null;
     }
