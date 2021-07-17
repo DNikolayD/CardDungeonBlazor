@@ -1,4 +1,4 @@
-﻿using CardDungeonBlazor.Data.Models.CardModles;
+﻿using CardDungeonBlazor.Data.Models.CardModels;
 using CardDungeonBlazor.Data.Models.Common;
 using CardDungeonBlazor.Data.Models.PostModels;
 using Microsoft.AspNetCore.Identity;
@@ -26,6 +26,9 @@ namespace CardDungeonBlazor.Data.Models.User
 
         public DateTime? DeletedOn { get; set; }
 
+        public bool IsEdited { get; set; }
+        public DateTime? EditedOn { get; set; }
+
         public string RoleId { get; set; }
 
         public virtual ApplicationRole Role { get; set; }
@@ -37,5 +40,6 @@ namespace CardDungeonBlazor.Data.Models.User
         public virtual ICollection<Post> Posts { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
+        
     }
 }

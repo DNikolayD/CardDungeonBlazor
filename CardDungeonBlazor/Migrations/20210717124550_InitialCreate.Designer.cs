@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CardDungeonBlazor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210709063047_InitialCreate")]
+    [Migration("20210717124550_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,12 +36,12 @@ namespace CardDungeonBlazor.Migrations
                     b.ToTable("ApplicationUserDeck");
                 });
 
-            modelBuilder.Entity("CardDungeonBlazor.Data.Models.CardModles.Card", b =>
+            modelBuilder.Entity("CardDungeonBlazor.Data.Models.CardModels.Card", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("CardType")
+                    b.Property<int>("CardTypeId")
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedByUserId")
@@ -54,15 +54,23 @@ namespace CardDungeonBlazor.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Duration")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("EditedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsEdited")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Value")
@@ -70,12 +78,14 @@ namespace CardDungeonBlazor.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CardTypeId");
+
                     b.HasIndex("CreatedByUserId");
 
                     b.ToTable("Cards");
                 });
 
-            modelBuilder.Entity("CardDungeonBlazor.Data.Models.CardModles.CardDeck", b =>
+            modelBuilder.Entity("CardDungeonBlazor.Data.Models.CardModels.CardDeck", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -97,7 +107,38 @@ namespace CardDungeonBlazor.Migrations
                     b.ToTable("CardDecks");
                 });
 
-            modelBuilder.Entity("CardDungeonBlazor.Data.Models.CardModles.Deck", b =>
+            modelBuilder.Entity("CardDungeonBlazor.Data.Models.CardModels.CardType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("EditedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEdited")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CardTypes");
+                });
+
+            modelBuilder.Entity("CardDungeonBlazor.Data.Models.CardModels.Deck", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -115,12 +156,20 @@ namespace CardDungeonBlazor.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("EditedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsEdited")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -161,10 +210,17 @@ namespace CardDungeonBlazor.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("EditedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsEdited")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -186,12 +242,20 @@ namespace CardDungeonBlazor.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("EditedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsEdited")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -212,7 +276,13 @@ namespace CardDungeonBlazor.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("EditedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEdited")
                         .HasColumnType("bit");
 
                     b.Property<int>("Likes")
@@ -222,9 +292,11 @@ namespace CardDungeonBlazor.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("PostedByUserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("TextContent")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -274,19 +346,28 @@ namespace CardDungeonBlazor.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("EditedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEdited")
                         .HasColumnType("bit");
 
                     b.Property<int>("Likes")
                         .HasColumnType("int");
 
                     b.Property<string>("PostedByUserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("TextContent")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -542,7 +623,13 @@ namespace CardDungeonBlazor.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("EditedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEdited")
                         .HasColumnType("bit");
 
                     b.HasDiscriminator().HasValue("ApplicationRole");
@@ -558,7 +645,13 @@ namespace CardDungeonBlazor.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("EditedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEdited")
                         .HasColumnType("bit");
 
                     b.Property<string>("RoleId")
@@ -571,7 +664,7 @@ namespace CardDungeonBlazor.Migrations
 
             modelBuilder.Entity("ApplicationUserDeck", b =>
                 {
-                    b.HasOne("CardDungeonBlazor.Data.Models.CardModles.Deck", null)
+                    b.HasOne("CardDungeonBlazor.Data.Models.CardModels.Deck", null)
                         .WithMany()
                         .HasForeignKey("CreatedDecksId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -584,22 +677,30 @@ namespace CardDungeonBlazor.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("CardDungeonBlazor.Data.Models.CardModles.Card", b =>
+            modelBuilder.Entity("CardDungeonBlazor.Data.Models.CardModels.Card", b =>
                 {
+                    b.HasOne("CardDungeonBlazor.Data.Models.CardModels.CardType", "CardType")
+                        .WithMany()
+                        .HasForeignKey("CardTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("CardDungeonBlazor.Data.Models.User.ApplicationUser", "CreatedByUser")
                         .WithMany("CreatedCards")
                         .HasForeignKey("CreatedByUserId");
 
+                    b.Navigation("CardType");
+
                     b.Navigation("CreatedByUser");
                 });
 
-            modelBuilder.Entity("CardDungeonBlazor.Data.Models.CardModles.CardDeck", b =>
+            modelBuilder.Entity("CardDungeonBlazor.Data.Models.CardModels.CardDeck", b =>
                 {
-                    b.HasOne("CardDungeonBlazor.Data.Models.CardModles.Card", "Card")
+                    b.HasOne("CardDungeonBlazor.Data.Models.CardModels.Card", "Card")
                         .WithMany("Decks")
                         .HasForeignKey("CardId");
 
-                    b.HasOne("CardDungeonBlazor.Data.Models.CardModles.Deck", "Deck")
+                    b.HasOne("CardDungeonBlazor.Data.Models.CardModels.Deck", "Deck")
                         .WithMany("Cards")
                         .HasForeignKey("DeckId");
 
@@ -610,7 +711,7 @@ namespace CardDungeonBlazor.Migrations
 
             modelBuilder.Entity("CardDungeonBlazor.Data.Models.Common.CardImage", b =>
                 {
-                    b.HasOne("CardDungeonBlazor.Data.Models.CardModles.Card", "Card")
+                    b.HasOne("CardDungeonBlazor.Data.Models.CardModels.Card", "Card")
                         .WithMany()
                         .HasForeignKey("CardId");
 
@@ -626,14 +727,16 @@ namespace CardDungeonBlazor.Migrations
             modelBuilder.Entity("CardDungeonBlazor.Data.Models.PostModels.Comment", b =>
                 {
                     b.HasOne("CardDungeonBlazor.Data.Models.PostModels.Post", "Post")
-                        .WithMany()
+                        .WithMany("Comments")
                         .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CardDungeonBlazor.Data.Models.User.ApplicationUser", "PostedByUser")
                         .WithMany("Comments")
-                        .HasForeignKey("PostedByUserId");
+                        .HasForeignKey("PostedByUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Post");
 
@@ -667,7 +770,9 @@ namespace CardDungeonBlazor.Migrations
 
                     b.HasOne("CardDungeonBlazor.Data.Models.User.ApplicationUser", "PostedByUser")
                         .WithMany("Posts")
-                        .HasForeignKey("PostedByUserId");
+                        .HasForeignKey("PostedByUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Category");
 
@@ -751,12 +856,12 @@ namespace CardDungeonBlazor.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("CardDungeonBlazor.Data.Models.CardModles.Card", b =>
+            modelBuilder.Entity("CardDungeonBlazor.Data.Models.CardModels.Card", b =>
                 {
                     b.Navigation("Decks");
                 });
 
-            modelBuilder.Entity("CardDungeonBlazor.Data.Models.CardModles.Deck", b =>
+            modelBuilder.Entity("CardDungeonBlazor.Data.Models.CardModels.Deck", b =>
                 {
                     b.Navigation("Cards");
                 });
@@ -782,6 +887,8 @@ namespace CardDungeonBlazor.Migrations
 
             modelBuilder.Entity("CardDungeonBlazor.Data.Models.PostModels.Post", b =>
                 {
+                    b.Navigation("Comments");
+
                     b.Navigation("Images");
                 });
 

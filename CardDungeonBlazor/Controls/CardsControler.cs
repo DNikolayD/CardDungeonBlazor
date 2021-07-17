@@ -1,5 +1,5 @@
 ﻿using CardDungeonBlazor.Data;
-using CardDungeonBlazor.Data.Models.CardModles;
+using CardDungeonBlazor.Data.Models.CardModels;
 using CardDungeonBlazor.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;

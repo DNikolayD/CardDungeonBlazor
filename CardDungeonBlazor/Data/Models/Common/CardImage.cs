@@ -1,4 +1,6 @@
-﻿using CardDungeonBlazor.Data.Models.CardModles;
+﻿
+
+using CardDungeonBlazor.Data.Models.CardModels;
 
 namespace CardDungeonBlazor.Data.Models.Common
 {

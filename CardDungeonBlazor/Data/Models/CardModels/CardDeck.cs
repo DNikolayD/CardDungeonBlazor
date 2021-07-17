@@ -1,4 +1,4 @@
-﻿namespace CardDungeonBlazor.Data.Models.CardModles
+﻿namespace CardDungeonBlazor.Data.Models.CardModels
 {
     public class CardDeck 
     {

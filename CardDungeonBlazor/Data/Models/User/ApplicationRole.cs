@@ -21,5 +21,7 @@ namespace CardDungeonBlazor.Data.Models.User
         public DateTime CreatedOn { get; set; }
         public bool IsDeleted { get; set; }
         public DateTime? DeletedOn { get; set; }
+        public bool IsEdited { get; set; }
+        public DateTime? EditedOn { get; set; }
     }
 }

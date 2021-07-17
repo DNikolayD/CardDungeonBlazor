@@ -3,8 +3,9 @@ using CardDungeonBlazor.Data.Models.Common;
 using CardDungeonBlazor.Data.Models.User;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace CardDungeonBlazor.Data.Models.CardModles
+namespace CardDungeonBlazor.Data.Models.CardModels
 {
     public class Card : BaseModel<string>
     {
@@ -15,15 +16,18 @@ namespace CardDungeonBlazor.Data.Models.CardModles
             this.Decks = new HashSet<CardDeck>();
         }
 
+        [Required]
         public string Name { get; set; }
 
+        [Required]
         public string Description { get; set; }
 
+        [Required]
         public int CardTypeId { get; set; }
 
+        public virtual CardType CardType { get; set; }
 
-        public virtual ICollection<CardType> CardTypes { get; set; }
-
+        [Required]
         public int Value { get; set; }
 
         public int? Duration { get; set; }

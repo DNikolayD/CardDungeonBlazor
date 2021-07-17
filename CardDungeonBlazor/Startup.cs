@@ -1,6 +1,7 @@
 using CardDungeonBlazor.Areas.Identity;
 using CardDungeonBlazor.Data;
 using CardDungeonBlazor.Data.Models.User;
+using CardDungeonBlazor.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -48,6 +49,8 @@ namespace CardDungeonBlazor
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.PrepareDatabase();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

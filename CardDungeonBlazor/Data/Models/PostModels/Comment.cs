@@ -1,6 +1,7 @@
 ﻿using CardDungeonBlazor.Data.Models.Common;
 using CardDungeonBlazor.Data.Models.User;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace CardDungeonBlazor.Data.Models.PostModels
 {
@@ -12,10 +13,13 @@ namespace CardDungeonBlazor.Data.Models.PostModels
             this.Images = new HashSet<CommetImage>();
         }
 
+        [Required]
         public string TextContent { get; set; }
 
+        [Required]
         public int Likes { get; set; }
 
+        [Required]
         public string PostedByUserId { get; set; }
 
         public virtual ApplicationUser PostedByUser { get; set; }

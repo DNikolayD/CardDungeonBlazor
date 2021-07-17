@@ -2,8 +2,9 @@
 using CardDungeonBlazor.Data.Models.User;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace CardDungeonBlazor.Data.Models.CardModles
+namespace CardDungeonBlazor.Data.Models.CardModels
 {
     public class Deck : BaseModel<string>
     {
@@ -14,10 +15,13 @@ namespace CardDungeonBlazor.Data.Models.CardModles
             this.Cards = new HashSet<CardDeck>();
         }
 
+        [Required]
         public string Name { get; set; }
 
+        [Required]
         public string Description { get; set; }
 
+        [Required]
         public DeckType DeckType { get; set; }
 
         public virtual ICollection<CardDeck> Cards  { get; set; }
