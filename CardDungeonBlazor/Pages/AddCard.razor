@@ -7,36 +7,36 @@
 
 <div class="row">
     <div class="col-sm-9 col-md-7 col-lg-5 my-3">
-        <EditForm Model="model" OnValidSubmit="Submit">
+        <EditForm Model="Model" OnValidSubmit="Submit">
             <DataAnnotationsValidator />
             <ValidationSummary />
             <div class="input-group mb-3">
                 <div class="input-group-prepend w-25">
                     <span class="input-group-text w-100">Name</span>
                 </div>
-                <InputText class="form-control" @bind-Value="model.Name" />
+                <InputText class="form-control" @bind-Value="Model.Name" />
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend w-25">
                     <span class="input-group-text w-100">Description</span>
                 </div>
-                <InputText class="form-control" @bind-Value="model.Description" />
+                <InputText class="form-control" @bind-Value="Model.Description" />
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend w-25">
                     <span class="input-group-text w-100">Value</span>
                 </div>
-                <InputNumber class="form-control" @bind-Value="model.Value" />
+                <InputNumber class="form-control" @bind-Value="Model.Value" />
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend w-25">
-                    <span class="input-group-text w-100">CardTupe</span>
+                    <span class="input-group-text w-100">CardType</span>
                 </div>
-                <select asp-for="CategoryId" class="form-control">
-                    @foreach (var cardType in model.CardTypes)
+                <select class="form-control" @bind="Model.CardTypeId">
+                    @foreach (var cardType in Model.CardTypes)
                     {
-        <option value="@cardType.Id">@cardType.Name</option>
-}
+                        <option value="@cardType.Id">@cardType.Name</option>
+                    }
                 </select>
             </div>
             <button class="btn btn-success btn-lg" type="submit">Add card</button>
@@ -44,12 +44,20 @@
     </div>
 </div>
 
-@code{
-    AddCardFormModel model = new AddCardFormModel();
-    Task Submit()
+@code{   
+    AddCardFormModel Model;
+
+    protected override void OnInitialized()
+    {
+        Model = new AddCardFormModel();
+        CardsControler cardsControler = new CardsControler(dbcontext);
+        Model.CardTypes = cardsControler.GetCardTypeViewModels(dbcontext);
+
+    }
+
+    void Submit()
     {
         CardsControler cardsControler = new CardsControler(dbcontext);
-        cardsControler.Add(model);
-        return null;
+        cardsControler.Add(Model);
     }
 }

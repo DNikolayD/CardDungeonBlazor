@@ -28,7 +28,7 @@ namespace CardDungeonBlazor.Infrastructure
 
         private static void SeedCategories(ApplicationDbContext data)
         {
-            if (data.Categories.Any())
+            if (data.CardTypes.Any())
             {
                 return;
             }
