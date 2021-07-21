@@ -1,0 +1,33 @@
+﻿@page "/cards/all";
+@using CardDungeonBlazor.Models;
+@using CardDungeonBlazor.Controls;
+@inject CardDungeonBlazor.Data.ApplicationDbContext dbcontext;
+<h3>AllCards</h3>
+
+<div class="row">
+    @foreach (var card in Model.Cards)
+    {
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <img class="card-img-top" src="@card.ImageUrl" alt="@card.Name @card.CardType - @card.Value">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-center">@card.Name @card.CardType - @card.Value</h5>
+                    <a asp-controller="Cars" asp-action="Details" asp-route-id="@card.Id" class="btn btn-primary">View More</a>
+                </div>
+            </div>
+        </div>}
+</div>
+
+@code {
+    AllCardsViewModel Model;
+
+    protected override void OnInitialized()
+    {
+        Model = new AllCardsViewModel();
+        CardsControler cardsControler = new CardsControler(dbcontext);
+        Model.Cards = cardsControler.GetAllCards(dbcontext).Cards;
+
+    }
+
+
+}

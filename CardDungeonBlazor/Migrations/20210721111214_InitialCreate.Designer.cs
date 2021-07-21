@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CardDungeonBlazor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210717124550_InitialCreate")]
+    [Migration("20210721111214_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -62,6 +62,9 @@ namespace CardDungeonBlazor.Migrations
 
                     b.Property<DateTime?>("EditedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");

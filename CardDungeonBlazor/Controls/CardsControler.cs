@@ -22,6 +22,7 @@ namespace CardDungeonBlazor.Controls
             var cardData = new Card
             {
                 Name = card.Name,
+                ImageUrl = card.ImageUrl,
                 CardTypeId = card.CardTypeId,
                 Description = card.Description,
                 Value = card.Value,
@@ -48,5 +49,22 @@ namespace CardDungeonBlazor.Controls
             }
             return cardTypeViewModel;
         }
+
+        public AllCardsViewModel GetAllCards(ApplicationDbContext data)
+        {
+            AllCardsViewModel allCards = new();
+            foreach (var card in data.Cards)
+            {
+                allCards.Cards.Add(new CardServiceModel
+                {
+                    Id = card.Id,
+                    CardType = data.CardTypes.FirstOrDefault(x => x.Id == card.CardTypeId).Name,
+                    Name = card.Name,
+                    ImageUrl = card.ImageUrl,
+                    Value = card.Value,
+                });
+            }
+            return allCards;
+        } 
     }
 }

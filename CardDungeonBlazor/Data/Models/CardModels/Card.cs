@@ -32,6 +32,8 @@ namespace CardDungeonBlazor.Data.Models.CardModels
 
         public int? Duration { get; set; }
 
+        public string ImageUrl { get; set; }
+
         public ICollection<CardDeck> Decks { get; set; }
 
         public string CreatedByUserId { get; set; }

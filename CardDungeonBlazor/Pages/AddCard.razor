@@ -2,6 +2,7 @@
 @using CardDungeonBlazor.Models;
 @using CardDungeonBlazor.Controls;
 @inject CardDungeonBlazor.Data.ApplicationDbContext dbcontext;
+@inject NavigationManager navManager;
 
 <h1>Add card to the database</h1>
 
@@ -27,6 +28,12 @@
                     <span class="input-group-text w-100">Value</span>
                 </div>
                 <InputNumber class="form-control" @bind-Value="Model.Value" />
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend w-25">
+                    <span class="input-group-text w-100">Image Url</span>
+                </div>
+                <InputText class="form-control" @bind-Value="Model.ImageUrl" />
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend w-25">
@@ -59,5 +66,6 @@
     {
         CardsControler cardsControler = new CardsControler(dbcontext);
         cardsControler.Add(Model);
+        navManager.NavigateTo("/cards/all");
     }
 }
