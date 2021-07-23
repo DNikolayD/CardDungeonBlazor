@@ -13,6 +13,7 @@ namespace CardDungeonBlazor.Data.Models.CardModels
         {
             this.Id = Guid.NewGuid().ToString();
             this.Cards = new HashSet<CardDeck>();
+            this.Users = new HashSet<ApplicationUser>();
         }
 
         [Required]

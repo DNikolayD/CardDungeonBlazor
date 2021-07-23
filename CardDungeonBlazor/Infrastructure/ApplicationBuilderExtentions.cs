@@ -40,7 +40,6 @@ namespace CardDungeonBlazor.Infrastructure
                 new CardType { Name = "Heal"},
                 new CardType { Name = "Poison"}
             });
-
             data.SaveChanges();
         }
     }

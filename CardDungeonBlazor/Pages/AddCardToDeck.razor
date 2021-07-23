@@ -1,0 +1,45 @@
+﻿@page "/deck/addCards"
+@using CardDungeonBlazor.Data;
+@using CardDungeonBlazor.Models;
+@using CardDungeonBlazor.Controls;
+@inject ApplicationDbContext dbcontext
+@inject Services.CardAddedToDeck CardsAdded
+
+<h3>Add cards to the Deck</h3>
+
+<div class="row">
+    @foreach (var card in CardsAdded.Cards)
+    {
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <img class="card-img-top" src="@card.Key.ImageUrl" alt="@card.Key.Name @card.Key.CardType - @card.Key.Value">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-center">@card.Key.Name @card.Key.CardType - @card.Key.Value</h5>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend w-25">
+                            <span class="input-group-text w-100" >@count</span>
+                        </div>
+                        <button class="btn btn-success btn-lg" type="submit" @onclick="() => Add(card.Key.Id)">Add card</button>
+                    </div>
+                </div>
+            </div>
+        </div>}
+</div>
+
+@code {
+    AddCardsToDeckModel Model;
+    private int count = 0;
+
+    protected override void OnInitialized()
+    {
+        Model = new AddCardsToDeckModel();
+        AddCardsToDeck cardsToDeck = new AddCardsToDeck();
+        Model.Cards = cardsToDeck.GetAllCards(dbcontext).Cards;
+
+    }
+    void Add(string id)
+    {
+        count++;
+    }
+
+}
