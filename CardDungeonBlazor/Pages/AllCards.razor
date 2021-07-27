@@ -14,8 +14,12 @@
                 <div class="card-body text-center">
                     <h5 class="card-title text-center">@card.Name @card.CardType - @card.Value</h5>
                     <a asp-controller="Cars" asp-action="Details" @onclick="() => RedirectToFullView(card.Id)" class="btn btn-primary">View More</a>
-                    <a asp-controller="Cars" asp-action="Details" @onclick="() => Delete(card.Id)" class="btn btn-primary">Delete</a>
-                    <a asp-controller="Cars" asp-action="Details" @onclick="() => RedirectToEdit(card.Id)" class="btn btn-primary">Edit</a>
+                    @if (isLoggedIn)
+                    {
+                        <a asp-controller="Cars" asp-action="Details" @onclick="() => Delete(card.Id)" class="btn btn-primary">Delete</a>
+                        <a asp-controller="Cars" asp-action="Details" @onclick="() => RedirectToEdit(card.Id)" class="btn btn-primary">Edit</a>
+                    }
+
 
                 </div>
             </div>
@@ -25,7 +29,17 @@
 
 
 @code {
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
     AllCardsViewModel Model;
+    bool isLoggedIn;
+
+    protected async override Task OnInitializedAsync()
+    {
+        var autenticationState = await AuthenticationStateTask;
+        isLoggedIn = autenticationState.User.Identity.IsAuthenticated;
+    }
 
     protected override void OnInitialized()
     {

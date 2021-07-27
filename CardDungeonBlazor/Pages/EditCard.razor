@@ -1,12 +1,10 @@
-﻿@page "/cards/add"
+﻿@page "/card/edit/{id}"
 @using CardDungeonBlazor.Models;
 @using CardDungeonBlazor.Controls;
 @inject CardDungeonBlazor.Data.ApplicationDbContext dbcontext;
 @inject NavigationManager navManager;
 
-@attribute [Authorize]
-
-<h1>Add card to the database</h1>
+<h1>Edit card</h1>
 
 <div class="row">
     <div class="col-sm-9 col-md-7 col-lg-5 my-3">
@@ -48,26 +46,28 @@
                     }
                 </select>
             </div>
-            <button class="btn btn-success btn-lg" type="submit">Add card</button>
+            <button class="btn btn-success btn-lg" type="submit">Edit card</button>
         </EditForm>
     </div>
 </div>
 
-@code{   
-    AddCardFormModel Model;
+@code{
+    [Parameter]
+    public string Id { get; set; }
+    CardEditFomModel Model;
 
     protected override void OnInitialized()
     {
-        Model = new AddCardFormModel();
+        Model = new CardEditFomModel();
         CardsControler cardsControler = new CardsControler(dbcontext);
-        Model.CardTypes = cardsControler.GetCardTypeViewModels(dbcontext);
+        Model = cardsControler.GetEditFomModel(Id);
 
     }
 
     void Submit()
     {
         CardsControler cardsControler = new CardsControler(dbcontext);
-        cardsControler.Add(Model);
+        cardsControler.Edit(Id,Model);
         navManager.NavigateTo("/cards/all");
     }
 }

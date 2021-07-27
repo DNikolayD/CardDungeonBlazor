@@ -93,5 +93,41 @@ namespace CardDungeonBlazor.Controls
                 Value = card.Value,
             };
         }
+
+        public CardEditFomModel GetEditFomModel(string id)
+        {
+            var card = this.data.Cards.FirstOrDefault(x => x.Id == id && !x.IsDeleted);
+            List<CardTypeViewModel> cardTypeViewModel = new();
+            foreach (var cardType in data.CardTypes)
+            {
+                cardTypeViewModel.Add(new CardTypeViewModel
+                {
+                    Id = cardType.Id,
+                    Name = cardType.Name
+                });
+            }
+
+            return new CardEditFomModel()
+            {
+                Name = card.Name,
+                Description = card.Description,
+                ImageUrl = card.ImageUrl,
+                CardTypeId = card.CardTypeId,
+                CardTypes = cardTypeViewModel,
+                Value = card.Value,
+            };
+        }
+
+        public void Edit(string id, CardEditFomModel card)
+        {
+            this.data.Cards.FirstOrDefault(x => x.Id == id && !x.IsDeleted).CardTypeId = card.CardTypeId;
+            this.data.Cards.FirstOrDefault(x => x.Id == id && !x.IsDeleted).Description = card.Description;
+            this.data.Cards.FirstOrDefault(x => x.Id == id && !x.IsDeleted).ImageUrl = card.ImageUrl;
+            this.data.Cards.FirstOrDefault(x => x.Id == id && !x.IsDeleted).Name = card.Name;
+            this.data.Cards.FirstOrDefault(x => x.Id == id && !x.IsDeleted).Value = card.Value;
+            this.data.Cards.FirstOrDefault(x => x.Id == id && !x.IsDeleted).EditedOn = DateTime.UtcNow;
+            this.data.Cards.FirstOrDefault(x => x.Id == id && !x.IsDeleted).IsEdited = true;
+            this.data.SaveChanges();
+        }
     }
 }
