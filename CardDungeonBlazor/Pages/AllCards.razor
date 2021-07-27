@@ -2,6 +2,7 @@
 @using CardDungeonBlazor.Models;
 @using CardDungeonBlazor.Controls;
 @inject CardDungeonBlazor.Data.ApplicationDbContext dbcontext;
+@inject NavigationManager navManager;
 <h3>AllCards</h3>
 
 <div class="row">
@@ -12,12 +13,15 @@
                 <img class="card-img-top" src="@card.ImageUrl" alt="@card.Name @card.CardType - @card.Value">
                 <div class="card-body text-center">
                     <h5 class="card-title text-center">@card.Name @card.CardType - @card.Value</h5>
-                    <a asp-controller="Cars" asp-action="Details" asp-route-id="@card.Id" class="btn btn-primary">View More</a>
+                    <a asp-controller="Cars" asp-action="Details" @onclick="() => RedirectToFullView(card.Id)" class="btn btn-primary">View More</a>
+                    <a asp-controller="Cars" asp-action="Details" @onclick="() => Delete(card.Id)" class="btn btn-primary">Delete</a>
+                    <a asp-controller="Cars" asp-action="Details" @onclick="() => RedirectToEdit(card.Id)" class="btn btn-primary">Edit</a>
+
                 </div>
             </div>
         </div>}
 </div>
-<button class="btn btn-success btn-lg" type="submit">Add card</button>
+<button class="btn btn-success btn-lg" type="submit" @onclick="() => Redirect()">Add card</button>
 
 
 @code {
@@ -29,6 +33,26 @@
         CardsControler cardsControler = new CardsControler(dbcontext);
         Model.Cards = cardsControler.GetAllCards(dbcontext).Cards;
 
+    }
+
+    void Redirect()
+    {
+        navManager.NavigateTo("/cards/add");
+    }
+    void RedirectToFullView(string id)
+    {
+        navManager.NavigateTo($"/card/show/{id}");
+    }
+    void RedirectToEdit(string id)
+    {
+        navManager.NavigateTo($"/card/edit/{id}");
+
+    }
+    void Delete(string id)
+    {
+        CardsControler cardsControler = new CardsControler(dbcontext);
+        cardsControler.Delete(id);
+        OnInitialized();
     }
 
 

@@ -55,6 +55,10 @@ namespace CardDungeonBlazor.Controls
             AllCardsViewModel allCards = new();
             foreach (var card in data.Cards)
             {
+                if (card.IsDeleted)
+                {
+                    continue;
+                }
                 allCards.Cards.Add(new CardServiceModel
                 {
                     Id = card.Id,
@@ -65,6 +69,29 @@ namespace CardDungeonBlazor.Controls
                 });
             }
             return allCards;
-        } 
+        }
+
+        public void Delete(string id)
+        {
+            this.data.Cards.FirstOrDefault(x => x.Id == id).IsDeleted = true;
+            this.data.Cards.FirstOrDefault(x => x.Id == id).DeletedOn = DateTime.UtcNow;
+            this.data.SaveChanges();
+        }
+
+        public FullCardViewModel GetFullCardView(string id)
+        {
+            var card = this.data.Cards.FirstOrDefault(x => x.Id == id && !x.IsDeleted);
+
+            return new FullCardViewModel()
+            {
+                CardType = card.CardType.Name,
+                CreatedOn = card.CreatedOn.ToShortDateString(),
+                Description = card.Description,
+                Duration = card.Duration.GetValueOrDefault(),
+                ImageUrl = card.ImageUrl,
+                Name = card.Name,
+                Value = card.Value,
+            };
+        }
     }
 }

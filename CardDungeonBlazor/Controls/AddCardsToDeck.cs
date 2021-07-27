@@ -32,6 +32,9 @@ namespace CardDungeonBlazor.Controls
         {
             data.CardDecks.Add(new CardDeck { CardId = cardId, DeckId = deckId });
             data.SaveChanges();
+            CardDeck card = data.CardDecks.FirstOrDefault(x => x.DeckId == deckId);
+            data.Decks.FirstOrDefault(x => x.Id == deckId).Cards.Add(card);
+            data.SaveChanges();
 
         }
 

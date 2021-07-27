@@ -1,0 +1,60 @@
+﻿@page "/card/show/{id}"
+@using CardDungeonBlazor.Models;
+@using CardDungeonBlazor.Controls;
+@inject CardDungeonBlazor.Data.ApplicationDbContext dbcontext;
+
+<img class="card-img-top" src="@Model.ImageUrl">
+
+<div class="input-group mb-3">
+    <div class="input-group-prepend w-25">
+        <span class="input-group-text w-100">Name</span>
+    </div>
+    <span class="input-group-text w-100">@Model.Name</span>
+</div>
+<div class="input-group mb-3">
+    <div class="input-group-prepend w-25">
+        <span class="input-group-text w-100">Description</span>
+    </div>
+    <span class="input-group-text w-100">@Model.Description</span>
+</div>
+<div class="input-group mb-3">
+    <div class="input-group-prepend w-25">
+        <span class="input-group-text w-100">Value</span>
+    </div>
+    <span class="input-group-text w-100">@Model.Value</span>
+</div>
+<div class="input-group mb-3">
+    <div class="input-group-prepend w-25">
+        <span class="input-group-text w-100">Type</span>
+    </div>
+    <span class="input-group-text w-100">@Model.CardType</span>
+</div>
+<div class="input-group mb-3">
+    <div class="input-group-prepend w-25">
+        <span class="input-group-text w-100">Created On</span>
+    </div>
+    <span class="input-group-text w-100">@Model.CreatedOn</span>
+</div>
+<div class="input-group mb-3">
+    <div class="input-group-prepend w-25">
+        <span class="input-group-text w-100">Duration</span>
+    </div>
+    <span class="input-group-text w-100">@Model.Duration</span>
+</div>
+
+
+
+@code
+{
+    [Parameter]
+    public string Id { get; set; }
+    FullCardViewModel Model;
+
+    protected override void OnInitialized()
+    {
+        Model = new FullCardViewModel();
+        CardsControler cardsControler = new CardsControler(dbcontext);
+        Model = cardsControler.GetFullCardView(Id);
+
+    }
+}

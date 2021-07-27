@@ -53,21 +53,26 @@ namespace CardDungeonBlazor.Controls
             return cardTypeViewModel;
         }
 
-        public AllCardsViewModel GetAllCards(ApplicationDbContext data)
+        public AllDeckViewModel GetAll(ApplicationDbContext data)
         {
-            AllCardsViewModel allCards = new();
-            foreach (var card in data.Cards)
+            AllDeckViewModel allDecks = new();
+            string cardImage = null;
+            foreach (var deck in data.Decks)
             {
-                allCards.Cards.Add(new CardServiceModel
+                if (deck.Cards.Count > 0)
                 {
-                    Id = card.Id,
-                    CardType = data.CardTypes.FirstOrDefault(x => x.Id == card.CardTypeId).Name,
-                    Name = card.Name,
-                    ImageUrl = card.ImageUrl,
-                    Value = card.Value,
+                    cardImage = deck.Cards.FirstOrDefault().Card.ImageUrl;
+                }
+                allDecks.Decks.Add(new DeckServiceModel
+                {
+                    Id = deck.Id,
+                    Type = deck.DeckType.ToString(),
+                    Name = deck.Name,
+                    ImageUrl = cardImage,
                 });
             }
-            return allCards;
+            
+            return allDecks;
         }
 
         public string GetId(string name)
