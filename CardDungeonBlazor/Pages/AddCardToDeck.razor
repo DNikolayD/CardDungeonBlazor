@@ -1,4 +1,4 @@
-﻿@page "/deck/addCards"
+﻿@page "/deck/addCards/{id}"
 @using CardDungeonBlazor.Data;
 @using CardDungeonBlazor.Models;
 @using CardDungeonBlazor.Controls;
@@ -12,14 +12,14 @@
     {
         <div class="col-md-4">
             <div class="card mb-3">
-                <img class="card-img-top" src="@card.Key.ImageUrl" alt="@card.Key.Name @card.Key.CardType - @card.Key.Value">
+                <img class="card-img-top" src="@card.ImageUrl" alt="@card.Name @card.CardType - @card.Value">
                 <div class="card-body text-center">
-                    <h5 class="card-title text-center">@card.Key.Name @card.Key.CardType - @card.Key.Value</h5>
+                    <h5 class="card-title text-center">@card.Name @card.CardType - @card.Value</h5>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend w-25">
-                            <span class="input-group-text w-100" >@count</span>
+                            <span class="input-group-text w-100" >@card.TimesAdded</span>
                         </div>
-                        <button class="btn btn-success btn-lg" type="submit" @onclick="() => Add(card.Key.Id)">Add card</button>
+                        <button class="btn btn-success btn-lg" type="submit" @onclick="() => Add(card.Id)">Add card</button>
                     </div>
                 </div>
             </div>
@@ -27,6 +27,8 @@
 </div>
 
 @code {
+    [Parameter]
+    public string Id { get; set; }
     AddCardsToDeckModel Model;
     private int count = 0;
 
@@ -34,12 +36,14 @@
     {
         Model = new AddCardsToDeckModel();
         AddCardsToDeck cardsToDeck = new AddCardsToDeck();
-        Model.Cards = cardsToDeck.GetAllCards(dbcontext).Cards;
+        CardsAdded.Cards = cardsToDeck.GetAllCards(dbcontext).Cards;
 
     }
-    void Add(string id)
+    void Add(string CardId)
     {
-        count++;
+        CardsAdded.Cards.Find(x => x.Id == CardId).TimesAdded++;
+        AddCardsToDeck cardsToDeck = new AddCardsToDeck();
+        cardsToDeck.AddCardsToDeckWithId(dbcontext, CardId, Id);
     }
 
 }

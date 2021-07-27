@@ -8,11 +8,11 @@ namespace CardDungeonBlazor.Models
     public class AddCardsToDeckModel
     {
 
-        public List<CardServiceModel> Cards { get; set; }
+        public List<CardAddedToTheDeckViewModel> Cards { get; set; }
 
         public AddCardsToDeckModel()
         {
-            Cards = new List<CardServiceModel>();
+            Cards = new List<CardAddedToTheDeckViewModel>();
         }
     }
 }

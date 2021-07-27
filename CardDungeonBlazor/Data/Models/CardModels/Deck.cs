@@ -12,7 +12,7 @@ namespace CardDungeonBlazor.Data.Models.CardModels
         public Deck()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.Cards = new HashSet<CardDeck>();
+            this.Cards = new List<CardDeck>();
             this.Users = new HashSet<ApplicationUser>();
         }
 
@@ -25,7 +25,7 @@ namespace CardDungeonBlazor.Data.Models.CardModels
         [Required]
         public DeckType DeckType { get; set; }
 
-        public virtual ICollection<CardDeck> Cards  { get; set; }
+        public virtual List<CardDeck> Cards  { get; set; }
 
         public string CreatedByUserId { get; set; }
 

@@ -1,4 +1,6 @@
 ﻿using CardDungeonBlazor.Data;
+using CardDungeonBlazor.Data.Models.CardModels;
+using CardDungeonBlazor.Data.Models.Common;
 using CardDungeonBlazor.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,23 +17,25 @@ namespace CardDungeonBlazor.Controls
         public DecksController(ApplicationDbContext data)
            => this.data = data;
 
-        public IActionResult Add(AddCardsToDeckModel card)
+        public IActionResult Add(AddDeckFormModel deck)
         {
-
-           /* var cardData = new 
+            DeckType deckType;
+            if (deck.DeckType)
             {
-              /*  Name = card.Name,
-                ImageUrl = card.ImageUrl,
-                CardTypeId = card.CardTypeId,
-                Description = card.Description,
-                Value = card.Value,
-                CreatedOn = DateTime.UtcNow,
-                IsDeleted = false,
-                IsEdited = false, 
-
+                deckType = DeckType.Public;
+            }
+            else
+            {
+                deckType = DeckType.Private;
+            }
+            var deckData = new Deck()
+            {
+                Name = deck.Name,
+                Description = deck.Description,
+                DeckType = deckType,
             };
-            this.data.Cards.Add(cardData);
-            this.data.SaveChanges(); */
+            this.data.Decks.Add(deckData);
+            this.data.SaveChanges();
             return null;
         }
 
@@ -65,5 +69,12 @@ namespace CardDungeonBlazor.Controls
             }
             return allCards;
         }
+
+        public string GetId(string name)
+        {
+            return data.Decks.FirstOrDefault(x => x.Name == name).Id;
+        }
     }
+
+
 }

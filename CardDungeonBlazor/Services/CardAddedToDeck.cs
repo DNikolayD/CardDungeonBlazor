@@ -10,8 +10,8 @@ namespace CardDungeonBlazor.Services
     {
         public CardAddedToDeck()
         {
-            this.Cards = new List<KeyValuePair<CardServiceModel, int>>();
+            this.Cards = new List<CardAddedToTheDeckViewModel>();
         }
-        public List<KeyValuePair<CardServiceModel, int>> Cards { get; set; }
+        public List<CardAddedToTheDeckViewModel> Cards { get; set; }
     }
 }
