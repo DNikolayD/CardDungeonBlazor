@@ -2,45 +2,27 @@
 @using CardDungeonBlazor.Models;
 @using CardDungeonBlazor.Controls;
 @inject CardDungeonBlazor.Data.ApplicationDbContext dbcontext;
+@inject NavigationManager navManager;
 
-<img class="card-img-top" src="@Model.ImageUrl">
 
-<div class="input-group mb-3">
-    <div class="input-group-prepend w-25">
-        <span class="input-group-text w-100">Name</span>
-    </div>
-    <span class="input-group-text w-100">@Model.Name</span>
-</div>
-<div class="input-group mb-3">
-    <div class="input-group-prepend w-25">
-        <span class="input-group-text w-100">Description</span>
-    </div>
-    <span class="input-group-text w-100">@Model.Description</span>
-</div>
-<div class="input-group mb-3">
-    <div class="input-group-prepend w-25">
-        <span class="input-group-text w-100">Value</span>
-    </div>
-    <span class="input-group-text w-100">@Model.Value</span>
-</div>
-<div class="input-group mb-3">
-    <div class="input-group-prepend w-25">
-        <span class="input-group-text w-100">Type</span>
-    </div>
-    <span class="input-group-text w-100">@Model.CardType</span>
-</div>
-<div class="input-group mb-3">
-    <div class="input-group-prepend w-25">
-        <span class="input-group-text w-100">Created On</span>
-    </div>
-    <span class="input-group-text w-100">@Model.CreatedOn</span>
-</div>
-<div class="input-group mb-3">
-    <div class="input-group-prepend w-25">
-        <span class="input-group-text w-100">Duration</span>
-    </div>
-    <span class="input-group-text w-100">@Model.Duration</span>
-</div>
+<MudItem Class="d-flex justify-center py-2 px-1 mt-6">
+    <MudCard>
+        <MudCardMedia Image="@Model.ImageUrl" />
+        <MudCardContent>
+            <MudText Typo="Typo.h5">Card with name @Model.Name</MudText>
+            <MudText Typo="Typo.body2">With a value of @Model.Value @Model.CardType . The description of this card is @Model.Description</MudText>
+            <MudText Typo="Typo.body2">This card was created on @Model.CreatedOn</MudText>
+            @if (Model.Duration > 0)
+            {
+                <MudText Typo="Typo.body2">The efect of this card lasts for @Model.Duration turns</MudText>
+            }
+
+        </MudCardContent>
+        <MudCardActions>
+            <MudButton Variant="Variant.Text" Color="Color.Primary" @onclick="() => Redirect()">Go back to all cards</MudButton>
+        </MudCardActions>
+    </MudCard>
+</MudItem>
 
 
 
@@ -55,6 +37,9 @@
         Model = new FullCardViewModel();
         CardsControler cardsControler = new CardsControler(dbcontext);
         Model = cardsControler.GetFullCardView(Id);
-
+    }
+    void Redirect()
+    {
+        navManager.NavigateTo("/cards/all");
     }
 }

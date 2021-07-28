@@ -4,28 +4,23 @@
 @inject CardDungeonBlazor.Data.ApplicationDbContext dbcontext;
 @inject NavigationManager navManager;
 <h3>AllCards</h3>
-
-<div class="row">
-    @foreach (var card in Model.Cards)
-    {
-        <div class="col-md-4">
-            <div class="card mb-3">
-                <img class="card-img-top" src="@card.ImageUrl" alt="@card.Name @card.CardType - @card.Value">
-                <div class="card-body text-center">
-                    <h5 class="card-title text-center">@card.Name @card.CardType - @card.Value</h5>
-                    <a asp-controller="Cars" asp-action="Details" @onclick="() => RedirectToFullView(card.Id)" class="btn btn-primary">View More</a>
-                    @if (isLoggedIn)
-                    {
-                        <a asp-controller="Cars" asp-action="Details" @onclick="() => Delete(card.Id)" class="btn btn-primary">Delete</a>
-                        <a asp-controller="Cars" asp-action="Details" @onclick="() => RedirectToEdit(card.Id)" class="btn btn-primary">Edit</a>
-                    }
-
-
-                </div>
-            </div>
-        </div>}
-</div>
-<button class="btn btn-success btn-lg" type="submit" @onclick="() => Redirect()">Add card</button>
+    @foreach (var card in Model.Cards) {
+<MudItem xs="6" sm="3">
+    <MudCard Class="mb-3">
+        <MudCardMedia Image="@card.ImageUrl" />
+        <MudCardContent>
+            <MudText Typo="Typo.h5">Card with name @card.Name</MudText>
+            <MudText Typo="Typo.body2">With a value of @card.Value @card.CardType</MudText>
+        </MudCardContent>
+        <MudCardActions>
+            <MudButton Variant="Variant.Text" Color="Color.Info" @onclick="() => RedirectToFullView(card.Id)">See More</MudButton>
+            <MudButton Variant="Variant.Text" Color="Color.Primary" @onclick="() => RedirectToEdit(card.Id)">Edit</MudButton>
+            <MudButton Variant="Variant.Text" Color="Color.Error" @onclick="() => Delete(card.Id)">Delete</MudButton>
+        </MudCardActions>
+    </MudCard>
+</MudItem>
+        }
+<MudButton Variant="Variant.Text" StartIcon="@Icons.Filled.Add" Color="Color.Primary" @onclick="() => Redirect()">Add</MudButton>
 
 
 @code {
@@ -68,6 +63,4 @@
         cardsControler.Delete(id);
         OnInitialized();
     }
-
-
 }

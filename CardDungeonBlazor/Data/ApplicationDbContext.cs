@@ -47,7 +47,6 @@ namespace CardDungeonBlazor.Data
                 .WithMany(c => c.Comments)
                 .HasForeignKey(c => c.PostId)
                 .OnDelete(DeleteBehavior.Restrict);
-
             base.OnModelCreating(builder);
         }
     }

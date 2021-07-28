@@ -1,5 +1,6 @@
 ﻿@page "/deck/add"
 @using CardDungeonBlazor.Models;
+@using CardDungeonBlazor.Data.Models.Common
 @using CardDungeonBlazor.Controls;
 @inject CardDungeonBlazor.Data.ApplicationDbContext dbcontext;
 @inject NavigationManager navManager;
@@ -8,33 +9,24 @@
 
 <h1>Add card to the database</h1>
 
-<div class="row">
-    <div class="col-sm-9 col-md-7 col-lg-5 my-3">
-        <EditForm Model="Model" OnValidSubmit="Submit">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-            <div class="input-group mb-3">
-                <div class="input-group-prepend w-25">
-                    <span class="input-group-text w-100">Name</span>
-                </div>
-                <InputText class="form-control" @bind-Value="Model.Name" />
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend w-25">
-                    <span class="input-group-text w-100">Description</span>
-                </div>
-                <InputText class="form-control" @bind-Value="Model.Description" />
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend w-25">
-                    <span class="input-group-text w-100">Value</span>
-                </div>
-                <InputCheckbox class="form-control" @bind-Value="Model.DeckType" />
-            </div>
-            <button class="btn btn-success btn-lg" type="submit">Add cards</button>
-        </EditForm>
-    </div>
-</div>
+<EditForm Model="@Model" OnValidSubmit="Submit">
+    <DataAnnotationsValidator />
+    <MudCard Class="pa-4">
+        <MudCardContent>
+            <MudTextField Label="Name" Class="mt-3"
+                          @bind-Value="Model.Name" For="@(() => Model.Name)" />
+            <MudTextField Label="Description" Class="mt-3"
+                          @bind-Value="Model.Description" For="@(() => Model.Description)" />
+            <MudRadioGroup @bind-SelectedOption="Model.DeckType">
+                <MudRadio Color="Color.Primary" Option="@(DeckType.Public)">Public</MudRadio>
+                <MudRadio Color="Color.Primary" Option="@(DeckType.Private)">Private</MudRadio>
+            </MudRadioGroup>
+        </MudCardContent>
+        <MudCardActions>
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Add deck</MudButton>
+        </MudCardActions>
+    </MudCard>
+</EditForm>
 
 @code{
     AddDeckFormModel Model;

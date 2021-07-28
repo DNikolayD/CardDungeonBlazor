@@ -6,50 +6,33 @@
 
 <h1>Edit card</h1>
 
-<div class="row">
-    <div class="col-sm-9 col-md-7 col-lg-5 my-3">
-        <EditForm Model="Model" OnValidSubmit="Submit">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-            <div class="input-group mb-3">
-                <div class="input-group-prepend w-25">
-                    <span class="input-group-text w-100">Name</span>
-                </div>
-                <InputText class="form-control" @bind-Value="Model.Name" />
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend w-25">
-                    <span class="input-group-text w-100">Description</span>
-                </div>
-                <InputText class="form-control" @bind-Value="Model.Description" />
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend w-25">
-                    <span class="input-group-text w-100">Value</span>
-                </div>
-                <InputNumber class="form-control" @bind-Value="Model.Value" />
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend w-25">
-                    <span class="input-group-text w-100">Image Url</span>
-                </div>
-                <InputText class="form-control" @bind-Value="Model.ImageUrl" />
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend w-25">
-                    <span class="input-group-text w-100">CardType</span>
-                </div>
-                <select class="form-control" @bind="Model.CardTypeId">
+<EditForm Model="@Model" OnValidSubmit="Submit">
+    <DataAnnotationsValidator />
+    <MudCard Class="pa-4">
+        <MudCardContent>
+            <MudTextField Label="Name" Class="mt-3"
+                          @bind-Value="Model.Name" For="@(() => Model.Name)" />
+            <MudTextField Label="Description" Class="mt-3"
+                          @bind-Value="Model.Description" For="@(() => Model.Description)" />
+            <MudTextField Label="Image Url" Class="mt-3"
+                          @bind-Value="Model.ImageUrl" For="@(() => Model.ImageUrl)" />
+            <MudTextField Label="Value" Class="mt-3"
+                          @bind-Value="Model.Value" For="@(() => Model.Value)" InputType="InputType.Number" />
+            <MudItem xs="12" sm="6" md="4" Class="mt-3">
+                <MudSelect T="int" Label="Type" Strict="true" Variant="Variant.Outlined" Format="F2" @bind-Value="Model.CardTypeId">
                     @foreach (var cardType in Model.CardTypes)
                     {
-                        <option value="@cardType.Id">@cardType.Name</option>
+                        <MudSelectItem T="int" Value="cardType.Id">@cardType.Name</MudSelectItem>
+
                     }
-                </select>
-            </div>
-            <button class="btn btn-success btn-lg" type="submit">Edit card</button>
-        </EditForm>
-    </div>
-</div>
+                </MudSelect>
+            </MudItem>
+        </MudCardContent>
+        <MudCardActions>
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Add Card</MudButton>
+        </MudCardActions>
+    </MudCard>
+</EditForm>
 
 @code{
     [Parameter]
@@ -67,7 +50,7 @@
     void Submit()
     {
         CardsControler cardsControler = new CardsControler(dbcontext);
-        cardsControler.Edit(Id,Model);
+        cardsControler.Edit(Id, Model);
         navManager.NavigateTo("/cards/all");
     }
 }
