@@ -4,28 +4,29 @@
 @using CardDungeonBlazor.Controls;
 @inject ApplicationDbContext dbcontext
 @inject Services.CardAddedToDeck CardsAdded
+@inject NavigationManager navManager;
+
 
 <h3>Add cards to the Deck</h3>
-
-<div class="row">
+<MudGrid>
     @foreach (var card in CardsAdded.Cards)
     {
-        <div class="col-md-4">
-            <div class="card mb-3">
-                <img class="card-img-top" src="@card.ImageUrl" alt="@card.Name @card.CardType - @card.Value">
-                <div class="card-body text-center">
-                    <h5 class="card-title text-center">@card.Name @card.CardType - @card.Value</h5>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend w-25">
-                            <span class="input-group-text w-100" >@card.TimesAdded</span>
-                        </div>
-                        <button class="btn btn-success btn-lg" type="submit" @onclick="() => Add(card.Id)">Add card</button>
-                    </div>
-                </div>
-            </div>
-        </div>}
-</div>
-
+        <MudItem Class="d-flex align-center justify-center mud-width-full py-8" xs=3>
+            <MudCard>
+                <MudCardMedia Image="@card.ImageUrl" />
+                <MudCardContent>
+                    <MudText Typo="Typo.h5">Card with name @card.Name</MudText>
+                    <MudText Typo="Typo.body2">With a value of @card.Value @card.CardType</MudText>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudText Typo="Typo.body2">@card.TimesAdded</MudText>
+                    <MudButton Variant="Variant.Text" StartIcon="@Icons.Filled.Add" Color="Color.Info" @onclick="() => Add(card.Id)">Add card</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+    }
+</MudGrid>
+<MudButton Variant="Variant.Text" Color="Color.Primary" @onclick="() => Redirect()">Finish the deck</MudButton>
 @code {
     [Parameter]
     public string Id { get; set; }
@@ -43,6 +44,10 @@
         CardsAdded.Cards.Find(x => x.Id == CardId).TimesAdded++;
         AddCardsToDeck cardsToDeck = new AddCardsToDeck();
         cardsToDeck.AddCardsToDeckWithId(dbcontext, CardId, Id);
+    }
+    void Redirect()
+    {
+        navManager.NavigateTo("/decks/all");
     }
 
 }

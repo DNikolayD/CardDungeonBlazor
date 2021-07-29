@@ -16,7 +16,7 @@ namespace CardDungeonBlazor.Models
         public string Description { get; set; }
 
         [Required]
-        public bool DeckType { get; set; }
+        public DeckType DeckType { get; set; }
 
         public virtual ICollection<AddCardsToDeckModel> Cards { get; set; }
 

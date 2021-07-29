@@ -1,4 +1,4 @@
-﻿@page "/decks/add"
+﻿@page "/deck/edit/{id}"
 @using CardDungeonBlazor.Models;
 @using CardDungeonBlazor.Data.Models.Common
 @using CardDungeonBlazor.Controls;
@@ -23,26 +23,31 @@
             </MudRadioGroup>
         </MudCardContent>
         <MudCardActions>
-            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Add cards to the deck</MudButton>
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Edit</MudButton>
         </MudCardActions>
     </MudCard>
 </EditForm>
 
 @code{
 
+    [Parameter]
+    public string Id { get; set; }
+
     AddDeckFormModel Model;
 
     protected override void OnInitialized()
     {
         Model = new AddDeckFormModel();
-        CardsControler cardsControler = new CardsControler(dbcontext);
+        DecksController decksController = new DecksController(dbcontext);
+        Model = decksController.GetDeck(Id);
+
 
     }
 
     void Submit()
     {
         DecksController decksController = new DecksController(dbcontext);
-        decksController.Add(Model);
+        decksController.Edit(Id,Model);
         navManager.NavigateTo($"/deck/addCards/{decksController.GetId(Model.Name)}");
     }
 }

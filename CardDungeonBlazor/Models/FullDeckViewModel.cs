@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 
 namespace CardDungeonBlazor.Models
 {
-    public class DeckServiceModel
+    public class FullDeckViewModel
     {
-        public string Id { get; set; }
-
         public string Name { get; set; }
+
+        public string Description { get; set; }
 
         public string Type { get; set; }
 
-        public string ImageUrl { get; set; }
+        public string CreatedOn { get; set; }
 
-        public int Cards { get; set; }
+        public int NumberOfCards { get; set; }
     }
 }

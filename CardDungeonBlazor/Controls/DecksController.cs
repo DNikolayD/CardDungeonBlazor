@@ -20,7 +20,7 @@ namespace CardDungeonBlazor.Controls
         public IActionResult Add(AddDeckFormModel deck)
         {
             DeckType deckType;
-            if (deck.DeckType)
+            if (deck.DeckType == DeckType.Public)
             {
                 deckType = DeckType.Public;
             }
@@ -56,12 +56,12 @@ namespace CardDungeonBlazor.Controls
         public AllDeckViewModel GetAll(ApplicationDbContext data)
         {
             AllDeckViewModel allDecks = new();
-            string cardImage = null;
-            foreach (var deck in data.Decks)
+            string cardImage = "";
+            foreach (var deck in data.Decks.Where(x => !x.IsDeleted))
             {
-                if (deck.Cards.Count > 0)
+                if (data.Cards.FirstOrDefault(x => x.Id == data.CardDecks.FirstOrDefault(x => x.DeckId == deck.Id).CardId).ImageUrl.Any())
                 {
-                    cardImage = deck.Cards.FirstOrDefault().Card.ImageUrl;
+                    cardImage = data.Cards.FirstOrDefault(x => x.Id == data.CardDecks.FirstOrDefault(x => x.DeckId == deck.Id).CardId).ImageUrl;
                 }
                 allDecks.Decks.Add(new DeckServiceModel
                 {
@@ -69,6 +69,7 @@ namespace CardDungeonBlazor.Controls
                     Type = deck.DeckType.ToString(),
                     Name = deck.Name,
                     ImageUrl = cardImage,
+                    Cards = data.CardDecks.Where(x => x.DeckId == deck.Id).Count(),
                 });
             }
             
@@ -78,6 +79,43 @@ namespace CardDungeonBlazor.Controls
         public string GetId(string name)
         {
             return data.Decks.FirstOrDefault(x => x.Name == name).Id;
+        }
+
+        public void Delete(string id)
+        {
+            this.data.Decks.FirstOrDefault(x => x.Id == id).IsDeleted = true;
+        }
+
+        public AddDeckFormModel GetDeck(string id)
+        {
+            return new AddDeckFormModel
+            {
+                Name = this.data.Decks.FirstOrDefault(x => x.Id == id).Name,
+                DeckType = this.data.Decks.FirstOrDefault(x => x.Id == id).DeckType,
+                Description = this.data.Decks.FirstOrDefault(x => x.Id == id).Description,
+            };
+
+        }
+        public void Edit(string id, AddDeckFormModel model)
+        {
+            this.data.Decks.FirstOrDefault(x => x.Id == id).Name = model.Name;
+            this.data.Decks.FirstOrDefault(x => x.Id == id).DeckType = model.DeckType;
+            this.data.Decks.FirstOrDefault(x => x.Id == id).Description = model.Description;
+
+
+            this.data.SaveChanges();
+        }
+
+        public FullDeckViewModel GetFullDeckView(string id)
+        {
+            return new FullDeckViewModel
+            {
+                Name = data.Decks.FirstOrDefault(x => x.Id == id).Name,
+                Description = data.Decks.FirstOrDefault(x => x.Id == id).Description,
+                Type = data.Decks.FirstOrDefault(x => x.Id == id).DeckType.ToString(),
+                CreatedOn = data.Decks.FirstOrDefault(x => x.Id == id).CreatedOn.ToShortDateString(),
+                NumberOfCards = data.CardDecks.Where(x => x.DeckId == id).Count()
+            };
         }
     }
 

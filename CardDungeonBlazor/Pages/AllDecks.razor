@@ -2,23 +2,30 @@
 @using CardDungeonBlazor.Models;
 @using CardDungeonBlazor.Controls;
 @inject CardDungeonBlazor.Data.ApplicationDbContext dbcontext;
+@inject NavigationManager navManager;
+
 <h3>AllCards</h3>
 
-<div class="row">
+<MudGrid>
     @foreach (var deck in Model.Decks)
     {
-        <div class="col-md-4">
-            <div class="card mb-3">
-                <img class="card-img-top" src="@deck.ImageUrl" alt="@deck.Name @deck.Type">
-                <div class="card-body text-center">
-                    <h5 class="card-title text-center">@deck.Name @deck.Type</h5>
-                    <a asp-controller="Cars" asp-action="Details" asp-route-id="@deck.Id" class="btn btn-primary">View More</a>
-                </div>
-            </div>
-        </div>}
-</div>
-<button class="btn btn-success btn-lg" type="submit">Add card</button>
-
+        <MudItem Class="d-flex align-center justify-center mud-width-full py-8" xs=3>
+            <MudCard>
+                <MudCardMedia Image="@deck.ImageUrl" />
+                <MudCardContent>
+                    <MudText Typo="Typo.h5">Deck with name @deck.Name</MudText>
+                    <MudText Typo="Typo.body2">With a type of @deck.Type and it has @deck.Cards cards</MudText>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Variant="Variant.Text" Color="Color.Info" @onclick="() => RedirectToFullView(deck.Id)">See More</MudButton>
+                    <MudButton Variant="Variant.Text" Color="Color.Primary" @onclick="() => RedirectToEdit(deck.Id)">Edit</MudButton>
+                    <MudButton Variant="Variant.Text" Color="Color.Error" @onclick="() => Delete(deck.Id)">Delete</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+    }
+</MudGrid>
+<MudButton Variant="Variant.Text" StartIcon="@Icons.Filled.Add" Color="Color.Primary" @onclick="() => Redirect()">Add</MudButton>
 
 @code {
     AllDeckViewModel Model;
@@ -29,6 +36,27 @@
         DecksController decksController = new DecksController(dbcontext);
         Model.Decks = decksController.GetAll(dbcontext).Decks;
 
+    }
+
+    void RedirectToFullView(string id)
+    {
+        navManager.NavigateTo($"/deck/show/{id}");
+    }
+
+    void RedirectToEdit(string id)
+    {
+        navManager.NavigateTo($"/deck/edit/{id}");
+    }
+
+    void Delete(string id)
+    {
+        DecksController decksController = new DecksController(dbcontext);
+        decksController.Delete(id);
+    }
+
+    void Redirect()
+    {
+        navManager.NavigateTo("/decks/add");
     }
 
 
