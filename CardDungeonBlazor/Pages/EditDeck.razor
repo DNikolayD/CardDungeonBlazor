@@ -1,9 +1,7 @@
 ﻿@page "/deck/edit/{id}"
-@using CardDungeonBlazor.Models;
-@using CardDungeonBlazor.Data.Models.Common
-@using CardDungeonBlazor.Controls;
-@inject CardDungeonBlazor.Data.ApplicationDbContext dbcontext;
-@inject NavigationManager navManager;
+@using Data.Models.Common
+@using Controllers
+@inherits EditDecksController
 
 @attribute [Authorize]
 
@@ -27,27 +25,3 @@
         </MudCardActions>
     </MudCard>
 </EditForm>
-
-@code{
-
-    [Parameter]
-    public string Id { get; set; }
-
-    AddDeckFormModel Model;
-
-    protected override void OnInitialized()
-    {
-        Model = new AddDeckFormModel();
-        DecksController decksController = new DecksController(dbcontext);
-        Model = decksController.GetDeck(Id);
-
-
-    }
-
-    void Submit()
-    {
-        DecksController decksController = new DecksController(dbcontext);
-        decksController.Edit(Id,Model);
-        navManager.NavigateTo($"/deck/addCards/{decksController.GetId(Model.Name)}");
-    }
-}

@@ -1,9 +1,7 @@
-﻿@page "/cards/all";
-@using CardDungeonBlazor.Models;
-@using CardDungeonBlazor.Controls;
-@inject CardDungeonBlazor.Data.ApplicationDbContext dbcontext;
-@inject NavigationManager navManager;
-<h3>AllCards</h3>
+﻿@page "/cards/all"
+@using Controllers
+@inherits AllCardsController
+<MudText Typo="Typo.h3">AllCards</MudText>
 
 <MudGrid>
     @foreach (var card in Model.Cards)
@@ -25,46 +23,3 @@
     }
 </MudGrid>
 <MudButton Variant="Variant.Text" StartIcon="@Icons.Filled.Add" Color="Color.Primary" @onclick="() => Redirect()">Add</MudButton>
-
-
-@code {
-    [CascadingParameter]
-    public Task<AuthenticationState> AuthenticationStateTask { get; set; }
-
-    AllCardsViewModel Model;
-    bool isLoggedIn;
-
-    protected async override Task OnInitializedAsync()
-    {
-        var autenticationState = await AuthenticationStateTask;
-        isLoggedIn = autenticationState.User.Identity.IsAuthenticated;
-    }
-
-    protected override void OnInitialized()
-    {
-        Model = new AllCardsViewModel();
-        CardsControler cardsControler = new CardsControler(dbcontext);
-        Model.Cards = cardsControler.GetAllCards(dbcontext).Cards;
-
-    }
-
-    void Redirect()
-    {
-        navManager.NavigateTo("/cards/add");
-    }
-    void RedirectToFullView(string id)
-    {
-        navManager.NavigateTo($"/card/show/{id}");
-    }
-    void RedirectToEdit(string id)
-    {
-        navManager.NavigateTo($"/card/edit/{id}");
-
-    }
-    void Delete(string id)
-    {
-        CardsControler cardsControler = new CardsControler(dbcontext);
-        cardsControler.Delete(id);
-        OnInitialized();
-    }
-}

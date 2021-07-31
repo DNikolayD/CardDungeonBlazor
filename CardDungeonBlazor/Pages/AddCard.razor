@@ -1,14 +1,10 @@
 ﻿@page "/cards/add"
-@using CardDungeonBlazor.Models;
-@using CardDungeonBlazor.Controls;
-@using System.Text.RegularExpressions
-@using System.ComponentModel.DataAnnotations
-@inject CardDungeonBlazor.Data.ApplicationDbContext dbcontext;
-@inject NavigationManager navManager;
+@using Controllers
+@inherits AddCardsController
 
 @attribute [Authorize]
 
-<h1>Add card to the database</h1>
+<MudText Typo="Typo.h3">Create your own card</MudText>
     <EditForm Model="@Model" OnValidSubmit="Submit">
         <DataAnnotationsValidator />
         <MudCard Class="pa-4">
@@ -37,21 +33,4 @@
         </MudCard>
     </EditForm>
 
-@code{
-    AddCardFormModel Model;
 
-    protected override void OnInitialized()
-    {
-        Model = new AddCardFormModel();
-        CardsControler cardsControler = new CardsControler(dbcontext);
-        Model.CardTypes = cardsControler.GetCardTypeViewModels(dbcontext);
-
-    }
-
-    void Submit()
-    {
-        CardsControler cardsControler = new CardsControler(dbcontext);
-        cardsControler.Add(Model);
-        navManager.NavigateTo("/cards/all");
-    }
-}

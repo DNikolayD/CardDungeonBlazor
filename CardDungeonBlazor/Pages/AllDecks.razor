@@ -1,10 +1,8 @@
-﻿@page "/decks/all";
-@using CardDungeonBlazor.Models;
-@using CardDungeonBlazor.Controls;
-@inject CardDungeonBlazor.Data.ApplicationDbContext dbcontext;
-@inject NavigationManager navManager;
+﻿@page "/decks/all"
+@using Controllers
+@inherits AllDecksController
 
-<h3>AllCards</h3>
+<MudText Typo="Typo.h3">All Decks</MudText>
 
 <MudGrid>
     @foreach (var deck in Model.Decks)
@@ -26,39 +24,3 @@
     }
 </MudGrid>
 <MudButton Variant="Variant.Text" StartIcon="@Icons.Filled.Add" Color="Color.Primary" @onclick="() => Redirect()">Add</MudButton>
-
-@code {
-    AllDeckViewModel Model;
-
-    protected override void OnInitialized()
-    {
-        Model = new AllDeckViewModel();
-        DecksController decksController = new DecksController(dbcontext);
-        Model.Decks = decksController.GetAll(dbcontext).Decks;
-
-    }
-
-    void RedirectToFullView(string id)
-    {
-        navManager.NavigateTo($"/deck/show/{id}");
-    }
-
-    void RedirectToEdit(string id)
-    {
-        navManager.NavigateTo($"/deck/edit/{id}");
-    }
-
-    void Delete(string id)
-    {
-        DecksController decksController = new DecksController(dbcontext);
-        decksController.Delete(id);
-    }
-
-    void Redirect()
-    {
-        navManager.NavigateTo("/decks/add");
-    }
-
-
-}
-

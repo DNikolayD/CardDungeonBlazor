@@ -2,6 +2,7 @@ using CardDungeonBlazor.Areas.Identity;
 using CardDungeonBlazor.Data;
 using CardDungeonBlazor.Data.Models.User;
 using CardDungeonBlazor.Infrastructure;
+using CardDungeonBlazor.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -46,7 +47,11 @@ namespace CardDungeonBlazor
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddControllersWithViews();
-            services.AddSingleton<Services.CardAddedToDeck>();
+            services.AddControllers();
+            services.AddSingleton<CardAddedToDeck>();
+            services.AddScoped<CardsService>();
+            services.AddScoped<DecksService>();
+            services.AddScoped<AddCardsToDeckService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

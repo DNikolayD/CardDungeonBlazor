@@ -1,8 +1,6 @@
 ﻿@page "/card/edit/{id}"
-@using CardDungeonBlazor.Models;
-@using CardDungeonBlazor.Controls;
-@inject CardDungeonBlazor.Data.ApplicationDbContext dbcontext;
-@inject NavigationManager navManager;
+@using Controllers
+@inherits EditCardsController
 
 <h1>Edit card</h1>
 
@@ -33,24 +31,3 @@
         </MudCardActions>
     </MudCard>
 </EditForm>
-
-@code{
-    [Parameter]
-    public string Id { get; set; }
-    CardEditFomModel Model;
-
-    protected override void OnInitialized()
-    {
-        Model = new CardEditFomModel();
-        CardsControler cardsControler = new CardsControler(dbcontext);
-        Model = cardsControler.GetEditFomModel(Id);
-
-    }
-
-    void Submit()
-    {
-        CardsControler cardsControler = new CardsControler(dbcontext);
-        cardsControler.Edit(Id, Model);
-        navManager.NavigateTo("/cards/all");
-    }
-}

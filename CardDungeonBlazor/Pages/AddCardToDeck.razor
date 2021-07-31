@@ -1,10 +1,6 @@
 ﻿@page "/deck/addCards/{id}"
-@using CardDungeonBlazor.Data;
-@using CardDungeonBlazor.Models;
-@using CardDungeonBlazor.Controls;
-@inject ApplicationDbContext dbcontext
-@inject Services.CardAddedToDeck CardsAdded
-@inject NavigationManager navManager;
+@using Controllers
+@inherits AddCardsToDeckController
 
 
 <h3>Add cards to the Deck</h3>
@@ -27,27 +23,4 @@
     }
 </MudGrid>
 <MudButton Variant="Variant.Text" Color="Color.Primary" @onclick="() => Redirect()">Finish the deck</MudButton>
-@code {
-    [Parameter]
-    public string Id { get; set; }
-    AddCardsToDeckModel Model;
 
-    protected override void OnInitialized()
-    {
-        Model = new AddCardsToDeckModel();
-        AddCardsToDeck cardsToDeck = new AddCardsToDeck();
-        CardsAdded.Cards = cardsToDeck.GetAllCards(dbcontext).Cards;
-
-    }
-    void Add(string CardId)
-    {
-        CardsAdded.Cards.Find(x => x.Id == CardId).TimesAdded++;
-        AddCardsToDeck cardsToDeck = new AddCardsToDeck();
-        cardsToDeck.AddCardsToDeckWithId(dbcontext, CardId, Id);
-    }
-    void Redirect()
-    {
-        navManager.NavigateTo("/decks/all");
-    }
-
-}
