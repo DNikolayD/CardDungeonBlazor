@@ -1,5 +1,16 @@
-﻿<h3>MainGamePage</h3>
+﻿@page "/game/main"
 
-@code {
+@inherits GameController
+<MudItem Class="deck-position">
+    @{ int offcet = 0;
+        int z = Model.PlayerModel1.Deck.Cards.Count;
+        foreach (var deck in Model.PlayerModel1.Deck.Cards)
+        {
+            deck.Offcet += offcet;
+            <CardInDeck Model="@deck" z="@z"></CardInDeck>
+            offcet+=5;
+            z--;
+        }
+                }
+</MudItem>
 
-}

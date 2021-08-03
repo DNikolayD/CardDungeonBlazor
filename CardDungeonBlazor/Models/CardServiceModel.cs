@@ -15,6 +15,10 @@ namespace CardDungeonBlazor.Models
 
         public string CardType { get; set; }
 
+        public int Cost { get; set; }
+
         public int Value { get; set; }
+
+        public int Offcet { get; set; } = 0;
     }
 }

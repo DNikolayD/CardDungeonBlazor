@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardDungeonBlazor", "CardDungeonBlazor\CardDungeonBlazor.csproj", "{0CF4C786-B9DE-45A0-9937-786C9A11CADB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardGame", "CardGame\CardGame.csproj", "{EECE49F6-7566-471D-8171-59B68BAF97DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardGame", "CardGame\CardGame.csproj", "{EECE49F6-7566-471D-8171-59B68BAF97DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

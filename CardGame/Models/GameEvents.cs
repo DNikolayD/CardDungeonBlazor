@@ -13,6 +13,5 @@ namespace CardGame.Models
         StartTurn,
         TookEffect,
         Died,
-        Won,
     }
 }
