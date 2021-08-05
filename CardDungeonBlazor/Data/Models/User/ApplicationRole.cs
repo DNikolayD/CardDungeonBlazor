@@ -14,8 +14,8 @@ namespace CardDungeonBlazor.Data.Models.User
 
         public ApplicationRole(string roleName) : base(roleName)
         {
-            this.Id = Guid.NewGuid().ToString();
-            this.CreatedOn = DateTime.UtcNow;
+            Id = Guid.NewGuid().ToString();
+            CreatedOn = DateTime.UtcNow;
         }
 
         public DateTime CreatedOn { get; set; }

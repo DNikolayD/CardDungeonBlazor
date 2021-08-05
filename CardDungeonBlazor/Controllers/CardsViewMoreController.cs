@@ -1,14 +1,10 @@
 ﻿using CardDungeonBlazor.Models;
 using CardDungeonBlazor.Services;
 using Microsoft.AspNetCore.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CardDungeonBlazor.Controllers
 {
-    public class CardsViewMoreController :ComponentBase
+    public class CardsViewMoreController : ComponentBase
     {
         [Inject]
         public CardsService Service { get; set; }

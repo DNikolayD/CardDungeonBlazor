@@ -1,7 +1,7 @@
 ﻿@using CardDungeonBlazor.Models
 
-<MudCard Class="card-position" Style="@modelcss">
-    <MudCardMedia Image="@Model.ImageUrl" Class="card-position" ></MudCardMedia>
+<MudCard Class="player1-card-position" Style="@modelcss">
+    <MudCardMedia Image="@Model.ImageUrl" Class="player1-card-position" ></MudCardMedia>
 </MudCard>
 
 @code {
@@ -9,5 +9,6 @@
     public CardServiceModel Model { get; set; }
     [Parameter]
     public int z { get; set; }
+
     string modelcss => $"padding-top:{Model.Offcet}px; z-index:{z}";
 }

@@ -24,14 +24,14 @@ namespace CardDungeonBlazor.Services
                 Description = model.Description,
                 DeckType = model.DeckType,
             };
-            this.data.Decks.Add(dbDeck);
-            this.data.SaveChanges();
+            data.Decks.Add(dbDeck);
+            data.SaveChanges();
         }
 
         public List<CardTypeViewModel> GetCardTypeViewModels()
         {
             List<CardTypeViewModel> cardTypeViewModel = new();
-            DbSet<CardType> cardTypes = this.data.CardTypes;
+            DbSet<CardType> cardTypes = data.CardTypes;
 
             foreach (var cardType in cardTypes)
             {
@@ -81,16 +81,16 @@ namespace CardDungeonBlazor.Services
 
         public void Delete(string id)
         {
-            Deck deck = this.data.Decks.FirstOrDefault(x => x.Id == id);
+            Deck deck = data.Decks.FirstOrDefault(x => x.Id == id);
             deck.IsDeleted = true;
             deck.DeletedOn = DateTime.UtcNow;
-            this.data.Decks.Update(deck);
-            this.data.SaveChanges();
+            data.Decks.Update(deck);
+            data.SaveChanges();
         }
 
         public AddDeckFormModel GetDeck(string id)
         {
-            Deck deck = this.data.Decks.FirstOrDefault(d => d.Id == id);
+            Deck deck = data.Decks.FirstOrDefault(d => d.Id == id);
 
             AddDeckFormModel model = new()
             {
@@ -103,20 +103,20 @@ namespace CardDungeonBlazor.Services
         }
         public void Edit(string id, AddDeckFormModel model)
         {
-            Deck deck = this.data.Decks.FirstOrDefault(x => x.Id == id);
+            Deck deck = data.Decks.FirstOrDefault(x => x.Id == id);
             deck.Name = model.Name;
             deck.DeckType = model.DeckType;
             deck.Description = model.Description;
-            this.data.Decks.Update(deck);
+            data.Decks.Update(deck);
             data.SaveChanges();
         }
 
         public FullDeckViewModel GetFullDeckView(string id)
         {
-            Deck deck = this.data.Decks.FirstOrDefault(x => x.Id == id);
+            Deck deck = data.Decks.FirstOrDefault(x => x.Id == id);
             IQueryable<CardDeck> cards = data.CardDecks.Where(cd => cd.DeckId == id);
             string createdOn = deck.CreatedOn.ToShortDateString();
-            string type = deck.DeckType.ToString(); 
+            string type = deck.DeckType.ToString();
             FullDeckViewModel model = new()
             {
                 Name = deck.Name,

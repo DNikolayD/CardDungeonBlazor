@@ -1,5 +1,4 @@
-﻿using CardDungeonBlazor.Data.Models.CardModels;
-using CardDungeonBlazor.Data.Models.Common;
+﻿using CardDungeonBlazor.Data.Models.Common;
 using CardDungeonBlazor.Data.Models.User;
 using System;
 using System.Collections.Generic;
@@ -12,8 +11,8 @@ namespace CardDungeonBlazor.Data.Models.CardModels
 
         public Card()
         {
-            this.Id = Guid.NewGuid().ToString();
-            this.Decks = new HashSet<CardDeck>();
+            Id = Guid.NewGuid().ToString();
+            Decks = new HashSet<CardDeck>();
         }
 
         [Required]

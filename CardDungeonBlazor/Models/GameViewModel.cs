@@ -1,10 +1,4 @@
-﻿using CardGame.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CardDungeonBlazor.Models
+﻿namespace CardDungeonBlazor.Models
 {
     public class GameViewModel
     {

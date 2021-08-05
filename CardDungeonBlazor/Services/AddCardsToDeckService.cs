@@ -2,10 +2,7 @@
 using CardDungeonBlazor.Data.Models.CardModels;
 using CardDungeonBlazor.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace CardDungeonBlazor.Services
 {
@@ -21,7 +18,7 @@ namespace CardDungeonBlazor.Services
         public AddCardsToDeckModel GetAllCards()
         {
             AddCardsToDeckModel allCards = new();
-            DbSet<Card> cards = this.data.Cards;
+            DbSet<Card> cards = data.Cards;
             foreach (var card in cards)
             {
                 CardAddedToTheDeckViewModel model = new()
@@ -39,17 +36,17 @@ namespace CardDungeonBlazor.Services
         }
         public void AddCardsToDeckWithId(string cardId, string deckId)
         {
-            Deck deck = this.data.Decks.FirstOrDefault(d => d.Id == deckId);
+            Deck deck = data.Decks.FirstOrDefault(d => d.Id == deckId);
             CardDeck cardDeck = new()
             {
                 CardId = cardId,
                 DeckId = deckId,
             };
-            this.data.CardDecks.Add(cardDeck);
-            this.data.SaveChanges();
+            data.CardDecks.Add(cardDeck);
+            data.SaveChanges();
             deck.Cards.Add(cardDeck);
-            this.data.Decks.Update(deck);
-            this.data.SaveChanges();
+            data.Decks.Update(deck);
+            data.SaveChanges();
         }
     }
 }

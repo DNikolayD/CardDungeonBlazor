@@ -9,7 +9,7 @@ namespace CardDungeonBlazor.Data.Models.PostModels
 
         public Category()
         {
-            this.Posts = new HashSet<Post>();
+            Posts = new HashSet<Post>();
         }
 
         [Required]

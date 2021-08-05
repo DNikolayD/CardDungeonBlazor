@@ -10,10 +10,10 @@ namespace CardDungeonBlazor.Data.Models.Common
 
         public Image()
         {
-            this.Id = Guid.NewGuid().ToString();
-            this.Cards = new HashSet<CardImage>();
-            this.Posts = new HashSet<PostImage>();
-            this.Commets = new HashSet<CommetImage>();
+            Id = Guid.NewGuid().ToString();
+            Cards = new HashSet<CardImage>();
+            Posts = new HashSet<PostImage>();
+            Commets = new HashSet<CommetImage>();
         }
 
         [Required]

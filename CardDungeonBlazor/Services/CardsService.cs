@@ -18,7 +18,7 @@ namespace CardDungeonBlazor.Services
         }
 
         public void Add(AddCardFormModel model)
-        { 
+        {
             var dbCard = new Card
             {
                 Name = model.Name,
@@ -29,14 +29,14 @@ namespace CardDungeonBlazor.Services
                 CreatedOn = DateTime.UtcNow,
 
             };
-            this.data.Cards.Add(dbCard);
-            this.data.SaveChanges();
+            data.Cards.Add(dbCard);
+            data.SaveChanges();
         }
 
         public List<CardTypeViewModel> GetCardTypeViewModels()
         {
             List<CardTypeViewModel> cardTypeViewModel = new();
-            DbSet<CardType> cardTypes = this.data.CardTypes;
+            DbSet<CardType> cardTypes = data.CardTypes;
 
             foreach (var cardType in cardTypes)
             {
@@ -53,11 +53,11 @@ namespace CardDungeonBlazor.Services
         public AllCardsViewModel GetAllCards()
         {
             AllCardsViewModel allCards = new();
-            IQueryable<Card> cards = this.data.Cards.Where(c => !c.IsDeleted);
+            IQueryable<Card> cards = data.Cards.Where(c => !c.IsDeleted);
             CardType cardType = new();
             foreach (var card in cards)
             {
-                cardType = this.data.CardTypes.FirstOrDefault(x => x.Id == card.CardTypeId);
+                cardType = data.CardTypes.FirstOrDefault(x => x.Id == card.CardTypeId);
 
                 CardServiceModel model = new()
                 {
@@ -74,16 +74,16 @@ namespace CardDungeonBlazor.Services
 
         public void Delete(string id)
         {
-            Card dbCard = this.data.Cards.FirstOrDefault(c => c.Id == id);
+            Card dbCard = data.Cards.FirstOrDefault(c => c.Id == id);
             dbCard.IsDeleted = true;
             dbCard.DeletedOn = DateTime.UtcNow;
             data.Cards.Update(dbCard);
-            this.data.SaveChanges();
+            data.SaveChanges();
         }
 
         public FullCardViewModel GetFullCardView(string id)
         {
-            var card = this.data.Cards.FirstOrDefault(c => c.Id == id && !c.IsDeleted);
+            var card = data.Cards.FirstOrDefault(c => c.Id == id && !c.IsDeleted);
             string createdOn = card.CreatedOn.ToShortDateString();
             int duration = card.Duration.Value;
 
@@ -103,8 +103,8 @@ namespace CardDungeonBlazor.Services
 
         public CardEditFomModel GetEditFomModel(string id)
         {
-            var card = this.data.Cards.FirstOrDefault(x => x.Id == id && !x.IsDeleted);
-            List<CardTypeViewModel> cardTypeViewModel = this.GetCardTypeViewModels();
+            var card = data.Cards.FirstOrDefault(x => x.Id == id && !x.IsDeleted);
+            List<CardTypeViewModel> cardTypeViewModel = GetCardTypeViewModels();
 
             CardEditFomModel model = new()
             {
@@ -121,7 +121,7 @@ namespace CardDungeonBlazor.Services
 
         public void Edit(string id, CardEditFomModel cardModel)
         {
-            Card dbCard = this.data.Cards.FirstOrDefault(x => x.Id == id && !x.IsDeleted);
+            Card dbCard = data.Cards.FirstOrDefault(x => x.Id == id && !x.IsDeleted);
             dbCard.CardTypeId = cardModel.CardTypeId;
             dbCard.Description = cardModel.Description;
             dbCard.ImageUrl = cardModel.ImageUrl;
@@ -129,8 +129,8 @@ namespace CardDungeonBlazor.Services
             dbCard.Value = cardModel.Value;
             dbCard.EditedOn = DateTime.UtcNow;
             dbCard.IsEdited = true;
-            this.data.Cards.Update(dbCard);
-            this.data.SaveChanges();
+            data.Cards.Update(dbCard);
+            data.SaveChanges();
         }
     }
 }

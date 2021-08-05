@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CardDungeonBlazor.Data;
@@ -19,14 +18,19 @@ namespace CardDungeonBlazor.Services
             this.data = data;
         }
 
-        public void PlayCard(string cardId, string playerName, GameViewModel game)
+        public GameManager GameManager { get; set; }
+
+        public async Task PlayCard(string cardId, string playerName, GameViewModel game)
         {
-            PlayerModel player = this.GetPlayer(game, playerName);
+            PlayerModel player = GetPlayer(game, playerName);
             CardModel playedCard = player.CardsInHeand.FirstOrDefault(c => c.Id == cardId);
-            GameManager gameManager = new(this.GetPlayer(game, game.PlayerModel1.Name), this.GetPlayer(game, game.PlayerModel2.Name));
-            gameManager.Update(GameEvents.SelectCard, new string[] { cardId });
+            await GameManager.Update(GameEvents.SelectCard, new string[] { cardId });
+            game.PlayerModel1.Health = GameManager.player1.Health;
+            game.PlayerModel2.Health = GameManager.player2.Health;
+            game.PlayerModel1.Energy = GameManager.player1.Energy;
+            game.PlayerModel2.Energy = GameManager.player2.Energy;
         }
-        public DeckViewModel GetDeck()
+        public DeckViewModel GetDeck(string playerName)
         {
             DeckViewModel viewModel = new();
             IQueryable<CardDeck> deck = this.data.CardDecks.Where(cd => cd.DeckId == this.data.Decks.FirstOrDefault().Id);
@@ -46,9 +50,56 @@ namespace CardDungeonBlazor.Services
                 }
                 );
             }
+            foreach (var cardService in viewModel.Cards)
+            {
+                TypeModel model = new();
+                if (cardService.CardType == "Attack")
+                {
+                    model = TypeModel.Attack;
+                }
+                else if (cardService.CardType == "Heal")
+                {
+                    model = TypeModel.Heal;
+                }
+                if (cardService.CardType == "Deffence")
+                {
+                    model = TypeModel.Deffence;
+                }
+                else if(cardService.CardType == "Poison")
+                {
+                    model = TypeModel.Poison;
+                };
+                if (playerName == GameManager.player1.Name)
+                {
+                    GameManager.player1.Deck.Cards.Add(
+                    new CardModel
+                    {
+                        Cost = cardService.Cost,
+                        Id = cardService.Id,
+                        Name = cardService.Name,
+                        Type = model,
+                        Value = cardService.Value,
+                    }
+                    );
+                }
+                else
+                {
+                    GameManager.player2.Deck.Cards.Add(
+                    new CardModel
+                    {
+                        Cost = cardService.Cost,
+                        Id = cardService.Id,
+                        Name = cardService.Name,
+                        Type = model,
+                        Value = cardService.Value,
+                    }
+                    );
+                }
+            }
             return viewModel;
         }
-       private PlayerModel GetPlayer(GameViewModel game, string playerName)
+        public PlayerModel GetPlayer(GameViewModel game,
+                                      string playerName)
         {
             PlayerModel player;
             PlayerViewModel playerView;
@@ -65,7 +116,7 @@ namespace CardDungeonBlazor.Services
             DeckModel deck = new();
             foreach (var card in playerView.CardsInHeand)
             {
-                TypeModel model = new();
+                TypeModel model;
                 if (card.CardType == "Attack")
                 {
                     model = TypeModel.Attack;
@@ -132,6 +183,51 @@ namespace CardDungeonBlazor.Services
 
             };
             return player;
-        } 
+        }
+
+        public async Task<List<CardServiceModel>> GetCardsInHand()
+        {
+            List<CardServiceModel> cards = new();
+            await GameManager.Update(GameEvents.StartTurn);
+            PlayerModel player = GameManager.player;
+            string type;
+            foreach (var card in player.CardsInHeand)
+            {
+                if (card.Type.CompareTo(TypeModel.Attack) == TypeModel.Attack.CompareTo(card.Type))
+                {
+                    type = "Attack";
+                }
+                else if (card.Type == TypeModel.Deffence)
+                {
+                    type = "Deffence";
+                }
+                else if (card.Type == TypeModel.Heal)
+                {
+                    type = "Heal";
+                }
+                else
+                {
+                    type = "Poison";
+                }
+                cards.Add
+                (
+                    new CardServiceModel
+                    {
+                        CardType = type,
+                        Cost = card.Cost,
+                        Id = card.Id,
+                        ImageUrl = this.data.Cards.FirstOrDefault(c => c.Id == card.Id).ImageUrl,
+                        Name = card.Name,
+                        Value = card.Value,
+                    }
+                );
+            }
+            return cards;
+        }
+
+        public async Task EndTurn()
+        {
+            await GameManager.Update(GameEvents.EndTurn);
+        }
     }
 }

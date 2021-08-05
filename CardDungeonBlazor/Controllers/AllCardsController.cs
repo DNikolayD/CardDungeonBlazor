@@ -1,10 +1,6 @@
 ﻿using CardDungeonBlazor.Models;
 using CardDungeonBlazor.Services;
 using Microsoft.AspNetCore.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CardDungeonBlazor.Controllers
 {
@@ -42,7 +38,7 @@ namespace CardDungeonBlazor.Controllers
         public void Delete(string id)
         {
             Service.Delete(id);
-            this.OnInitialized();
+            OnInitialized();
         }
     }
 }

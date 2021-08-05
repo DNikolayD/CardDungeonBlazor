@@ -1,5 +1,4 @@
-﻿using CardDungeonBlazor.Models;
-using CardDungeonBlazor.Services;
+﻿using CardDungeonBlazor.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace CardDungeonBlazor.Controllers

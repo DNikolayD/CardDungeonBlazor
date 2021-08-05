@@ -16,6 +16,7 @@ namespace CardDungeonBlazor.Controllers
         protected override void OnInitialized()
         {
             Model = new();
+            Model.CardTypes = Service.GetCardTypeViewModels();
             base.OnInitialized();
         }
 

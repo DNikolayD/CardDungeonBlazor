@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace CardDungeonBlazor.Models
 {
@@ -10,7 +7,7 @@ namespace CardDungeonBlazor.Models
 
         public AllCardsViewModel()
         {
-            Cards = new List<CardServiceModel>(); 
+            Cards = new List<CardServiceModel>();
         }
         public List<CardServiceModel> Cards { get; set; }
     }

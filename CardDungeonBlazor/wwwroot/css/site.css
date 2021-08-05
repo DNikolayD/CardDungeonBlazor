@@ -49,16 +49,75 @@ a, .btn-link {
         top: 0.5rem;
     }
 
-.deck-position{
-    position:relative;
-    width:300px;
-    height:400px
-
+.player1-deck-position {
+    position: relative;
+    width: 300px;
+    height: 400px;
+    top: 500px;
+    left: 1280px;
 }
-.card-position{
+.player1-card-position{
     position:absolute;
     width:300px;
     height:300px;
     border-bottom: 5px solid black;
 }
+.player1-card-inhand{
+    width: 200px;
+    height:200px;
+}
+.player1-hand-position{
+    position: absolute;
+    top: 1000px;
+}
+.player2-deck-position {
+    position: relative;
+    width: 300px;
+    height: 400px;
+    left: 1280px;
+}
+
+.player2-card-position {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-bottom: 5px solid black;
+}
+
+.player2-card-inhand {
+    width: 200px;
+    height: 200px;
+}
+
+.player2-hand-position {
+    position: absolute;
+    bottom :700px;
+}
+
+.player1-health-position{
+    position:absolute;
+    top: 900px;
+}
+.player2-health-position{
+    position: absolute;
+    bottom: 400px;
+}
+
+.player1-energy-position {
+    position: absolute;
+    top: 900px;
+    right: 100px;
+}
+
+.player2-energy-position {
+    position: absolute;
+    bottom: 400px;
+    right: 100px;
+}
+
+.endturn-button-position{
+    position: absolute;
+    top: 200px;
+}
+
 

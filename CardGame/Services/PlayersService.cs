@@ -18,7 +18,7 @@ namespace CardGame.Services
         public PlayerModel Draw()
         {
             player.CardsInHeand.AddRange(player.Deck.Cards.GetRange(0, 5));
-            player.Deck.Cards.RemoveRange(0, 5);
+            player.Deck.Cards.RemoveRange(player.Deck.Cards.Count - 5, player.Deck.Cards.Count);
             return player;
         }
     }

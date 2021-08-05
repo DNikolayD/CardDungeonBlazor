@@ -1,6 +1,6 @@
 ﻿namespace CardDungeonBlazor.Data.Models.CardModels
 {
-    public class CardDeck 
+    public class CardDeck
     {
         public int Id { get; set; }
 

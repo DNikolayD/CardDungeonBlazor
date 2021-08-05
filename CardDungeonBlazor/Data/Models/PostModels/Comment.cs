@@ -10,7 +10,7 @@ namespace CardDungeonBlazor.Data.Models.PostModels
 
         public Comment()
         {
-            this.Images = new HashSet<CommetImage>();
+            Images = new HashSet<CommetImage>();
         }
 
         [Required]

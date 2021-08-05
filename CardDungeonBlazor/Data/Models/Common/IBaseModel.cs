@@ -13,7 +13,7 @@ namespace CardDungeonBlazor.Data.Models.Common
         public bool IsDeleted { get; set; }
 
         public DateTime? DeletedOn { get; set; }
-        
+
         [Required]
         public bool IsEdited { get; set; }
 

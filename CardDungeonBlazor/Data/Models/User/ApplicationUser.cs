@@ -12,12 +12,12 @@ namespace CardDungeonBlazor.Data.Models.User
     {
         public ApplicationUser()
         {
-            this.Id = Guid.NewGuid().ToString();
-            this.CreatedOn = DateTime.UtcNow;
-            this.CreatedCards = new HashSet<Card>();
-            this.CreatedDecks = new HashSet<Deck>();
-            this.Posts = new HashSet<Post>();
-            this.Comments = new HashSet<Comment>();
+            Id = Guid.NewGuid().ToString();
+            CreatedOn = DateTime.UtcNow;
+            CreatedCards = new HashSet<Card>();
+            CreatedDecks = new HashSet<Deck>();
+            Posts = new HashSet<Post>();
+            Comments = new HashSet<Comment>();
         }
 
         public DateTime CreatedOn { get; set; }
@@ -40,6 +40,6 @@ namespace CardDungeonBlazor.Data.Models.User
         public virtual ICollection<Post> Posts { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
-        
+
     }
 }

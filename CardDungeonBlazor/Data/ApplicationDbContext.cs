@@ -1,12 +1,8 @@
 ﻿using CardDungeonBlazor.Data.Models.CardModels;
 using CardDungeonBlazor.Data.Models.Common;
 using CardDungeonBlazor.Data.Models.PostModels;
-using CardDungeonBlazor.Data.Models.User;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CardDungeonBlazor.Data
 {
