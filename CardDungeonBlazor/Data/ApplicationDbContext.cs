@@ -19,21 +19,14 @@ namespace CardDungeonBlazor.Data
 
         public DbSet<Deck> Decks { get; set; }
 
-        public DbSet<CardImage> CardImages { get; set; }
-
         public DbSet<CardType> CardTypes { get; set; }
-
-        public DbSet<Image> Images { get; set; }
 
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<Comment> Comments { get; set; }
 
-        public DbSet<CommetImage> CommetImages { get; set; }
-
         public DbSet<Post> Posts { get; set; }
 
-        public DbSet<PostImage> PostImages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

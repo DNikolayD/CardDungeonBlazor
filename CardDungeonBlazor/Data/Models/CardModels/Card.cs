@@ -29,6 +29,9 @@ namespace CardDungeonBlazor.Data.Models.CardModels
         [Required]
         public int Value { get; set; }
 
+        [Required]
+        public int Cost { get; set; }
+
         public int? Duration { get; set; }
 
         public string ImageUrl { get; set; }

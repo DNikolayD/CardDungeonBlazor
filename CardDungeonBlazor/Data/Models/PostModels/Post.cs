@@ -1,16 +1,17 @@
 ﻿using CardDungeonBlazor.Data.Models.Common;
 using CardDungeonBlazor.Data.Models.User;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace CardDungeonBlazor.Data.Models.PostModels
 {
-    public class Post : BaseModel<int>
+    public class Post : BaseModel<string>
     {
 
         public Post()
         {
-            Images = new HashSet<PostImage>();
+            this.Id = Guid.NewGuid().ToString();
             Comments = new HashSet<Comment>();
         }
 
@@ -35,6 +36,6 @@ namespace CardDungeonBlazor.Data.Models.PostModels
 
         public virtual ICollection<Comment> Comments { get; set; }
 
-        public virtual ICollection<PostImage> Images { get; set; }
+        public virtual string Images { get; set; }
     }
 }

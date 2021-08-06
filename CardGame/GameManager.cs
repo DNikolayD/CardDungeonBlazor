@@ -83,8 +83,8 @@ namespace CardGame
                         gameIsOn = !gameIsOn;
                         break;
                     default:
-                        return;
                         await Task.Delay(20);
+                        return;
                 }
             }
             

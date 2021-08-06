@@ -27,7 +27,7 @@ namespace CardDungeonBlazor.Services
                 Description = model.Description,
                 Value = model.Value,
                 CreatedOn = DateTime.UtcNow,
-
+                Cost = model.Cost,
             };
             data.Cards.Add(dbCard);
             data.SaveChanges();
@@ -66,6 +66,7 @@ namespace CardDungeonBlazor.Services
                     Name = card.Name,
                     ImageUrl = card.ImageUrl,
                     Value = card.Value,
+                    Cost = card.Cost,
                 };
                 allCards.Cards.Add(model);
             }
@@ -96,6 +97,7 @@ namespace CardDungeonBlazor.Services
                 ImageUrl = card.ImageUrl,
                 Name = card.Name,
                 Value = card.Value,
+                Cost = card.Cost,
             };
 
             return viewModel;
@@ -127,6 +129,7 @@ namespace CardDungeonBlazor.Services
             dbCard.ImageUrl = cardModel.ImageUrl;
             dbCard.Name = cardModel.Name;
             dbCard.Value = cardModel.Value;
+            dbCard.Cost = cardModel.Cost;
             dbCard.EditedOn = DateTime.UtcNow;
             dbCard.IsEdited = true;
             data.Cards.Update(dbCard);

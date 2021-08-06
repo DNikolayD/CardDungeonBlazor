@@ -7,7 +7,7 @@
         <MudCardMedia Image="@Model.ImageUrl" />
         <MudCardContent>
             <MudText Typo="Typo.h5">Card with name @Model.Name</MudText>
-            <MudText Typo="Typo.body2">With a value of @Model.Value @Model.CardType . The description of this card is @Model.Description</MudText>
+            <MudText Typo="Typo.body2">With a value of @Model.Value @Model.CardType. The card costs @Model.Cost energy to play  The description of this card is @Model.Description</MudText>
             <MudText Typo="Typo.body2">This card was created on @Model.CreatedOn</MudText>
             @if (Model.Duration > 0)
             {

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CardDungeonBlazor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210729100512_InitialCreate")]
+    [Migration("20210806112323_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,7 +18,7 @@ namespace CardDungeonBlazor.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.7")
+                .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("ApplicationUserDeck", b =>
@@ -42,6 +42,9 @@ namespace CardDungeonBlazor.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("CardTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Cost")
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedByUserId")
@@ -180,63 +183,10 @@ namespace CardDungeonBlazor.Migrations
                     b.ToTable("Decks");
                 });
 
-            modelBuilder.Entity("CardDungeonBlazor.Data.Models.Common.CardImage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CardId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ImageId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CardId");
-
-                    b.HasIndex("ImageId");
-
-                    b.ToTable("CardImages");
-                });
-
-            modelBuilder.Entity("CardDungeonBlazor.Data.Models.Common.Image", b =>
+            modelBuilder.Entity("CardDungeonBlazor.Data.Models.PostModels.Category", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("EditedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsEdited")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Images");
-                });
-
-            modelBuilder.Entity("CardDungeonBlazor.Data.Models.PostModels.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -268,10 +218,8 @@ namespace CardDungeonBlazor.Migrations
 
             modelBuilder.Entity("CardDungeonBlazor.Data.Models.PostModels.Comment", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -282,6 +230,9 @@ namespace CardDungeonBlazor.Migrations
                     b.Property<DateTime?>("EditedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -291,8 +242,8 @@ namespace CardDungeonBlazor.Migrations
                     b.Property<int>("Likes")
                         .HasColumnType("int");
 
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
+                    b.Property<string>("PostId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PostedByUserId")
                         .IsRequired()
@@ -311,37 +262,16 @@ namespace CardDungeonBlazor.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("CardDungeonBlazor.Data.Models.PostModels.CommetImage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CommentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ImageId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CommentId");
-
-                    b.HasIndex("ImageId");
-
-                    b.ToTable("CommetImages");
-                });
-
             modelBuilder.Entity("CardDungeonBlazor.Data.Models.PostModels.Post", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
+
+                    b.Property<string>("CategoryId1")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -351,6 +281,9 @@ namespace CardDungeonBlazor.Migrations
 
                     b.Property<DateTime?>("EditedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Images")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -375,33 +308,11 @@ namespace CardDungeonBlazor.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("CategoryId1");
 
                     b.HasIndex("PostedByUserId");
 
                     b.ToTable("Posts");
-                });
-
-            modelBuilder.Entity("CardDungeonBlazor.Data.Models.PostModels.PostImage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ImageId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ImageId");
-
-                    b.HasIndex("PostId");
-
-                    b.ToTable("PostImages");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -712,28 +623,12 @@ namespace CardDungeonBlazor.Migrations
                     b.Navigation("Deck");
                 });
 
-            modelBuilder.Entity("CardDungeonBlazor.Data.Models.Common.CardImage", b =>
-                {
-                    b.HasOne("CardDungeonBlazor.Data.Models.CardModels.Card", "Card")
-                        .WithMany()
-                        .HasForeignKey("CardId");
-
-                    b.HasOne("CardDungeonBlazor.Data.Models.Common.Image", "Image")
-                        .WithMany("Cards")
-                        .HasForeignKey("ImageId");
-
-                    b.Navigation("Card");
-
-                    b.Navigation("Image");
-                });
-
             modelBuilder.Entity("CardDungeonBlazor.Data.Models.PostModels.Comment", b =>
                 {
                     b.HasOne("CardDungeonBlazor.Data.Models.PostModels.Post", "Post")
                         .WithMany("Comments")
                         .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("CardDungeonBlazor.Data.Models.User.ApplicationUser", "PostedByUser")
                         .WithMany("Comments")
@@ -746,30 +641,11 @@ namespace CardDungeonBlazor.Migrations
                     b.Navigation("PostedByUser");
                 });
 
-            modelBuilder.Entity("CardDungeonBlazor.Data.Models.PostModels.CommetImage", b =>
-                {
-                    b.HasOne("CardDungeonBlazor.Data.Models.PostModels.Comment", "Comment")
-                        .WithMany("Images")
-                        .HasForeignKey("CommentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CardDungeonBlazor.Data.Models.Common.Image", "Image")
-                        .WithMany("Commets")
-                        .HasForeignKey("ImageId");
-
-                    b.Navigation("Comment");
-
-                    b.Navigation("Image");
-                });
-
             modelBuilder.Entity("CardDungeonBlazor.Data.Models.PostModels.Post", b =>
                 {
                     b.HasOne("CardDungeonBlazor.Data.Models.PostModels.Category", "Category")
                         .WithMany("Posts")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId1");
 
                     b.HasOne("CardDungeonBlazor.Data.Models.User.ApplicationUser", "PostedByUser")
                         .WithMany("Posts")
@@ -780,23 +656,6 @@ namespace CardDungeonBlazor.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("PostedByUser");
-                });
-
-            modelBuilder.Entity("CardDungeonBlazor.Data.Models.PostModels.PostImage", b =>
-                {
-                    b.HasOne("CardDungeonBlazor.Data.Models.Common.Image", "Image")
-                        .WithMany("Posts")
-                        .HasForeignKey("ImageId");
-
-                    b.HasOne("CardDungeonBlazor.Data.Models.PostModels.Post", "Post")
-                        .WithMany("Images")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Image");
-
-                    b.Navigation("Post");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -869,30 +728,14 @@ namespace CardDungeonBlazor.Migrations
                     b.Navigation("Cards");
                 });
 
-            modelBuilder.Entity("CardDungeonBlazor.Data.Models.Common.Image", b =>
-                {
-                    b.Navigation("Cards");
-
-                    b.Navigation("Commets");
-
-                    b.Navigation("Posts");
-                });
-
             modelBuilder.Entity("CardDungeonBlazor.Data.Models.PostModels.Category", b =>
                 {
                     b.Navigation("Posts");
                 });
 
-            modelBuilder.Entity("CardDungeonBlazor.Data.Models.PostModels.Comment", b =>
-                {
-                    b.Navigation("Images");
-                });
-
             modelBuilder.Entity("CardDungeonBlazor.Data.Models.PostModels.Post", b =>
                 {
                     b.Navigation("Comments");
-
-                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("CardDungeonBlazor.Data.Models.User.ApplicationUser", b =>

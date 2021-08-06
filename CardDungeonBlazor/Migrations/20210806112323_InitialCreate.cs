@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CardDungeonBlazor.Migrations
 {
@@ -49,8 +49,7 @@ namespace CardDungeonBlazor.Migrations
                 name: "Categories",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -82,23 +81,6 @@ namespace CardDungeonBlazor.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Decks", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Images",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsEdited = table.Column<bool>(type: "bit", nullable: false),
-                    EditedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Images", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -278,6 +260,7 @@ namespace CardDungeonBlazor.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CardTypeId = table.Column<int>(type: "int", nullable: false),
                     Value = table.Column<int>(type: "int", nullable: false),
+                    Cost = table.Column<int>(type: "int", nullable: false),
                     Duration = table.Column<int>(type: "int", nullable: true),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedByUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
@@ -308,13 +291,14 @@ namespace CardDungeonBlazor.Migrations
                 name: "Posts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TextContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Likes = table.Column<int>(type: "int", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
+                    CategoryId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     PostedByUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Images = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -331,11 +315,11 @@ namespace CardDungeonBlazor.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Posts_Categories_CategoryId",
-                        column: x => x.CategoryId,
+                        name: "FK_Posts_Categories_CategoryId1",
+                        column: x => x.CategoryId1,
                         principalTable: "Categories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -365,41 +349,15 @@ namespace CardDungeonBlazor.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CardImages",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CardId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    ImageId = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CardImages", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CardImages_Cards_CardId",
-                        column: x => x.CardId,
-                        principalTable: "Cards",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_CardImages_Images_ImageId",
-                        column: x => x.ImageId,
-                        principalTable: "Images",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Comments",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     TextContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Likes = table.Column<int>(type: "int", nullable: false),
                     PostedByUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PostId = table.Column<int>(type: "int", nullable: false),
+                    PostId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -419,58 +377,6 @@ namespace CardDungeonBlazor.Migrations
                         name: "FK_Comments_Posts_PostId",
                         column: x => x.PostId,
                         principalTable: "Posts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PostImages",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PostId = table.Column<int>(type: "int", nullable: false),
-                    ImageId = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PostImages", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PostImages_Images_ImageId",
-                        column: x => x.ImageId,
-                        principalTable: "Images",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_PostImages_Posts_PostId",
-                        column: x => x.PostId,
-                        principalTable: "Posts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CommetImages",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CommentId = table.Column<int>(type: "int", nullable: false),
-                    ImageId = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CommetImages", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CommetImages_Comments_CommentId",
-                        column: x => x.CommentId,
-                        principalTable: "Comments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CommetImages_Images_ImageId",
-                        column: x => x.ImageId,
-                        principalTable: "Images",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -535,16 +441,6 @@ namespace CardDungeonBlazor.Migrations
                 column: "DeckId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CardImages_CardId",
-                table: "CardImages",
-                column: "CardId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CardImages_ImageId",
-                table: "CardImages",
-                column: "ImageId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Cards_CardTypeId",
                 table: "Cards",
                 column: "CardTypeId");
@@ -565,29 +461,9 @@ namespace CardDungeonBlazor.Migrations
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CommetImages_CommentId",
-                table: "CommetImages",
-                column: "CommentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CommetImages_ImageId",
-                table: "CommetImages",
-                column: "ImageId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PostImages_ImageId",
-                table: "PostImages",
-                column: "ImageId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PostImages_PostId",
-                table: "PostImages",
-                column: "PostId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Posts_CategoryId",
+                name: "IX_Posts_CategoryId1",
                 table: "Posts",
-                column: "CategoryId");
+                column: "CategoryId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Posts_PostedByUserId",
@@ -619,31 +495,19 @@ namespace CardDungeonBlazor.Migrations
                 name: "CardDecks");
 
             migrationBuilder.DropTable(
-                name: "CardImages");
-
-            migrationBuilder.DropTable(
-                name: "CommetImages");
-
-            migrationBuilder.DropTable(
-                name: "PostImages");
-
-            migrationBuilder.DropTable(
-                name: "Decks");
+                name: "Comments");
 
             migrationBuilder.DropTable(
                 name: "Cards");
 
             migrationBuilder.DropTable(
-                name: "Comments");
-
-            migrationBuilder.DropTable(
-                name: "Images");
-
-            migrationBuilder.DropTable(
-                name: "CardTypes");
+                name: "Decks");
 
             migrationBuilder.DropTable(
                 name: "Posts");
+
+            migrationBuilder.DropTable(
+                name: "CardTypes");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

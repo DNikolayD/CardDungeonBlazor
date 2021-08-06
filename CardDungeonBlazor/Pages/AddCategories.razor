@@ -1,0 +1,19 @@
+﻿@page "/categories/add"
+@inherits AddCategoriesController
+@attribute [Authorize]
+
+<MudText Typo="Typo.h3">Create category</MudText>
+<EditForm Model="@Model" OnValidSubmit="Submit">
+    <DataAnnotationsValidator />
+    <MudCard Class="pa-4">
+        <MudCardContent>
+            <MudTextField Label="Name" Class="mt-3"
+                          @bind-Value="Model.Name" For="@(() => Model.Name)" />
+            <MudTextField Label="Description" Class="mt-3"
+                          @bind-Value="Model.Description" For="@(() => Model.Description)" />        
+        </MudCardContent>
+        <MudCardActions>
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Add Category</MudButton>
+        </MudCardActions>
+    </MudCard>
+</EditForm>

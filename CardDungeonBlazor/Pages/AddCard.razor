@@ -17,11 +17,13 @@
                               @bind-Value="Model.ImageUrl" For="@(() => Model.ImageUrl)" />
                 <MudTextField Label="Value" Class="mt-3"
                               @bind-Value="Model.Value" For="@(() => Model.Value)" InputType="InputType.Number" />
+                <MudTextField Label="Cost" Class="mt-3"
+                              @bind-Value="Model.Cost" For="@(() => Model.Cost)" InputType="InputType.Number" />
                 <MudItem xs="12" sm="6" md="4" Class="mt-3">
                     <MudSelect T="int" Label="Type" Strict="true" Variant="Variant.Outlined" Format="F2" @bind-Value="Model.CardTypeId">
                         @foreach (var cardType in Model.CardTypes)
                         {
-                            <MudSelectItem T="int" Value="cardType.Id" >@cardType.Name</MudSelectItem>
+                            <MudSelectItem T="int" Value="cardType.Id">@cardType.Name</MudSelectItem>
 
                         }
                     </MudSelect>

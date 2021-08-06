@@ -46,6 +46,7 @@ namespace CardDungeonBlazor
             services.AddTransient<DecksService>();
             services.AddTransient<AddCardsToDeckService>();
             services.AddTransient<GameService>();
+            services.AddTransient<CategoriesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

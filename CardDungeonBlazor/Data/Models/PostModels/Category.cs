@@ -1,14 +1,16 @@
 ﻿using CardDungeonBlazor.Data.Models.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace CardDungeonBlazor.Data.Models.PostModels
 {
-    public class Category : BaseModel<int>
+    public class Category : BaseModel<string>
     {
 
         public Category()
         {
+            this.Id = Guid.NewGuid().ToString();
             Posts = new HashSet<Post>();
         }
 

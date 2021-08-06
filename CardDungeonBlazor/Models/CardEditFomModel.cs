@@ -20,5 +20,7 @@ namespace CardDungeonBlazor.Models
         public virtual List<CardTypeViewModel> CardTypes { get; set; }
 
         public int Value { get; set; }
+
+        public int Cost { get; set; }
     }
 }

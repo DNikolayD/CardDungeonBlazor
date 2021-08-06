@@ -21,5 +21,7 @@ namespace CardDungeonBlazor.Models
 
         public int Value { get; set; }
 
+        public int Cost { get; set; }
+
     }
 }

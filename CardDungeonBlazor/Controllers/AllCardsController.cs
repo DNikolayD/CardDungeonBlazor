@@ -16,8 +16,7 @@ namespace CardDungeonBlazor.Controllers
 
         protected override void OnInitialized()
         {
-            Model = new();
-            Model.Cards = Service.GetAllCards().Cards;
+            Model  = Service.GetAllCards();
         }
 
         public void Redirect()
