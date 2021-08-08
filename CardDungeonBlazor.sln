@@ -7,6 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardDungeonBlazor", "CardDu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardGame", "CardGame\CardGame.csproj", "{EECE49F6-7566-471D-8171-59B68BAF97DA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4212334D-BC4E-4F87-B125-D018D35B830F}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{3D54439E-8A45-45C6-9DE1-676DDAD902A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +28,10 @@ Global
 		{EECE49F6-7566-471D-8171-59B68BAF97DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EECE49F6-7566-471D-8171-59B68BAF97DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EECE49F6-7566-471D-8171-59B68BAF97DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D54439E-8A45-45C6-9DE1-676DDAD902A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D54439E-8A45-45C6-9DE1-676DDAD902A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D54439E-8A45-45C6-9DE1-676DDAD902A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D54439E-8A45-45C6-9DE1-676DDAD902A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace CardGame.Models
-{
-    public class PlayerModel
     {
-        public PlayerModel()
+    public class PlayerModel
         {
-            Energy = 3;
-            Health = 100;
-            Deck = new DeckModel();
-            CardsInHeand = new List<CardModel>();
-        }
+        public PlayerModel()
+            {
+            this.Energy = 3;
+            this.Health = 100;
+            this.Deck = new DeckModel();
+            this.CardsInHeand = new List<CardModel>();
+            }
 
         public string Name { get; set; }
 
@@ -29,5 +25,5 @@ namespace CardGame.Models
         public DeckModel Deck { get; set; }
 
         public List<CardModel> CardsInHeand { get; set; }
+        }
     }
-}
