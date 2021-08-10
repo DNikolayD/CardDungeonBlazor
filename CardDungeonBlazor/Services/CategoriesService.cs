@@ -10,12 +10,12 @@ namespace CardDungeonBlazor.Services
         {
         private readonly ApplicationDbContext data;
 
-        public CategoriesService(ApplicationDbContext data)
+        public CategoriesService ( ApplicationDbContext data )
             {
             this.data = data;
             }
 
-        public void Add(AddCategoryFormModel model)
+        public void Add ( AddCategoryFormModel model )
             {
             Category dbCategory = new()
                 {
@@ -27,7 +27,7 @@ namespace CardDungeonBlazor.Services
             this.data.SaveChanges();
             }
 
-        public AllCategoriesViewModel GetAllCategories()
+        public AllCategoriesViewModel GetAllCategories ()
             {
             AllCategoriesViewModel model = new();
             IQueryable<Category> categories = this.data.Categories.Where(c => !c.IsDeleted);
@@ -45,7 +45,7 @@ namespace CardDungeonBlazor.Services
             return model;
             }
 
-        public void Delete(string id)
+        public void Delete ( string id )
             {
             Category dbCategory = this.data.Categories.FirstOrDefault(c => c.Id == id);
             dbCategory.IsDeleted = true;
@@ -54,7 +54,7 @@ namespace CardDungeonBlazor.Services
             this.data.SaveChanges();
             }
 
-        public AddCategoryFormModel GetCategoryById(string id)
+        public AddCategoryFormModel GetCategoryById ( string id )
             {
             Category category = this.data.Categories.FirstOrDefault(c => c.Id == id);
             AddCategoryFormModel model = new()
@@ -65,7 +65,7 @@ namespace CardDungeonBlazor.Services
             return model;
             }
 
-        public void Edit(string id, AddCategoryFormModel model)
+        public void Edit ( string id, AddCategoryFormModel model )
             {
             Category category = this.data.Categories.FirstOrDefault(c => c.Id == id);
             category.Name = model.Name;

@@ -7,7 +7,7 @@ namespace CardDungeonBlazor.Data.Models.Common
     public class BaseModel<TKey> : IBaseModel
         {
 
-        public BaseModel()
+        public BaseModel ()
             {
             this.CreatedOn = DateTime.UtcNow;
             this.IsDeleted = false;

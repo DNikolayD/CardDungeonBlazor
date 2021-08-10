@@ -14,29 +14,29 @@ namespace CardDungeonBlazor.Controllers
 
         public AllCategoriesViewModel Model { get; set; }
 
-        protected override void OnInitialized()
+        protected override void OnInitialized ()
             {
             this.Model = this.Service.GetAllCategories();
             base.OnInitialized();
             }
 
-        public void RedirectToPosts(string id)
+        public void RedirectToPosts ( string id )
             {
             this.Navigation.NavigateTo($"/posts/{id}/all");
             }
 
-        public void RedirectToEdit(string id)
+        public void RedirectToEdit ( string id )
             {
             this.Navigation.NavigateTo($"/categories/edit/{id}");
             }
 
-        public void Delete(string id)
+        public void Delete ( string id )
             {
             this.Service.Delete(id);
             this.OnInitialized();
             }
 
-        public void Redirect()
+        public void Redirect ()
             {
             this.Navigation.NavigateTo("/categories/add");
             }

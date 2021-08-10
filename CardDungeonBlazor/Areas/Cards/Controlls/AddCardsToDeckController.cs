@@ -1,7 +1,7 @@
 ﻿using CardDungeonBlazor.Services;
 using Microsoft.AspNetCore.Components;
 
-namespace CardDungeonBlazor.Controllers
+namespace CardDungeonBlazor.Areas.Cards
     {
     public class AddCardsToDeckController : ComponentBase
         {
@@ -17,17 +17,17 @@ namespace CardDungeonBlazor.Controllers
         [Parameter]
         public string Id { get; set; }
 
-        protected override void OnInitialized()
+        protected override void OnInitialized ()
             {
             this.CardsAdded.Cards = this.Service.GetAllCards().Cards;
 
             }
-        public void Add(string CardId)
+        public void Add ( string CardId )
             {
             this.CardsAdded.Cards.Find(x => x.Id == CardId).TimesAdded++;
             this.Service.AddCardsToDeckWithId(CardId, this.Id);
             }
-        public void Redirect()
+        public void Redirect ()
             {
             this.Navigation.NavigateTo("/decks/all");
             }

@@ -1,8 +1,7 @@
-﻿using CardDungeonBlazor.Models;
-using CardDungeonBlazor.Services;
+﻿using CardDungeonBlazor.Services;
 using Microsoft.AspNetCore.Components;
 
-namespace CardDungeonBlazor.Controllers
+namespace CardDungeonBlazor.Areas.Cards
     {
     public class DecksViewMoreController : ComponentBase
         {
@@ -17,11 +16,11 @@ namespace CardDungeonBlazor.Controllers
 
         public FullDeckViewModel Model;
 
-        protected override void OnInitialized()
+        protected override void OnInitialized ()
             {
             this.Model = this.Service.GetFullDeckView(this.Id);
             }
-        public void Redirect()
+        public void Redirect ()
             {
             this.Navigation.NavigateTo("/decks/all");
             }

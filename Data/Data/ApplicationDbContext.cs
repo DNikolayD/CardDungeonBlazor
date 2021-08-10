@@ -7,8 +7,8 @@ namespace CardDungeonBlazor.Data
     {
     public class ApplicationDbContext : IdentityDbContext
         {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
+        public ApplicationDbContext ( DbContextOptions<ApplicationDbContext> options )
+              : base(options)
             {
             }
 
@@ -27,14 +27,14 @@ namespace CardDungeonBlazor.Data
         public DbSet<Post> Posts { get; set; }
 
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating ( ModelBuilder builder )
             {
             builder
-                .Entity<Comment>()
-                .HasOne(c => c.Post)
-                .WithMany(c => c.Comments)
-                .HasForeignKey(c => c.PostId)
-                .OnDelete(DeleteBehavior.Restrict);
+                  .Entity<Comment>()
+                  .HasOne(c => c.Post)
+                  .WithMany(c => c.Comments)
+                  .HasForeignKey(c => c.PostId)
+                  .OnDelete(DeleteBehavior.Restrict);
             base.OnModelCreating(builder);
             }
         }

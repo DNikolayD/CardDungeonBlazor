@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace CardDungeonBlazor.Models
+namespace CardDungeonBlazor.Areas.Cards
     {
     public class AddCardFormModel
         {
-        public AddCardFormModel()
+        public AddCardFormModel ()
             {
             this.CardTypes = new List<CardTypeViewModel>();
             }

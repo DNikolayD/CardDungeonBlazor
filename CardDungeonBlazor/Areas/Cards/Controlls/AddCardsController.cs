@@ -1,8 +1,7 @@
-﻿using CardDungeonBlazor.Models;
-using CardDungeonBlazor.Services;
+﻿using CardDungeonBlazor.Services;
 using Microsoft.AspNetCore.Components;
 
-namespace CardDungeonBlazor.Controllers
+namespace CardDungeonBlazor.Areas.Cards
     {
     public class AddCardsController : ComponentBase
         {
@@ -13,14 +12,14 @@ namespace CardDungeonBlazor.Controllers
 
         public AddCardFormModel Model { get; set; }
 
-        protected override void OnInitialized()
+        protected override void OnInitialized ()
             {
             this.Model = new();
             this.Model.CardTypes = this.Service.GetCardTypeViewModels();
             base.OnInitialized();
             }
 
-        public void Submit()
+        public void Submit ()
             {
             this.Service.Add(this.Model);
             this.NavigationManager.NavigateTo("/cards/all");

@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using CardDungeonBlazor.Models;
+using CardDungeonBlazor.Areas.Cards;
 
 namespace CardDungeonBlazor.Services
     {
     public class CardAddedToDeck
         {
-        public CardAddedToDeck()
+        public CardAddedToDeck ()
             {
             this.Cards = new List<CardAddedToTheDeckViewModel>();
             }

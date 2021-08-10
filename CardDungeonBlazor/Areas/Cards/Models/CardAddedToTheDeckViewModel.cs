@@ -1,4 +1,4 @@
-﻿namespace CardDungeonBlazor.Models
+﻿namespace CardDungeonBlazor.Areas.Cards
     {
     public class CardAddedToTheDeckViewModel
         {
@@ -13,5 +13,7 @@
         public int Value { get; set; }
 
         public int TimesAdded { get; set; }
+
+        public int Cost { get; set; }
         }
     }

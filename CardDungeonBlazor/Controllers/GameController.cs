@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using CardDungeonBlazor.Models;
+using CardDungeonBlazor.Areas.Cards;
 using CardDungeonBlazor.Services;
 using CardGame;
 using Microsoft.AspNetCore.Components;
@@ -13,7 +13,7 @@ namespace CardDungeonBlazor.Controllers
 
         public GameViewModel Model { get; set; }
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnInitializedAsync ()
             {
             this.Model = new GameViewModel();
             this.Model.PlayerModel1.Name = "player1";
@@ -25,26 +25,26 @@ namespace CardDungeonBlazor.Controllers
             }
 
 
-        public async Task PlayCard(string cardId, string playerName)
+        public async Task PlayCard ( string cardId, string playerName )
             {
             await this.Service.PlayCard(cardId, playerName, this.Model);
             }
 
-        protected override void OnAfterRender(bool firstRender)
+        protected override void OnAfterRender ( bool firstRender )
             {
             foreach (CardServiceModel deck in this.Model.PlayerModel2.Deck.Cards)
                 {
                 deck.Offcet = 0;
                 }
             foreach (CardServiceModel deck in this.Model.PlayerModel1
-                .Deck.Cards)
+                  .Deck.Cards)
                 {
                 deck.Offcet = 0;
                 }
             base.OnAfterRender(firstRender);
             }
 
-        public async Task EndTurn()
+        public async Task EndTurn ()
             {
             await this.Service.EndTurn();
             if (this.Service.GameManager.player.Name == this.Model.PlayerModel1.Name)

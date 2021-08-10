@@ -1,18 +1,19 @@
-﻿@page "/categories/all"
-@inherits AllCategoriesController
-<MudText Typo="Typo.h3">All Catetegories</MudText>
+﻿@page "/posts/{id}/all"
+@using CardDungeonBlazor.Areas.Forum.Controlls
+@inherits AllPostsController
+<MudText Typo="Typo.h3">All Posts</MudText>
 <MudGrid>
-    @foreach (var category in Model.Categories)
+    @foreach (var post in Model.Posts)
     {
         <MudItem Class="d-flex align-center justify-center mud-width-full py-8" xs=3>
-            <MudCard @onclick="() => RedirectToPosts(category.Id)">
+            <MudCard @onclick="() => RedirectToPost(post.Id)">
                 <MudCardContent>
-                    <MudText Typo="Typo.h5"> @category.Name</MudText>
-                    <MudText Typo="Typo.body2">@category.Description @category.PostsCount Posts</MudText>
+                    <MudText Typo="Typo.h5"> @post.Title</MudText>
+                    <MudText Typo="Typo.body2">@post.Likes Likes</MudText>
                 </MudCardContent>
                 <MudCardActions>
-                    <MudButton Variant="Variant.Text" Color="Color.Primary" @onclick="() => RedirectToEdit(category.Id)">Edit</MudButton>
-                    <MudButton Variant="Variant.Text" Color="Color.Error" @onclick="() => Delete(category.Id)">Delete</MudButton>
+                    <MudButton Variant="Variant.Text" Color="Color.Primary" @onclick="() => RedirectToEdit(post.Id)">Edit</MudButton>
+                    <MudButton Variant="Variant.Text" Color="Color.Error" @onclick="() => Delete(post.Id)">Delete</MudButton>
                 </MudCardActions>
             </MudCard>
         </MudItem>

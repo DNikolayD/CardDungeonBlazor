@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using CardDungeonBlazor.Data.Models.Common;
 
-namespace CardDungeonBlazor.Models
+namespace CardDungeonBlazor.Areas.Cards
     {
     public class AddDeckFormModel
         {

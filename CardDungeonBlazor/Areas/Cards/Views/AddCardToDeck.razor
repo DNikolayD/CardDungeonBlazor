@@ -1,5 +1,4 @@
 ﻿@page "/deck/addCards/{id}"
-@using Controllers
 @inherits AddCardsToDeckController
 
 
@@ -12,7 +11,7 @@
                 <MudCardMedia Image="@card.ImageUrl" />
                 <MudCardContent>
                     <MudText Typo="Typo.h5">Card with name @card.Name</MudText>
-                    <MudText Typo="Typo.body2">With a value of @card.Value @card.CardType</MudText>
+                    <MudText Typo="Typo.body2">With a value of @card.Value @card.CardType and a cost of @card.Cost energy</MudText>
                 </MudCardContent>
                 <MudCardActions>
                     <MudText Typo="Typo.body2">@card.TimesAdded</MudText>

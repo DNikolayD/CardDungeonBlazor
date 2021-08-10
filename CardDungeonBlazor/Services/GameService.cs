@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CardDungeonBlazor.Areas.Cards;
 using CardDungeonBlazor.Data;
 using CardDungeonBlazor.Data.Models.CardModels;
-using CardDungeonBlazor.Models;
 using CardGame;
 using CardGame.Models;
 
@@ -13,14 +13,14 @@ namespace CardDungeonBlazor.Services
         {
         private readonly ApplicationDbContext data;
 
-        public GameService(ApplicationDbContext data)
+        public GameService ( ApplicationDbContext data )
             {
             this.data = data;
             }
 
         public GameManager GameManager { get; set; }
 
-        public async Task PlayCard(string cardId, string playerName, GameViewModel game)
+        public async Task PlayCard ( string cardId, string playerName, GameViewModel game )
             {
             PlayerModel player = this.GetPlayer(game, playerName);
             CardModel playedCard = player.CardsInHeand.FirstOrDefault(c => c.Id == cardId);
@@ -30,7 +30,7 @@ namespace CardDungeonBlazor.Services
             game.PlayerModel1.Energy = this.GameManager.player1.Energy;
             game.PlayerModel2.Energy = this.GameManager.player2.Energy;
             }
-        public DeckViewModel GetDeck(string playerName)
+        public DeckViewModel GetDeck ( string playerName )
             {
             DeckViewModel viewModel = new();
             IQueryable<CardDeck> deck = this.data.CardDecks.Where(cd => cd.DeckId == this.data.Decks.FirstOrDefault().Id);
@@ -98,8 +98,8 @@ namespace CardDungeonBlazor.Services
                 }
             return viewModel;
             }
-        public PlayerModel GetPlayer(GameViewModel game,
-                                      string playerName)
+        public PlayerModel GetPlayer ( GameViewModel game,
+                                                    string playerName )
             {
             PlayerModel player;
             PlayerViewModel playerView;
@@ -134,15 +134,15 @@ namespace CardDungeonBlazor.Services
                     model = TypeModel.Poison;
                     };
                 cards.Add(
-                    new CardModel
-                        {
-                        Id = card.Id,
-                        Cost = card.Cost,
-                        Name = card.Name,
-                        Type = model,
-                        Value = card.Value
-                        }
-                    );
+                      new CardModel
+                          {
+                          Id = card.Id,
+                          Cost = card.Cost,
+                          Name = card.Name,
+                          Type = model,
+                          Value = card.Value
+                          }
+                      );
                 }
             foreach (CardServiceModel card in playerView.Deck.Cards)
                 {
@@ -164,16 +164,16 @@ namespace CardDungeonBlazor.Services
                     model = TypeModel.Poison;
                     };
                 deck.Cards.Add
-                    (
-                    new CardModel
-                        {
-                        Id = card.Id,
-                        Cost = card.Cost,
-                        Type = model,
-                        Name = card.Name,
-                        Value = card.Value,
-                        }
-                    );
+                      (
+                      new CardModel
+                          {
+                          Id = card.Id,
+                          Cost = card.Cost,
+                          Type = model,
+                          Name = card.Name,
+                          Value = card.Value,
+                          }
+                      );
                 }
             player = new PlayerModel
                 {
@@ -185,7 +185,7 @@ namespace CardDungeonBlazor.Services
             return player;
             }
 
-        public async Task<List<CardServiceModel>> GetCardsInHand()
+        public async Task<List<CardServiceModel>> GetCardsInHand ()
             {
             List<CardServiceModel> cards = new();
             await this.GameManager.Update(GameEvents.StartTurn);
@@ -211,21 +211,21 @@ namespace CardDungeonBlazor.Services
                     }
                 cards.Add
                 (
-                    new CardServiceModel
-                        {
-                        CardType = type,
-                        Cost = card.Cost,
-                        Id = card.Id,
-                        ImageUrl = this.data.Cards.FirstOrDefault(c => c.Id == card.Id).ImageUrl,
-                        Name = card.Name,
-                        Value = card.Value,
-                        }
+                      new CardServiceModel
+                          {
+                          CardType = type,
+                          Cost = card.Cost,
+                          Id = card.Id,
+                          ImageUrl = this.data.Cards.FirstOrDefault(c => c.Id == card.Id).ImageUrl,
+                          Name = card.Name,
+                          Value = card.Value,
+                          }
                 );
                 }
             return cards;
             }
 
-        public async Task EndTurn()
+        public async Task EndTurn ()
             {
             await this.GameManager.Update(GameEvents.EndTurn);
             }

@@ -9,7 +9,7 @@ namespace CardDungeonBlazor.Data.Models.CardModels
     public class Deck : BaseModel<string>
         {
 
-        public Deck()
+        public Deck ()
             {
             this.Id = Guid.NewGuid().ToString();
             this.Cards = new List<CardDeck>();

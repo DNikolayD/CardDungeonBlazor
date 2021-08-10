@@ -17,7 +17,7 @@ namespace CardDungeonBlazor
     {
     public class Startup
         {
-        public Startup(IConfiguration configuration)
+        public Startup ( IConfiguration configuration )
             {
             this.Configuration = configuration;
             }
@@ -26,14 +26,14 @@ namespace CardDungeonBlazor
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices ( IServiceCollection services )
             {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    this.Configuration.GetConnectionString("DefaultConnection")));
+                  options.UseSqlServer(
+                        this.Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddRoles<ApplicationRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                  .AddRoles<ApplicationRole>()
+                  .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddMudServices();
@@ -41,16 +41,18 @@ namespace CardDungeonBlazor
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddControllersWithViews();
             services.AddControllers();
+            services.AddHttpContextAccessor();
             services.AddSingleton<CardAddedToDeck>();
             services.AddTransient<CardsService>();
             services.AddTransient<DecksService>();
             services.AddTransient<AddCardsToDeckService>();
             services.AddTransient<GameService>();
             services.AddTransient<CategoriesService>();
+            services.AddTransient<PostsService>();
             }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure ( IApplicationBuilder app, IWebHostEnvironment env )
             {
             app.PrepareDatabase();
 

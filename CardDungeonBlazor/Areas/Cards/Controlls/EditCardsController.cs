@@ -1,8 +1,7 @@
-﻿using CardDungeonBlazor.Models;
-using CardDungeonBlazor.Services;
+﻿using CardDungeonBlazor.Services;
 using Microsoft.AspNetCore.Components;
 
-namespace CardDungeonBlazor.Controllers
+namespace CardDungeonBlazor.Areas.Cards
     {
     public class EditCardsController : ComponentBase
         {
@@ -17,13 +16,13 @@ namespace CardDungeonBlazor.Controllers
 
         public CardEditFomModel Model;
 
-        protected override void OnInitialized()
+        protected override void OnInitialized ()
             {
             this.Model = this.Service.GetEditFomModel(this.Id);
 
             }
 
-        public void Submit()
+        public void Submit ()
             {
             this.Service.Edit(this.Id, this.Model);
             this.Navigation.NavigateTo("/cards/all");

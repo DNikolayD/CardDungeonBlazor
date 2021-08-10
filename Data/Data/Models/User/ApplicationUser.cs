@@ -10,7 +10,7 @@ namespace CardDungeonBlazor.Data.Models.User
     {
     public class ApplicationUser : IdentityUser, IBaseModel
         {
-        public ApplicationUser()
+        public ApplicationUser ()
             {
             this.Id = Guid.NewGuid().ToString();
             this.CreatedOn = DateTime.UtcNow;

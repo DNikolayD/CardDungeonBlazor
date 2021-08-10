@@ -9,7 +9,7 @@ namespace CardDungeonBlazor.Data.Models.PostModels
     public class Post : BaseModel<string>
         {
 
-        public Post()
+        public Post ()
             {
             this.Id = Guid.NewGuid().ToString();
             this.Comments = new HashSet<Comment>();
@@ -25,7 +25,7 @@ namespace CardDungeonBlazor.Data.Models.PostModels
         public int Likes { get; set; }
 
         [Required]
-        public int CategoryId { get; set; }
+        public string CategoryId { get; set; }
 
         public virtual Category Category { get; set; }
 

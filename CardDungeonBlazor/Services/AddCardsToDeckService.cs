@@ -1,7 +1,7 @@
 ﻿using System.Linq;
+using CardDungeonBlazor.Areas.Cards;
 using CardDungeonBlazor.Data;
 using CardDungeonBlazor.Data.Models.CardModels;
-using CardDungeonBlazor.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace CardDungeonBlazor.Services
@@ -10,12 +10,12 @@ namespace CardDungeonBlazor.Services
         {
         private readonly ApplicationDbContext data;
 
-        public AddCardsToDeckService(ApplicationDbContext data)
+        public AddCardsToDeckService ( ApplicationDbContext data )
             {
             this.data = data;
             }
 
-        public AddCardsToDeckModel GetAllCards()
+        public AddCardsToDeckModel GetAllCards ()
             {
             AddCardsToDeckModel allCards = new();
             DbSet<Card> cards = this.data.Cards;
@@ -34,7 +34,7 @@ namespace CardDungeonBlazor.Services
                 }
             return allCards;
             }
-        public void AddCardsToDeckWithId(string cardId, string deckId)
+        public void AddCardsToDeckWithId ( string cardId, string deckId )
             {
             Deck deck = this.data.Decks.FirstOrDefault(d => d.Id == deckId);
             CardDeck cardDeck = new()

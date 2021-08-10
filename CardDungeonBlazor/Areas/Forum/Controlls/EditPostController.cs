@@ -1,13 +1,13 @@
-﻿using CardDungeonBlazor.Models;
+﻿using CardDungeonBlazor.Areas.Forum.Models;
 using CardDungeonBlazor.Services;
 using Microsoft.AspNetCore.Components;
 
-namespace CardDungeonBlazor.Controllers
+namespace CardDungeonBlazor.Areas.Forum.Controlls
     {
-    public class EditCategoryController : ComponentBase
+    public class EditPostController : ComponentBase
         {
         [Inject]
-        protected CategoriesService Service { get; set; }
+        protected PostsService Service { get; set; }
 
         [Inject]
         protected NavigationManager Navigation { get; set; }
@@ -15,18 +15,18 @@ namespace CardDungeonBlazor.Controllers
         [Parameter]
         public string Id { get; set; }
 
-        public AddCategoryFormModel Model { get; set; }
+        public AddPostFormModel Model;
 
         protected override void OnInitialized ()
             {
-            this.Model = this.Service.GetCategoryById(this.Id);
+            this.Model = this.Service.GetPostsForm(this.Id);
             base.OnInitialized();
             }
 
         public void Submit ()
             {
-            this.Service.Edit(this.Id, this.Model);
-            this.Navigation.NavigateTo("/categories/all");
+            this.Service.Edit(this.Model, this.Id);
+            Navigation.NavigateTo($"/posts/{this.Id}/more");
             }
         }
     }

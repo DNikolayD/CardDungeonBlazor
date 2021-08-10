@@ -9,8 +9,8 @@ namespace CardDungeonBlazor.Infrastructure
     {
     public static class ApplicationBuilderExtentions
         {
-        public static IApplicationBuilder PrepareDatabase(
-            this IApplicationBuilder app)
+        public static IApplicationBuilder PrepareDatabase (
+              this IApplicationBuilder app )
             {
             using IServiceScope scopedServices = app.ApplicationServices.CreateScope();
 
@@ -23,7 +23,7 @@ namespace CardDungeonBlazor.Infrastructure
             return app;
             }
 
-        private static void SeedCategories(ApplicationDbContext data)
+        private static void SeedCategories ( ApplicationDbContext data )
             {
             if (data.CardTypes.Any())
                 {
@@ -32,10 +32,10 @@ namespace CardDungeonBlazor.Infrastructure
 
             data.CardTypes.AddRange(new[]
             {
-                new CardType { Name = "Attack"},
-                new CardType { Name = "Defence"},
-                new CardType { Name = "Heal"},
-                new CardType { Name = "Poison"}
+                        new CardType { Name = "Attack"},
+                        new CardType { Name = "Defence"},
+                        new CardType { Name = "Heal"},
+                        new CardType { Name = "Poison"}
             });
             data.SaveChanges();
             }

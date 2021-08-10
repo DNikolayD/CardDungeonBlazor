@@ -1,6 +1,6 @@
-﻿@page "/posts/{id}/add"
+﻿@page "/posts/{id}/edit"
 @using CardDungeonBlazor.Areas.Forum.Controlls;
-@inherits AddPostsController
+@inherits EditPostController
 @attribute [Authorize]
 
 <MudText Typo="Typo.h3">Create Post</MudText>
@@ -13,7 +13,7 @@
             <MudTextField Label="Image" Class="mt-3" @bind-Value="Model.Image" For= "@(() => Model.Image)" />
         </MudCardContent>
         <MudCardActions>
-            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Add Post</MudButton>
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Edit Post</MudButton>
         </MudCardActions>
     </MudCard>
 </EditForm>

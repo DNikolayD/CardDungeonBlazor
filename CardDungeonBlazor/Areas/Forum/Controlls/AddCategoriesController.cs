@@ -14,13 +14,13 @@ namespace CardDungeonBlazor.Controllers
 
         public AddCategoryFormModel Model { get; set; }
 
-        protected override void OnInitialized()
+        protected override void OnInitialized ()
             {
             this.Model = new AddCategoryFormModel();
             base.OnInitialized();
             }
 
-        public void Submit()
+        public void Submit ()
             {
             this.Service.Add(this.Model);
             this.Navigation.NavigateTo("/categories/all");

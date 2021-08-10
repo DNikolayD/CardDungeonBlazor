@@ -4,7 +4,7 @@ namespace CardGame.Models
     {
     public class DeckModel
         {
-        public DeckModel()
+        public DeckModel ()
             {
             this.Cards = new List<CardModel>();
             }

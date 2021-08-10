@@ -4,7 +4,7 @@ namespace CardGame.Models
     {
     public class PlayerModel
         {
-        public PlayerModel()
+        public PlayerModel ()
             {
             this.Energy = 3;
             this.Health = 100;

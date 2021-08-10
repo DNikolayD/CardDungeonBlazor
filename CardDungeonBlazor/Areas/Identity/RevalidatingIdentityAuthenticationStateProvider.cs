@@ -12,16 +12,16 @@ using Microsoft.Extensions.Options;
 namespace CardDungeonBlazor.Areas.Identity
     {
     public class RevalidatingIdentityAuthenticationStateProvider<TUser>
-        : RevalidatingServerAuthenticationStateProvider where TUser : class
+            : RevalidatingServerAuthenticationStateProvider where TUser : class
         {
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly IdentityOptions _options;
 
-        public RevalidatingIdentityAuthenticationStateProvider(
-            ILoggerFactory loggerFactory,
-            IServiceScopeFactory scopeFactory,
-            IOptions<IdentityOptions> optionsAccessor)
-            : base(loggerFactory)
+        public RevalidatingIdentityAuthenticationStateProvider (
+              ILoggerFactory loggerFactory,
+              IServiceScopeFactory scopeFactory,
+              IOptions<IdentityOptions> optionsAccessor )
+              : base(loggerFactory)
             {
             this._scopeFactory = scopeFactory;
             this._options = optionsAccessor.Value;
@@ -29,8 +29,8 @@ namespace CardDungeonBlazor.Areas.Identity
 
         protected override TimeSpan RevalidationInterval => TimeSpan.FromMinutes(30);
 
-        protected override async Task<bool> ValidateAuthenticationStateAsync(
-            AuthenticationState authenticationState, CancellationToken cancellationToken)
+        protected override async Task<bool> ValidateAuthenticationStateAsync (
+              AuthenticationState authenticationState, CancellationToken cancellationToken )
             {
             // Get the user manager from a new scope to ensure it fetches fresh data
             IServiceScope scope = this._scopeFactory.CreateScope();
@@ -52,7 +52,7 @@ namespace CardDungeonBlazor.Areas.Identity
                 }
             }
 
-        private async Task<bool> ValidateSecurityStampAsync(UserManager<TUser> userManager, ClaimsPrincipal principal)
+        private async Task<bool> ValidateSecurityStampAsync ( UserManager<TUser> userManager, ClaimsPrincipal principal )
             {
             TUser user = await userManager.GetUserAsync(principal);
             if (user == null)

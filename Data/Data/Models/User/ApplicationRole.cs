@@ -7,12 +7,12 @@ namespace CardDungeonBlazor.Data.Models.User
     {
     public class ApplicationRole : IdentityRole, IBaseModel
         {
-        public ApplicationRole() : this(null)
+        public ApplicationRole () : this(null)
             {
 
             }
 
-        public ApplicationRole(string roleName) : base(roleName)
+        public ApplicationRole ( string roleName ) : base(roleName)
             {
             this.Id = Guid.NewGuid().ToString();
             this.CreatedOn = DateTime.UtcNow;

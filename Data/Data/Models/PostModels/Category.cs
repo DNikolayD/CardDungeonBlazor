@@ -8,7 +8,7 @@ namespace CardDungeonBlazor.Data.Models.PostModels
     public class Category : BaseModel<string>
         {
 
-        public Category()
+        public Category ()
             {
             this.Id = Guid.NewGuid().ToString();
             this.Posts = new HashSet<Post>();

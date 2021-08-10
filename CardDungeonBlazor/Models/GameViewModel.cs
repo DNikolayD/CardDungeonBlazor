@@ -1,9 +1,9 @@
-﻿namespace CardDungeonBlazor.Models
+﻿namespace CardDungeonBlazor.Areas.Cards
     {
     public class GameViewModel
         {
 
-        public GameViewModel()
+        public GameViewModel ()
             {
             this.PlayerModel1 = new PlayerViewModel();
             this.PlayerModel2 = new PlayerViewModel();

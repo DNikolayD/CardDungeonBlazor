@@ -1,8 +1,7 @@
-﻿using CardDungeonBlazor.Models;
-using CardDungeonBlazor.Services;
+﻿using CardDungeonBlazor.Services;
 using Microsoft.AspNetCore.Components;
 
-namespace CardDungeonBlazor.Controllers
+namespace CardDungeonBlazor.Areas.Cards
     {
     public class AddDecksController : ComponentBase
         {
@@ -14,12 +13,12 @@ namespace CardDungeonBlazor.Controllers
 
         public AddDeckFormModel Model;
 
-        protected override void OnInitialized()
+        protected override void OnInitialized ()
             {
             this.Model = new();
             }
 
-        public void Submit()
+        public void Submit ()
             {
             this.Service.Add(this.Model);
             string deckId = this.Service.GetId(this.Model.Name);

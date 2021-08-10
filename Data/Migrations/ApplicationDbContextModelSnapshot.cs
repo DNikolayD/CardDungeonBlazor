@@ -265,10 +265,8 @@ namespace Data.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CategoryId1")
+                    b.Property<string>("CategoryId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedOn")
@@ -306,7 +304,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId1");
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("PostedByUserId");
 
@@ -643,7 +641,9 @@ namespace Data.Migrations
                 {
                     b.HasOne("CardDungeonBlazor.Data.Models.PostModels.Category", "Category")
                         .WithMany("Posts")
-                        .HasForeignKey("CategoryId1");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CardDungeonBlazor.Data.Models.User.ApplicationUser", "PostedByUser")
                         .WithMany("Posts")

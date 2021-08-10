@@ -7,12 +7,12 @@ namespace CardGame.Services
         {
         private readonly CardModel card;
 
-        public CardsService(CardModel card)
+        public CardsService ( CardModel card )
             {
             this.card = card;
             }
 
-        public List<PlayerModel> TakeEffect(PlayerModel player1, PlayerModel player2)
+        public List<PlayerModel> TakeEffect ( PlayerModel player1, PlayerModel player2 )
             {
             if (player1.Energy >= this.card.Cost)
                 {
@@ -49,10 +49,10 @@ namespace CardGame.Services
                 player1.Energy -= this.card.Cost;
                 }
             return new List<PlayerModel>
-            {
-                player1,
-                player2
-            };
+                  {
+                        player1,
+                        player2
+                  };
             }
         }
     }

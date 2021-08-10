@@ -8,7 +8,7 @@ namespace CardDungeonBlazor.Data.Models.PostModels
     public class Comment : BaseModel<string>
         {
 
-        public Comment()
+        public Comment ()
             {
             this.Id = Guid.NewGuid().ToString();
             }
@@ -28,6 +28,6 @@ namespace CardDungeonBlazor.Data.Models.PostModels
 
         public virtual Post Post { get; set; }
 
-        public virtual string Image { get; set; }
+        public string Image { get; set; }
         }
     }

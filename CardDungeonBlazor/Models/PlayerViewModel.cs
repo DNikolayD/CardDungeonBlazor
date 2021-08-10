@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace CardDungeonBlazor.Models
+namespace CardDungeonBlazor.Areas.Cards
     {
     public class PlayerViewModel
         {
-        public PlayerViewModel()
+        public PlayerViewModel ()
             {
             this.Energy = 3;
             this.Health = 100;

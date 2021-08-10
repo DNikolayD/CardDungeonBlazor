@@ -16,14 +16,14 @@ namespace CardGame
         private bool isPlayer1sTurn = true;
 
         private GameEvents events;
-        public GameManager(PlayerModel player1, PlayerModel player2)
+        public GameManager ( PlayerModel player1, PlayerModel player2 )
             {
             this.player1 = player1;
             this.player2 = player2;
             }
 
 
-        public async Task Update(GameEvents events, params string[] paramsAray)
+        public async Task Update ( GameEvents events, params string[] paramsAray )
             {
             if (this.gameIsOn)
                 {
@@ -86,13 +86,13 @@ namespace CardGame
                 }
 
             /* while (gameIsOn)
-             {
+		 {
 
-                 await Task.Delay(20);
-             }
-            */
+			 await Task.Delay(20);
+		 }
+		*/
             }
-        private async void Effect(string id)
+        private async void Effect ( string id )
             {
             CardModel card = this.player.Deck.Cards.FirstOrDefault(c => c.Id == id);
             CardsService cardsService = new(card);
@@ -112,7 +112,7 @@ namespace CardGame
             await this.Update(GameEvents.TookEffect);
             }
 
-        private void StartTurn()
+        private void StartTurn ()
             {
             if (this.isPlayer1sTurn)
                 {
@@ -134,7 +134,7 @@ namespace CardGame
                 }
             }
 
-        public async void CheckIfDead()
+        public async void CheckIfDead ()
             {
             if (this.player1.Health <= 0 || this.player2.Health <= 0)
                 {
@@ -146,7 +146,7 @@ namespace CardGame
                 }
             }
 
-        public void AssignDecks(DeckModel deckModel1, DeckModel deckModel2)
+        public void AssignDecks ( DeckModel deckModel1, DeckModel deckModel2 )
             {
             this.player1.Deck = deckModel1;
             this.player2.Deck = deckModel2;
