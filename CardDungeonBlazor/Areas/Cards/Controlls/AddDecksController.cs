@@ -1,7 +1,9 @@
-﻿using CardDungeonBlazor.Services;
+﻿using CardDungeonBlazor.Areas.Cards.Models;
+using CardDungeonBlazor.ServiceToView;
 using Microsoft.AspNetCore.Components;
+using Services.Services;
 
-namespace CardDungeonBlazor.Areas.Cards
+namespace CardDungeonBlazor.Areas.Cards.Controlls
     {
     public class AddDecksController : ComponentBase
         {
@@ -13,6 +15,8 @@ namespace CardDungeonBlazor.Areas.Cards
 
         public AddDeckFormModel Model;
 
+        public GetViewModelsFromServiceModels Get;
+
         protected override void OnInitialized ()
             {
             this.Model = new();
@@ -20,7 +24,7 @@ namespace CardDungeonBlazor.Areas.Cards
 
         public void Submit ()
             {
-            this.Service.Add(this.Model);
+            this.Service.Add(this.Get.GetAddDecksServiceModel(this.Model));
             string deckId = this.Service.GetId(this.Model.Name);
             this.Navigation.NavigateTo($"/deck/addCards/{deckId}");
             }

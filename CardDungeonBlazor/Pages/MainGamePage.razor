@@ -1,11 +1,11 @@
 ﻿@page "/game/main"
+@using CardDungeonBlazor.Areas.Cards.Models
 @using CardDungeonBlazor.Areas.Cards.Views
-
 @inherits GameController
 <MudItem Class="player2-deck-position">
     @{ int offcet = 0;
         int z = Model.PlayerModel1.Deck.Cards.Count;
-        foreach (var deck in Model.PlayerModel2.Deck.Cards)
+        foreach (CardViewModel deck in Model.PlayerModel2.Deck.Cards)
         {
             deck.Offcet += offcet;
             <CardInDeck Model="@deck" z="@z"></CardInDeck>
@@ -20,14 +20,14 @@
 <MudGrid Class="player2-hand-position">
     @{
         int a = 0;
-        foreach (var card in Model.PlayerModel2.CardsInHeand)
+        foreach (CardViewModel card in Model.PlayerModel2.CardsInHeand)
         {
             <MudItem Class="d-flex align-center" @onclick="() => PlayCard(card.Id, Model.PlayerModel2.Name)">
                 <MudCard Class="player2-card-inhand">
                     <MudCardMedia Image="@card.ImageUrl" />
                     <MudCardContent>
                         <MudText Typo="Typo.h5">@card.Name</MudText>
-                        <MudText Typo="Typo.body2">@card.Value @card.CardType @card.Cost</MudText>
+                        <MudText Typo="Typo.body2">@card.Value @card.CardType @card.Cost</MudText>     
                     </MudCardContent>
                 </MudCard>
             </MudItem>

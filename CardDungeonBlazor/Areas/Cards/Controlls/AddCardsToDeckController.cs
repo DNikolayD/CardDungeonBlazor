@@ -1,7 +1,7 @@
-﻿using CardDungeonBlazor.Services;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
+using Services.Services;
 
-namespace CardDungeonBlazor.Areas.Cards
+namespace CardDungeonBlazor.Areas.Cards.Controlls
     {
     public class AddCardsToDeckController : ComponentBase
         {

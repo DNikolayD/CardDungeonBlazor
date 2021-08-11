@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using CardDungeonBlazor.Areas.Forum.Models;
 using CardDungeonBlazor.Data;
 using CardDungeonBlazor.Data.Models.PostModels;
+using Services.ServiceModels.ForumsModels;
 
-namespace CardDungeonBlazor.Services
+namespace Services.Services
     {
     public class PostsService
         {
@@ -23,7 +22,7 @@ namespace CardDungeonBlazor.Services
             return this.data.Users.FirstOrDefault(u => u.UserName == name).Id;
             }
 
-        public void AddPost ( AddPostFormModel model )
+        public void AddPost ( AddPostServiceModel model )
             {
             Post post = new()
                 {
@@ -36,9 +35,9 @@ namespace CardDungeonBlazor.Services
             this.data.Posts.Add(post);
             this.data.SaveChanges();
             }
-        public AllPostsViewModel GetPosts ( string id )
+        public AllPostsServiceModel GetPosts ( string id )
             {
-            AllPostsViewModel model = new();
+            AllPostsServiceModel model = new();
             IQueryable<Post> posts = this.data.Posts.Where(p => p.CategoryId == id && !p.IsDeleted);
             if (posts.Any())
                 {
@@ -63,10 +62,10 @@ namespace CardDungeonBlazor.Services
             this.data.Posts.Update(post);
             this.data.SaveChanges();
             }
-        public AddPostFormModel GetPostsForm ( string id )
+        public AddPostServiceModel GetPostsForm ( string id )
             {
             Post post = this.data.Posts.FirstOrDefault(p => p.Id == id);
-            AddPostFormModel model = new()
+            AddPostServiceModel model = new()
                 {
                 CategoryId = post.CategoryId,
                 Image = post.Images,
@@ -78,7 +77,7 @@ namespace CardDungeonBlazor.Services
             return model;
             }
 
-        public void Edit(AddPostFormModel model, string id )
+        public void Edit ( AddPostServiceModel model, string id )
             {
             Post post = this.data.Posts.FirstOrDefault(p => p.Id == id);
             post.Images = model.Image;
@@ -89,12 +88,12 @@ namespace CardDungeonBlazor.Services
             this.data.SaveChanges();
             }
 
-        public FullPostViewModel GetFullPost (string id)
+        public FullPostServiceModel GetFullPost ( string id )
             {
             Post post = this.data.Posts.FirstOrDefault(p => p.Id == id);
             List<Comment> comments = post.Comments.ToList();
             List<CommentServiceModel> commentServices = new();
-            foreach (var comment in comments)
+            foreach (Comment comment in comments)
                 {
                 commentServices.Add(
                     new CommentServiceModel
@@ -107,7 +106,7 @@ namespace CardDungeonBlazor.Services
                         }
                     );
                 }
-            FullPostViewModel model = new()
+            FullPostServiceModel model = new()
                 {
                 Comments = commentServices,
                 Username = this.data.Users.FirstOrDefault(u => u.Id == post.PostedByUserId).UserName,
@@ -120,7 +119,7 @@ namespace CardDungeonBlazor.Services
                 };
             return model;
             }
-        public void AddComment(string id, CommentServiceModel model )
+        public void AddComment ( string id, CommentServiceModel model )
             {
             Comment comment = new()
                 {

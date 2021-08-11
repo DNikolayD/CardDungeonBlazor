@@ -1,4 +1,4 @@
-﻿namespace CardDungeonBlazor.Areas.Cards
+﻿namespace Services.ServiceModels.CardsModels
     {
     public class DeckServiceModel
         {

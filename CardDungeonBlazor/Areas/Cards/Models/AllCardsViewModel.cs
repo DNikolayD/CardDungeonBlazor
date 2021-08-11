@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 
-namespace CardDungeonBlazor.Areas.Cards
+namespace CardDungeonBlazor.Areas.Cards.Models
     {
     public class AllCardsViewModel
         {
 
         public AllCardsViewModel ()
             {
-            this.Cards = new List<CardServiceModel>();
+            this.Cards = new List<CardViewModel>();
             }
-        public List<CardServiceModel> Cards { get; set; }
+        public List<CardViewModel> Cards { get; set; }
         }
     }

@@ -1,7 +1,9 @@
-﻿using CardDungeonBlazor.Services;
+﻿using CardDungeonBlazor.Areas.Cards.Models;
+using CardDungeonBlazor.ServiceToView;
 using Microsoft.AspNetCore.Components;
+using Services.Services;
 
-namespace CardDungeonBlazor.Areas.Cards
+namespace CardDungeonBlazor.Areas.Cards.Controlls
     {
     public class AllCardsController : ComponentBase
         {
@@ -12,13 +14,14 @@ namespace CardDungeonBlazor.Areas.Cards
         [Inject]
         protected NavigationManager Navigation { get; set; }
 
-
-
         public AllCardsViewModel Model;
+
+        public GetViewModelsFromServiceModels Get;
 
         protected override void OnInitialized ()
             {
-            this.Model = this.Service.GetAllCards();
+            this.Get = new();
+            this.Model = this.Get.GetAllCardsViewModel(this.Service.GetAllCards());
             }
         public void Redirect ()
             {

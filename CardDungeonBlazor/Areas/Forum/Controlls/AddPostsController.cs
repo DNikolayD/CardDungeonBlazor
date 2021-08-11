@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CardDungeonBlazor.Areas.Forum.Models;
-using CardDungeonBlazor.Services;
+﻿using CardDungeonBlazor.Areas.Forum.Models;
+using CardDungeonBlazor.ServiceToView;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http;
+using Services.Services;
 
 namespace CardDungeonBlazor.Areas.Forum.Controlls
     {
@@ -25,8 +22,11 @@ namespace CardDungeonBlazor.Areas.Forum.Controlls
 
         public AddPostFormModel Model;
 
+        public GetViewModelsFromServiceModels Get;
+
         protected override void OnInitialized ()
             {
+            this.Get = new();
             this.Model = new AddPostFormModel()
                 {
                 CategoryId = Id,
@@ -38,7 +38,7 @@ namespace CardDungeonBlazor.Areas.Forum.Controlls
 
         public void Submit ()
             {
-            this.Service.AddPost(this.Model);
+            this.Service.AddPost(this.Get.GetAddPostServiceModel(this.Model));
             this.Navigation.NavigateTo($"/posts/{this.Id}/all");
             }
         }

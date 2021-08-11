@@ -1,6 +1,7 @@
 ﻿using CardDungeonBlazor.Models;
-using CardDungeonBlazor.Services;
+using CardDungeonBlazor.ServiceToView;
 using Microsoft.AspNetCore.Components;
+using Services.Services;
 
 namespace CardDungeonBlazor.Controllers
     {
@@ -14,9 +15,11 @@ namespace CardDungeonBlazor.Controllers
 
         public AllCategoriesViewModel Model { get; set; }
 
+        public GetViewModelsFromServiceModels Get;
+
         protected override void OnInitialized ()
             {
-            this.Model = this.Service.GetAllCategories();
+            this.Model = this.Get.GetAllCategoriesViewModel(this.Service.GetAllCategories());
             base.OnInitialized();
             }
 

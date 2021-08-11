@@ -6,6 +6,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Content Remove="Pages\MainGamePage.razor" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<None Include="..\.editorconfig" Link=".editorconfig" />
 	</ItemGroup>
 
@@ -27,5 +31,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\CardGame\CardGame.csproj" />
 		<ProjectReference Include="..\Data\Data.csproj" />
+		<ProjectReference Include="..\Services\Services.csproj" />
 	</ItemGroup>
 </Project>

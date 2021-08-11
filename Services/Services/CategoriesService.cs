@@ -2,9 +2,9 @@
 using System.Linq;
 using CardDungeonBlazor.Data;
 using CardDungeonBlazor.Data.Models.PostModels;
-using CardDungeonBlazor.Models;
+using Services.ServiceModels.ForumsModels;
 
-namespace CardDungeonBlazor.Services
+namespace Services.Services
     {
     public class CategoriesService
         {
@@ -15,7 +15,7 @@ namespace CardDungeonBlazor.Services
             this.data = data;
             }
 
-        public void Add ( AddCategoryFormModel model )
+        public void Add ( AddCategoryServiceModel model )
             {
             Category dbCategory = new()
                 {
@@ -27,9 +27,9 @@ namespace CardDungeonBlazor.Services
             this.data.SaveChanges();
             }
 
-        public AllCategoriesViewModel GetAllCategories ()
+        public AllCategoriesServiceModel GetAllCategories ()
             {
-            AllCategoriesViewModel model = new();
+            AllCategoriesServiceModel model = new();
             IQueryable<Category> categories = this.data.Categories.Where(c => !c.IsDeleted);
             foreach (Category category in categories)
                 {
@@ -54,10 +54,10 @@ namespace CardDungeonBlazor.Services
             this.data.SaveChanges();
             }
 
-        public AddCategoryFormModel GetCategoryById ( string id )
+        public AddCategoryServiceModel GetCategoryById ( string id )
             {
             Category category = this.data.Categories.FirstOrDefault(c => c.Id == id);
-            AddCategoryFormModel model = new()
+            AddCategoryServiceModel model = new()
                 {
                 Description = category.Description,
                 Name = category.Name,
@@ -65,7 +65,7 @@ namespace CardDungeonBlazor.Services
             return model;
             }
 
-        public void Edit ( string id, AddCategoryFormModel model )
+        public void Edit ( string id, AddCategoryServiceModel model )
             {
             Category category = this.data.Categories.FirstOrDefault(c => c.Id == id);
             category.Name = model.Name;

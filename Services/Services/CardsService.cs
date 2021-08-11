@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CardDungeonBlazor.Areas.Cards;
 using CardDungeonBlazor.Data;
 using CardDungeonBlazor.Data.Models.CardModels;
 using Microsoft.EntityFrameworkCore;
+using Services.ServiceModels.CardsModels;
 
-namespace CardDungeonBlazor.Services
+namespace Services.Services
     {
     public class CardsService
         {
@@ -17,7 +17,7 @@ namespace CardDungeonBlazor.Services
             this.data = data;
             }
 
-        public void Add ( AddCardFormModel model )
+        public void Add ( AddCardsServiceModel model )
             {
             Card dbCard = new()
                 {
@@ -33,14 +33,14 @@ namespace CardDungeonBlazor.Services
             this.data.SaveChanges();
             }
 
-        public List<CardTypeViewModel> GetCardTypeViewModels ()
+        public List<CardTypeServiceModel> GetCardTypeViewModels ()
             {
-            List<CardTypeViewModel> cardTypeViewModel = new();
+            List<CardTypeServiceModel> cardTypeViewModel = new();
             DbSet<CardType> cardTypes = this.data.CardTypes;
 
             foreach (CardType cardType in cardTypes)
                 {
-                CardTypeViewModel model = new()
+                CardTypeServiceModel model = new()
                     {
                     Id = cardType.Id,
                     Name = cardType.Name
@@ -50,9 +50,9 @@ namespace CardDungeonBlazor.Services
             return cardTypeViewModel;
             }
 
-        public AllCardsViewModel GetAllCards ()
+        public AllCardsServiceModel GetAllCards ()
             {
-            AllCardsViewModel allCards = new();
+            AllCardsServiceModel allCards = new();
             IQueryable<Card> cards = this.data.Cards.Where(c => !c.IsDeleted);
             CardType cardType = new();
             foreach (Card card in cards)
@@ -82,13 +82,13 @@ namespace CardDungeonBlazor.Services
             this.data.SaveChanges();
             }
 
-        public FullCardViewModel GetFullCardView ( string id )
+        public FullCardServiceModel GetFullCardView ( string id )
             {
             Card card = this.data.Cards.FirstOrDefault(c => c.Id == id && !c.IsDeleted);
             string createdOn = card.CreatedOn.ToShortDateString();
             int duration = card.Duration.Value;
 
-            FullCardViewModel viewModel = new()
+            FullCardServiceModel viewModel = new()
                 {
                 CardType = card.CardType.Name,
                 CreatedOn = createdOn,
@@ -103,12 +103,12 @@ namespace CardDungeonBlazor.Services
             return viewModel;
             }
 
-        public CardEditFomModel GetEditFomModel ( string id )
+        public AddCardsServiceModel GetEditFomModel ( string id )
             {
             Card card = this.data.Cards.FirstOrDefault(x => x.Id == id && !x.IsDeleted);
-            List<CardTypeViewModel> cardTypeViewModel = this.GetCardTypeViewModels();
+            List<CardTypeServiceModel> cardTypeViewModel = this.GetCardTypeViewModels();
 
-            CardEditFomModel model = new()
+            AddCardsServiceModel model = new()
                 {
                 Name = card.Name,
                 Description = card.Description,
@@ -121,7 +121,7 @@ namespace CardDungeonBlazor.Services
             return model;
             }
 
-        public void Edit ( string id, CardEditFomModel cardModel )
+        public void Edit ( string id, AddCardsServiceModel cardModel )
             {
             Card dbCard = this.data.Cards.FirstOrDefault(x => x.Id == id && !x.IsDeleted);
             dbCard.CardTypeId = cardModel.CardTypeId;

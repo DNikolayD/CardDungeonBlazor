@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace CardDungeonBlazor.Areas.Forum.Models
     {
@@ -10,9 +7,9 @@ namespace CardDungeonBlazor.Areas.Forum.Models
 
         public AllPostsViewModel ()
             {
-            this.Posts = new List<PostServiceModel>();
+            this.Posts = new List<PostViewModel>();
             }
 
-        public List<PostServiceModel> Posts { get; set; }
+        public List<PostViewModel> Posts { get; set; }
         }
     }

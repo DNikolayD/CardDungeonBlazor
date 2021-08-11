@@ -1,7 +1,9 @@
-﻿using CardDungeonBlazor.Services;
+﻿using CardDungeonBlazor.Areas.Cards.Models;
+using CardDungeonBlazor.ServiceToView;
 using Microsoft.AspNetCore.Components;
+using Services.Services;
 
-namespace CardDungeonBlazor.Areas.Cards
+namespace CardDungeonBlazor.Areas.Cards.Controlls
     {
     public class EditCardsController : ComponentBase
         {
@@ -14,17 +16,20 @@ namespace CardDungeonBlazor.Areas.Cards
         [Inject]
         protected NavigationManager Navigation { get; set; }
 
-        public CardEditFomModel Model;
+        public AddCardFormModel Model;
+
+        public GetViewModelsFromServiceModels Get;
 
         protected override void OnInitialized ()
             {
-            this.Model = this.Service.GetEditFomModel(this.Id);
+            this.Get = new();
+            this.Model = this.Get.GetAddCardFormModel(this.Service.GetEditFomModel(this.Id));
 
             }
 
         public void Submit ()
             {
-            this.Service.Edit(this.Id, this.Model);
+            this.Service.Edit(this.Id, this.Get.GetAddCardsServiceModel(this.Model));
             this.Navigation.NavigateTo("/cards/all");
             }
         }

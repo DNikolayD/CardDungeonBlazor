@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CardDungeonBlazor.Areas.Cards.Models;
 
 namespace CardDungeonBlazor.Areas.Cards
     {
@@ -8,8 +9,8 @@ namespace CardDungeonBlazor.Areas.Cards
             {
             this.Energy = 3;
             this.Health = 100;
-            this.Deck = new DeckViewModel();
-            this.CardsInHeand = new List<CardServiceModel>();
+            this.Deck = new DecksViewModel();
+            this.CardsInHeand = new List<CardViewModel>();
             }
 
         public string Name { get; set; }
@@ -22,8 +23,8 @@ namespace CardDungeonBlazor.Areas.Cards
 
         public bool IsPoisoned { get; set; }
 
-        public DeckViewModel Deck { get; set; }
+        public DecksViewModel Deck { get; set; }
 
-        public List<CardServiceModel> CardsInHeand { get; set; }
+        public List<CardViewModel> CardsInHeand { get; set; }
         }
     }

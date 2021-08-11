@@ -1,6 +1,6 @@
-﻿namespace CardDungeonBlazor.Areas.Cards
+﻿namespace CardDungeonBlazor.Areas.Cards.Models
     {
-    public class CardServiceModel
+    public class CardViewModel
         {
         public string Id { get; set; }
 

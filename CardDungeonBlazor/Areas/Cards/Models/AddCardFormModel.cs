@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CardDungeonBlazor.Areas.Cards
+namespace CardDungeonBlazor.Areas.Cards.Models
     {
     public class AddCardFormModel
         {

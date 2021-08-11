@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CardDungeonBlazor.Areas.Cards;
 using CardDungeonBlazor.Data;
 using CardDungeonBlazor.Data.Models.CardModels;
 using CardGame;
 using CardGame.Models;
+using Services.ServiceModels.CardsModels;
+using Services.ServiceModels.GameModels;
 
-namespace CardDungeonBlazor.Services
+namespace Services.Services
     {
     public class GameService
         {
@@ -20,9 +21,9 @@ namespace CardDungeonBlazor.Services
 
         public GameManager GameManager { get; set; }
 
-        public async Task PlayCard ( string cardId, string playerName, GameViewModel game )
+        public async Task PlayCard ( string cardId, string playerName, GameServiceModel game )
             {
-            PlayerModel player = this.GetPlayer(game, playerName);
+            PlayerModel player = GetPlayer(game, playerName);
             CardModel playedCard = player.CardsInHeand.FirstOrDefault(c => c.Id == cardId);
             await this.GameManager.Update(GameEvents.SelectCard, new string[] { cardId });
             game.PlayerModel1.Health = this.GameManager.player1.Health;
@@ -30,9 +31,9 @@ namespace CardDungeonBlazor.Services
             game.PlayerModel1.Energy = this.GameManager.player1.Energy;
             game.PlayerModel2.Energy = this.GameManager.player2.Energy;
             }
-        public DeckViewModel GetDeck ( string playerName )
+        public DecksServiceModel GetDeck ( string playerName )
             {
-            DeckViewModel viewModel = new();
+            DecksServiceModel viewModel = new();
             IQueryable<CardDeck> deck = this.data.CardDecks.Where(cd => cd.DeckId == this.data.Decks.FirstOrDefault().Id);
             foreach (CardDeck cardDeck in deck)
                 {
@@ -61,7 +62,7 @@ namespace CardDungeonBlazor.Services
                     {
                     model = TypeModel.Heal;
                     }
-                if (cardService.CardType == "Deffence")
+                else if (cardService.CardType == "Deffence")
                     {
                     model = TypeModel.Deffence;
                     }
@@ -98,11 +99,11 @@ namespace CardDungeonBlazor.Services
                 }
             return viewModel;
             }
-        public PlayerModel GetPlayer ( GameViewModel game,
+        public static PlayerModel GetPlayer ( GameServiceModel game,
                                                     string playerName )
             {
             PlayerModel player;
-            PlayerViewModel playerView;
+            PlayerServiceModel playerView;
             if (game.PlayerModel1.Name == playerName)
                 {
                 playerView = game.PlayerModel1;

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace CardDungeonBlazor.Areas.Forum.Models
     {
@@ -10,7 +7,7 @@ namespace CardDungeonBlazor.Areas.Forum.Models
 
         public FullPostViewModel ()
             {
-            this.Comments = new List<CommentServiceModel>();
+            this.Comments = new List<CommentViewModel>();
             }
 
         public string Title { get; set; }
@@ -25,6 +22,6 @@ namespace CardDungeonBlazor.Areas.Forum.Models
 
         public string CreatedOn { get; set; }
 
-        public List<CommentServiceModel> Comments { get; set; }
+        public List<CommentViewModel> Comments { get; set; }
         }
     }

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CardDungeonBlazor.Areas.Cards;
 using CardDungeonBlazor.Data;
 using CardDungeonBlazor.Data.Models.CardModels;
 using Microsoft.EntityFrameworkCore;
+using Services.ServiceModels.CardsModels;
 
-namespace CardDungeonBlazor.Services
+namespace Services.Services
     {
     public class DecksService
         {
@@ -16,7 +16,7 @@ namespace CardDungeonBlazor.Services
             {
             this.data = data;
             }
-        public void Add ( AddDeckFormModel model )
+        public void Add ( AddDecksServiceModel model )
             {
             Deck dbDeck = new()
                 {
@@ -28,14 +28,14 @@ namespace CardDungeonBlazor.Services
             this.data.SaveChanges();
             }
 
-        public List<CardTypeViewModel> GetCardTypeViewModels ()
+        public List<CardTypeServiceModel> GetCardTypeViewModels ()
             {
-            List<CardTypeViewModel> cardTypeViewModel = new();
+            List<CardTypeServiceModel> cardTypeViewModel = new();
             DbSet<CardType> cardTypes = this.data.CardTypes;
 
             foreach (CardType cardType in cardTypes)
                 {
-                CardTypeViewModel model = new()
+                CardTypeServiceModel model = new()
                     {
                     Id = cardType.Id,
                     Name = cardType.Name
@@ -45,9 +45,9 @@ namespace CardDungeonBlazor.Services
             return cardTypeViewModel;
             }
 
-        public AllDeckViewModel GetAll ()
+        public AllDecksServiceModel GetAll ()
             {
-            AllDeckViewModel allDecks = new();
+            AllDecksServiceModel allDecks = new();
             IQueryable<Deck> decks = this.data.Decks.Where(d => !d.IsDeleted);
             IQueryable<CardDeck> cards;
             Card card = new();
@@ -88,11 +88,11 @@ namespace CardDungeonBlazor.Services
             this.data.SaveChanges();
             }
 
-        public AddDeckFormModel GetDeck ( string id )
+        public AddDecksServiceModel GetDeck ( string id )
             {
             Deck deck = this.data.Decks.FirstOrDefault(d => d.Id == id);
 
-            AddDeckFormModel model = new()
+            AddDecksServiceModel model = new()
                 {
                 Name = deck.Name,
                 DeckType = deck.DeckType,
@@ -101,7 +101,7 @@ namespace CardDungeonBlazor.Services
 
             return model;
             }
-        public void Edit ( string id, AddDeckFormModel model )
+        public void Edit ( string id, AddDecksServiceModel model )
             {
             Deck deck = this.data.Decks.FirstOrDefault(x => x.Id == id);
             deck.Name = model.Name;
@@ -111,13 +111,13 @@ namespace CardDungeonBlazor.Services
             this.data.SaveChanges();
             }
 
-        public FullDeckViewModel GetFullDeckView ( string id )
+        public FullDeckServiceModel GetFullDeckView ( string id )
             {
             Deck deck = this.data.Decks.FirstOrDefault(x => x.Id == id);
             IQueryable<CardDeck> cards = this.data.CardDecks.Where(cd => cd.DeckId == id);
             string createdOn = deck.CreatedOn.ToShortDateString();
             string type = deck.DeckType.ToString();
-            FullDeckViewModel model = new()
+            FullDeckServiceModel model = new()
                 {
                 Name = deck.Name,
                 Description = deck.Description,

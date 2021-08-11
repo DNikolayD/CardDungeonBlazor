@@ -6,9 +6,9 @@ namespace CardDungeonBlazor.Models
         {
         public AllCategoriesViewModel ()
             {
-            this.Categories = new List<CategoryServiceModel>();
+            this.Categories = new List<CategoryViewModel>();
             }
 
-        public List<CategoryServiceModel> Categories { get; set; }
+        public List<CategoryViewModel> Categories { get; set; }
         }
     }

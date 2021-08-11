@@ -1,6 +1,6 @@
 ﻿namespace CardDungeonBlazor.Models
     {
-    public class CategoryServiceModel
+    public class CategoryViewModel
         {
         public string Id { get; set; }
 

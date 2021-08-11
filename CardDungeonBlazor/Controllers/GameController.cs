@@ -1,8 +1,11 @@
 ﻿using System.Threading.Tasks;
 using CardDungeonBlazor.Areas.Cards;
-using CardDungeonBlazor.Services;
+using CardDungeonBlazor.Areas.Cards.Models;
+using CardDungeonBlazor.ServiceToView;
 using CardGame;
 using Microsoft.AspNetCore.Components;
+using Services.ServiceModels.GameModels;
+using Services.Services;
 
 namespace CardDungeonBlazor.Controllers
     {
@@ -13,30 +16,34 @@ namespace CardDungeonBlazor.Controllers
 
         public GameViewModel Model { get; set; }
 
+        public GetViewModelsFromServiceModels Get;
+
         protected override async Task OnInitializedAsync ()
             {
+            this.Get = new();
             this.Model = new GameViewModel();
             this.Model.PlayerModel1.Name = "player1";
             this.Model.PlayerModel2.Name = "player2";
-            this.Service.GameManager = new GameManager(this.Service.GetPlayer(this.Model, this.Model.PlayerModel1.Name), this.Service.GetPlayer(this.Model, this.Model.PlayerModel2.Name));
-            this.Model.PlayerModel1.Deck = this.Service.GetDeck(this.Model.PlayerModel1.Name);
-            this.Model.PlayerModel2.Deck = this.Service.GetDeck(this.Model.PlayerModel2.Name);
-            this.Model.PlayerModel1.CardsInHeand = await this.Service.GetCardsInHand();
+            GameServiceModel gameServiceModel = this.Get.GetGameServiceModel(this.Model);
+            this.Service.GameManager = new GameManager(GameService.GetPlayer(gameServiceModel, this.Model.PlayerModel1.Name), GameService.GetPlayer(gameServiceModel, this.Model.PlayerModel2.Name));
+            this.Model.PlayerModel1.Deck = this.Get.GetDecksViewModel(this.Service.GetDeck(this.Model.PlayerModel1.Name));
+            this.Model.PlayerModel2.Deck = this.Get.GetDecksViewModel(this.Service.GetDeck(this.Model.PlayerModel2.Name));
+            this.Model.PlayerModel1.CardsInHeand = this.Get.GetCardViewModels(await this.Service.GetCardsInHand());
             }
 
 
         public async Task PlayCard ( string cardId, string playerName )
             {
-            await this.Service.PlayCard(cardId, playerName, this.Model);
+            await this.Service.PlayCard(cardId, playerName, this.Get.GetGameServiceModel(this.Model));
             }
 
         protected override void OnAfterRender ( bool firstRender )
             {
-            foreach (CardServiceModel deck in this.Model.PlayerModel2.Deck.Cards)
+            foreach (CardViewModel deck in this.Model.PlayerModel2.Deck.Cards)
                 {
                 deck.Offcet = 0;
                 }
-            foreach (CardServiceModel deck in this.Model.PlayerModel1
+            foreach (CardViewModel deck in this.Model.PlayerModel1
                   .Deck.Cards)
                 {
                 deck.Offcet = 0;
@@ -49,11 +56,11 @@ namespace CardDungeonBlazor.Controllers
             await this.Service.EndTurn();
             if (this.Service.GameManager.player.Name == this.Model.PlayerModel1.Name)
                 {
-                this.Model.PlayerModel1.CardsInHeand = await this.Service.GetCardsInHand();
+                this.Model.PlayerModel1.CardsInHeand = this.Get.GetCardViewModels(await this.Service.GetCardsInHand());
                 }
             else
                 {
-                this.Model.PlayerModel2.CardsInHeand = await this.Service.GetCardsInHand();
+                this.Model.PlayerModel2.CardsInHeand = this.Get.GetCardViewModels(await this.Service.GetCardsInHand());
                 }
             }
         }

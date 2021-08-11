@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 
-namespace CardDungeonBlazor.Areas.Cards
+namespace Services.ServiceModels.CardsModels
     {
-    public class CardEditFomModel
+    public class AddCardsServiceModel
         {
-        public CardEditFomModel ()
+        public AddCardsServiceModel ()
             {
-            this.CardTypes = new List<CardTypeViewModel>();
+            this.CardTypes = new List<CardTypeServiceModel>();
             }
 
         public string Name { get; set; }
@@ -17,7 +17,7 @@ namespace CardDungeonBlazor.Areas.Cards
 
         public int CardTypeId { get; set; }
 
-        public virtual List<CardTypeViewModel> CardTypes { get; set; }
+        public virtual List<CardTypeServiceModel> CardTypes { get; set; }
 
         public int Value { get; set; }
 

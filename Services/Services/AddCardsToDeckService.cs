@@ -1,10 +1,10 @@
 ﻿using System.Linq;
-using CardDungeonBlazor.Areas.Cards;
 using CardDungeonBlazor.Data;
 using CardDungeonBlazor.Data.Models.CardModels;
 using Microsoft.EntityFrameworkCore;
+using Services.ServiceModels.CardsModels;
 
-namespace CardDungeonBlazor.Services
+namespace Services.Services
     {
     public class AddCardsToDeckService
         {
@@ -15,13 +15,13 @@ namespace CardDungeonBlazor.Services
             this.data = data;
             }
 
-        public AddCardsToDeckModel GetAllCards ()
+        public AddCardsToDeckServiceModel GetAllCards ()
             {
-            AddCardsToDeckModel allCards = new();
+            AddCardsToDeckServiceModel allCards = new();
             DbSet<Card> cards = this.data.Cards;
             foreach (Card card in cards)
                 {
-                CardAddedToTheDeckViewModel model = new()
+                CardAddedToTheDeckServiceModel model = new()
                     {
                     Id = card.Id,
                     CardType = this.data.CardTypes.FirstOrDefault(x => x.Id == card.CardTypeId).Name,

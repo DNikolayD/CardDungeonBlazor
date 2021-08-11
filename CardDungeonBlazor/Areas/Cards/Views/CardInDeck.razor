@@ -1,11 +1,13 @@
-﻿
+﻿@using CardDungeonBlazor.Areas.Cards.Models
+@using Services.ServiceModels.CardsModels
+
 <MudCard Class="player1-card-position" Style="@modelcss">
     <MudCardMedia Image="@Model.ImageUrl" Class="player1-card-position" ></MudCardMedia>
 </MudCard>
 
 @code {
     [Parameter]
-    public CardServiceModel Model { get; set; }
+    public CardViewModel Model { get; set; }
     [Parameter]
     public int z { get; set; }
 

@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CardDungeonBlazor.Areas.Forum.Models;
-using CardDungeonBlazor.Services;
+﻿using CardDungeonBlazor.Areas.Forum.Models;
+using CardDungeonBlazor.ServiceToView;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http;
+using Services.Services;
 
 namespace CardDungeonBlazor.Areas.Forum.Controlls
     {
-    public class FullPostController:ComponentBase
+    public class FullPostController : ComponentBase
         {
         [Inject]
         protected PostsService Service { get; set; }
@@ -26,27 +23,29 @@ namespace CardDungeonBlazor.Areas.Forum.Controlls
 
         public FullPostViewModel Model;
 
-        public CommentServiceModel CommentModel;
+        public CommentViewModel CommentModel;
+
+        public GetViewModelsFromServiceModels Get;
 
         public bool addingComment = false;
 
         protected override void OnInitialized ()
             {
-            CommentModel = new();
-            Model = Service.GetFullPost(Id);
+            this.CommentModel = new();
+            this.Model = this.Get.GetFullPostViewModel(this.Service.GetFullPost(this.Id));
             base.OnInitialized();
             }
 
         public void Submit ()
             {
-            CommentModel.Username = HttpContext.HttpContext.User.Identity.Name;
-            Service.AddComment(Id, CommentModel);
-            addingComment = false;
+            this.CommentModel.Username = this.HttpContext.HttpContext.User.Identity.Name;
+            this.Service.AddComment(this.Id, this.Get.GetCommentServiceModel(this.CommentModel));
+            this.addingComment = false;
             }
 
         public void AddComment ()
             {
-            addingComment = true;
+            this.addingComment = true;
             }
         }
     }

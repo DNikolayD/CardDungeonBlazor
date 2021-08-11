@@ -1,6 +1,7 @@
 ﻿using CardDungeonBlazor.Areas.Forum.Models;
-using CardDungeonBlazor.Services;
+using CardDungeonBlazor.ServiceToView;
 using Microsoft.AspNetCore.Components;
+using Services.Services;
 
 namespace CardDungeonBlazor.Areas.Forum.Controlls
     {
@@ -17,16 +18,18 @@ namespace CardDungeonBlazor.Areas.Forum.Controlls
 
         public AddPostFormModel Model;
 
+        public GetViewModelsFromServiceModels Get;
+
         protected override void OnInitialized ()
             {
-            this.Model = this.Service.GetPostsForm(this.Id);
+            this.Model = this.Get.GetAddPostFormModel(this.Service.GetPostsForm(this.Id));
             base.OnInitialized();
             }
 
         public void Submit ()
             {
-            this.Service.Edit(this.Model, this.Id);
-            Navigation.NavigateTo($"/posts/{this.Id}/more");
+            this.Service.Edit(this.Get.GetAddPostServiceModel(this.Model), this.Id);
+            this.Navigation.NavigateTo($"/posts/{this.Id}/more");
             }
         }
     }

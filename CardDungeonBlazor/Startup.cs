@@ -2,7 +2,6 @@ using CardDungeonBlazor.Areas.Identity;
 using CardDungeonBlazor.Data;
 using CardDungeonBlazor.Data.Models.User;
 using CardDungeonBlazor.Infrastructure;
-using CardDungeonBlazor.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -12,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MudBlazor.Services;
+using Services.Services;
 
 namespace CardDungeonBlazor
     {
