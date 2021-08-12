@@ -32,6 +32,7 @@ namespace CardDungeonBlazor.Areas.Forum.Controlls
         protected override void OnInitialized ()
             {
             this.CommentModel = new();
+            this.Get = new();
             this.Model = this.Get.GetFullPostViewModel(this.Service.GetFullPost(this.Id));
             base.OnInitialized();
             }

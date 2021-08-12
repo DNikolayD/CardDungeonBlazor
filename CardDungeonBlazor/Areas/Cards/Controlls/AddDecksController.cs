@@ -24,6 +24,7 @@ namespace CardDungeonBlazor.Areas.Cards.Controlls
 
         public void Submit ()
             {
+            this.Get = new();
             this.Service.Add(this.Get.GetAddDecksServiceModel(this.Model));
             string deckId = this.Service.GetId(this.Model.Name);
             this.Navigation.NavigateTo($"/deck/addCards/{deckId}");

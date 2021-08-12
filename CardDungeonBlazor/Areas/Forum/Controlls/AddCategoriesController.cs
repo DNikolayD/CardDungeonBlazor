@@ -1,4 +1,5 @@
 ﻿using CardDungeonBlazor.Models;
+using CardDungeonBlazor.ServiceToView;
 using Microsoft.AspNetCore.Components;
 using Services.Services;
 
@@ -14,15 +15,18 @@ namespace CardDungeonBlazor.Controllers
 
         public AddCategoryFormModel Model { get; set; }
 
+        public GetViewModelsFromServiceModels Get;
+
         protected override void OnInitialized ()
             {
+            this.Get = new();
             this.Model = new AddCategoryFormModel();
             base.OnInitialized();
             }
 
         public void Submit ()
             {
-            this.Service.Add(this.Model);
+            this.Service.Add(this.Get.GetAddCategoryServiceModel(this.Model));
             this.Navigation.NavigateTo("/categories/all");
             }
         }

@@ -34,7 +34,7 @@ namespace CardDungeonBlazor.Controllers
 
         public async Task PlayCard ( string cardId, string playerName )
             {
-            await this.Service.PlayCard(cardId, playerName, this.Get.GetGameServiceModel(this.Model));
+            this.Model = this.Get.GetGameViewModel(await this.Service.PlayCard(cardId, playerName, this.Get.GetGameServiceModel(this.Model)));
             }
 
         protected override void OnAfterRender ( bool firstRender )

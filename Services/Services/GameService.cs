@@ -21,7 +21,7 @@ namespace Services.Services
 
         public GameManager GameManager { get; set; }
 
-        public async Task PlayCard ( string cardId, string playerName, GameServiceModel game )
+        public async Task<GameServiceModel> PlayCard ( string cardId, string playerName, GameServiceModel game )
             {
             PlayerModel player = GetPlayer(game, playerName);
             CardModel playedCard = player.CardsInHeand.FirstOrDefault(c => c.Id == cardId);
@@ -30,6 +30,7 @@ namespace Services.Services
             game.PlayerModel2.Health = this.GameManager.player2.Health;
             game.PlayerModel1.Energy = this.GameManager.player1.Energy;
             game.PlayerModel2.Energy = this.GameManager.player2.Energy;
+            return game;
             }
         public DecksServiceModel GetDeck ( string playerName )
             {

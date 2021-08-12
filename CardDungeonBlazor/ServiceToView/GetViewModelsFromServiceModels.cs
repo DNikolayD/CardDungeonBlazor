@@ -469,5 +469,28 @@ namespace CardDungeonBlazor.ServiceToView
                 };
             return decksServiceModel;
             }
+        public GameViewModel GetGameViewModel ( GameServiceModel gameServiceModel )
+            {
+            GameViewModel gameViewModel = new()
+                {
+                PlayerModel1 = this.GetPlayerViewModel(gameServiceModel.PlayerModel1),
+                PlayerModel2 = this.GetPlayerViewModel(gameServiceModel.PlayerModel2),
+                };
+            return gameViewModel;
+            }
+        public PlayerViewModel GetPlayerViewModel ( PlayerServiceModel playerServiceModel )
+            {
+            PlayerViewModel playerViewModel = new()
+                {
+                CardsInHeand = this.GetCardViewModels(playerServiceModel.CardsInHeand),
+                Deck = this.GetDecksViewModel(playerServiceModel.Deck),
+                Deffence = playerServiceModel.Deffence,
+                Energy = playerServiceModel.Energy,
+                Health = playerServiceModel.Health,
+                IsPoisoned = playerServiceModel.IsPoisoned,
+                Name = playerServiceModel.Name,
+                };
+            return playerViewModel;
+            }
         }
     }

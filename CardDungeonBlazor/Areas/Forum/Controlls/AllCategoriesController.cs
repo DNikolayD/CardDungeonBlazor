@@ -19,6 +19,7 @@ namespace CardDungeonBlazor.Controllers
 
         protected override void OnInitialized ()
             {
+            this.Get = new();
             this.Model = this.Get.GetAllCategoriesViewModel(this.Service.GetAllCategories());
             base.OnInitialized();
             }

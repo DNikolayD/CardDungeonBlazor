@@ -13,7 +13,7 @@ namespace CardGame.Services
         public PlayerModel Draw ()
             {
             this.player.CardsInHeand.AddRange(this.player.Deck.Cards.GetRange(0, 5));
-            this.player.Deck.Cards.RemoveRange(this.player.Deck.Cards.Count - 5, this.player.Deck.Cards.Count);
+            this.player.Deck.Cards.RemoveRange(0, 5);
             return this.player;
             }
         }

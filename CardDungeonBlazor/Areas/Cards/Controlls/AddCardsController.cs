@@ -14,10 +14,11 @@ namespace CardDungeonBlazor.Areas.Cards.Controlls
 
         public AddCardFormModel Model;
 
-        private readonly GetViewModelsFromServiceModels Get;
+        public GetViewModelsFromServiceModels Get;
 
         protected override void OnInitialized ()
             {
+            this.Get = new();
             this.Model = new();
             this.Model.CardTypes = this.Get.GetCardTypeViewModels(this.Service.GetCardTypeViewModels());
             base.OnInitialized();
