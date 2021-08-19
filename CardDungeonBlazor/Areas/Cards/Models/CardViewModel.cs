@@ -15,5 +15,7 @@
         public int Value { get; set; }
 
         public int Offcet { get; set; } = 0;
+
+        public bool IsHidden { get; set; }
         }
     }

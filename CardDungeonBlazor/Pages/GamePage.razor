@@ -1,10 +1,11 @@
 ﻿@page "/game/main"
+@using BlazorAnimate
 @using CardDungeonBlazor.Areas.Cards.Models
 @using CardDungeonBlazor.Areas.Cards.Views
 @inherits GameController
 <MudItem Class="player2-deck-position">
     @{ int offcet = 0;
-        int z = Model.PlayerModel1.Deck.Cards.Count;
+        int z = Model.PlayerModel2.Deck.Cards.Count;
         foreach (CardViewModel deck in Model.PlayerModel2.Deck.Cards)
         {
             deck.Offcet += offcet;
@@ -22,8 +23,10 @@
         int a = 0;
         foreach (CardViewModel card in Model.PlayerModel2.CardsInHeand)
         {
+            card.Offcet = 2 * a;
+            string style = $"animation-delay: {@card.Offcet}s;";
             <MudItem Class="d-flex align-center" @onclick="() => PlayCard(card.Id, Model.PlayerModel2.Name)">
-                <MudCard Class="player2-card-inhand">
+                <MudCard Class="player2-card-inhand" Style="@style">
                     <MudCardMedia Image="@card.ImageUrl" />
                     <MudCardContent>
                         <MudText Typo="Typo.h5">@card.Name</MudText>
@@ -31,13 +34,69 @@
                     </MudCardContent>
                 </MudCard>
             </MudItem>
+                    a++;
         }
-        a++;
+
     }
 </MudGrid>
 <MudText Class="player2-health-position">@Model.PlayerModel2.Health</MudText>
 <MudText Class="player2-energy-position">@Model.PlayerModel2.Energy</MudText>
 <MudButton Class="endturn-button-position" @onclick="EndTurn">End Turn</MudButton>
+<MudItem Class="discardpile-position">
+    @{
+        int offcet = 0;
+        int z = Model.PlayerModel1.Deck.Cards.Count;
+        if (Model.PlayerModel2.DiscardPile.Any())
+        {
+                    foreach (CardViewModel card in Model.PlayerModel2.DiscardPile)
+        {
+            card.Offcet += offcet;
+            <CardInDeck Model="@card" z="@z"></CardInDeck>
+            if (z > 0 && offcet < Model.PlayerModel2.Deck.Cards.Count * 5)
+            {
+                offcet += 5;
+                z--;
+            }
+        }
+        }
+
+    }
+</MudItem>
+<MudItem Class="discardpile-position">
+    @{
+        int offcet = 0;
+        int z = Model.PlayerModel1.Deck.Cards.Count;
+        if (Model.PlayerModel1.DiscardPile.Any())
+        {
+            foreach (CardViewModel card in Model.PlayerModel1.DiscardPile)
+        {
+            card.Offcet += offcet;
+            <CardInDeck Model="@card" z="@z"></CardInDeck>
+            if (z > 0 && offcet < Model.PlayerModel1.Deck.Cards.Count * 5)
+            {
+                offcet += 5;
+                z--;
+            }
+        }
+        }
+        
+    }
+</MudItem>
+@if (Model.PlayedCard != null)
+{
+    <MudGrid Class="played-card-position played-card-animation">
+<MudItem>
+                <MudCard Class="player2-card-inhand">
+                    <MudCardMedia Image="@Model.PlayedCard.ImageUrl" />
+                    <MudCardContent>
+                        <MudText Typo="Typo.h5">@Model.PlayedCard.Name</MudText>
+                        <MudText Typo="Typo.body2">@Model.PlayedCard.Value @Model.PlayedCard.CardType @Model.PlayedCard.Cost</MudText>     
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+    </MudGrid>
+}
+
 <MudText Class="player1-health-position">@Model.PlayerModel1.Health</MudText>
 <MudText Class="player1-energy-position">@Model.PlayerModel1.Energy</MudText>
 <MudItem Class="player1-deck-position">
@@ -47,19 +106,31 @@
         {
             deck.Offcet += offcet;
             <CardInDeck Model="@deck" z="@z"></CardInDeck>
-            if (z > 0 && offcet < Model.PlayerModel1.Deck.Cards.Count * 5)
+        if (z > 0 && offcet < Model.PlayerModel1.Deck.Cards.Count * 5)
             {
                 offcet += 5;
                 z--;
             }
+            Task.Delay(20);
         }
     }
 </MudItem>
 <MudGrid Class="player1-hand-position">
     @{
+        double count = 50;
         foreach (var card in Model.PlayerModel1.CardsInHeand)
         {
-            <MudItem Class="d-flex align-center" @onclick="() => PlayCard(card.Id, Model.PlayerModel1.Name)">
+            string cardStyle;
+            if (card.IsHidden)
+            {
+                cardStyle = "display: none;";
+            }
+            else
+            {
+                cardStyle = "display: block;";
+            }    
+            double ofccet= 10 * count;
+             <MudItem Class="d-flex align-center" @onclick="() => PlayCard(card.Id, Model.PlayerModel1.Name)" Style="@cardStyle">
                 <MudCard Class="player1-card-inhand">
                     <MudCardMedia Image="@card.ImageUrl" />
                     <MudCardContent>
@@ -68,6 +139,11 @@
                     </MudCardContent>
                 </MudCard>
             </MudItem>
+            <Animate Animation ="Animations.ZoomInLeft" Duration="TimeSpan.FromMilliseconds(ofccet)" IsManual="@isDrawAnimationManual" Delay="TimeSpan.FromMilliseconds(ofccet)" @ref="hand">
+               
+            </Animate>
+            
+            count += 10;
         }
     }
 </MudGrid>

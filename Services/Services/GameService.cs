@@ -30,6 +30,15 @@ namespace Services.Services
             game.PlayerModel2.Health = this.GameManager.player2.Health;
             game.PlayerModel1.Energy = this.GameManager.player1.Energy;
             game.PlayerModel2.Energy = this.GameManager.player2.Energy;
+            if (game.PlayerModel1.CardsInHeand.Any(c => c.Id == cardId) && game.PlayerModel1.Name == playerName)
+                {
+                game.PlayerModel1.CardsInHeand.Remove(game.PlayerModel1.CardsInHeand.Find(c => c.Id == cardId));
+                }
+            else
+                {
+                game.PlayerModel2.CardsInHeand.Remove(game.PlayerModel2.CardsInHeand.Find(c => c.Id == cardId));
+
+                }
             return game;
             }
         public DecksServiceModel GetDeck ( string playerName )
@@ -187,10 +196,10 @@ namespace Services.Services
             return player;
             }
 
-        public async Task<List<CardServiceModel>> GetCardsInHand ()
+        public List<CardServiceModel> GetCardsInHand ()
             {
             List<CardServiceModel> cards = new();
-            await this.GameManager.Update(GameEvents.StartTurn);
+            this.GameManager.Update(GameEvents.StartTurn);
             PlayerModel player = this.GameManager.player;
             string type;
             foreach (CardModel card in player.CardsInHeand)

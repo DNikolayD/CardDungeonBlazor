@@ -11,6 +11,7 @@ namespace CardDungeonBlazor.Areas.Cards
             this.Health = 100;
             this.Deck = new DecksViewModel();
             this.CardsInHeand = new List<CardViewModel>();
+            this.DiscardPile = new();
             }
 
         public string Name { get; set; }
@@ -26,5 +27,7 @@ namespace CardDungeonBlazor.Areas.Cards
         public DecksViewModel Deck { get; set; }
 
         public List<CardViewModel> CardsInHeand { get; set; }
+
+        public List<CardViewModel> DiscardPile { get; set; }
         }
     }

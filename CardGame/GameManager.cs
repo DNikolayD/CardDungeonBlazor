@@ -34,7 +34,7 @@ namespace CardGame
                         if (this.events != events)
                             {
                             this.events = events;
-                            this.Effect(paramsAray.FirstOrDefault());
+                            await this.Effect(paramsAray.FirstOrDefault());
                             }
                         else
                             {
@@ -44,19 +44,20 @@ namespace CardGame
                     case GameEvents.EndTurn:
                         this.player1.Energy = 3;
                         this.player2.Energy = 3;
-                        this.isPlayer1sTurn = !this.isPlayer1sTurn;
                         if (this.isPlayer1sTurn)
                             {
-                            this.player1.Deck.Cards.AddRange(this.player1.CardsInHeand);
-                            this.player1.CardsInHeand.RemoveRange(0, this.player1.CardsInHeand.Count);
-                            this.player = this.player1;
+                            this.player1.Deck.Cards.AddRange(this.player1.DescardPile);
+                            this.player1.DescardPile.RemoveRange(0, this.player1.DescardPile.Count);
+                            this.player = this.player2;
                             }
                         else
                             {
-                            this.player1.Deck.Cards.AddRange(this.player1.CardsInHeand);
-                            this.player1.CardsInHeand.RemoveRange(0, this.player1.CardsInHeand.Count);
-                            this.player = this.player2;
+                            this.player2.Deck.Cards.AddRange(this.player2.DescardPile);
+                            this.player2.DescardPile.RemoveRange(0, this.player2.DescardPile.Count);
+                            this.player = this.player1;
                             }
+                        this.isPlayer1sTurn = !this.isPlayer1sTurn;
+
                         break;
                     case GameEvents.StartTurn:
                         if (this.player.CardsInHeand.Count == 5)
@@ -92,19 +93,22 @@ namespace CardGame
 		 }
 		*/
             }
-        private async void Effect ( string id )
+        private async Task Effect ( string id )
             {
             CardModel card = this.player.Deck.Cards.FirstOrDefault(c => c.Id == id);
             CardsService cardsService = new(card);
             List<PlayerModel> playerStates;
             if (this.isPlayer1sTurn)
                 {
-
+                this.player1.CardsInHeand.Remove(card);
+                this.player1.DescardPile.Add(card);
                 playerStates = cardsService.TakeEffect(this.player1, this.player2);
 
                 }
             else
                 {
+                this.player2.CardsInHeand.Remove(card);
+                this.player2.DescardPile.Add(card);
                 playerStates = cardsService.TakeEffect(this.player2, this.player1);
                 }
             this.player1 = playerStates.FirstOrDefault(x => x.Name == this.player1.Name);
@@ -123,7 +127,10 @@ namespace CardGame
                 this.player = this.player2;
                 }
             PlayersService playersService = new(this.player);
-            this.player = playersService.Draw();
+            while (this.player.CardsInHeand.Count != 5)
+                {
+                this.player = playersService.Draw();
+                }
             if (this.player.Name == this.player1.Name)
                 {
                 this.player1 = this.player;

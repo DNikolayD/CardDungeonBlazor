@@ -9,6 +9,7 @@ namespace CardDungeonBlazor.Areas.Cards.Controlls
         {
         [Inject]
         protected CardsService Service { get; set; }
+
         [Inject]
         protected NavigationManager NavigationManager { get; set; }
 

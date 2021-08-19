@@ -64,7 +64,7 @@ a, .btn-link {
 }
 .player1-card-inhand{
     width: 200px;
-    height:200px;
+    height: 200px;
 }
 .player1-hand-position{
     position: absolute;
@@ -85,6 +85,7 @@ a, .btn-link {
 }
 
 .player2-card-inhand {
+    animation: ease-in drawanimaton; 
     width: 200px;
     height: 200px;
 }
@@ -118,6 +119,56 @@ a, .btn-link {
 .endturn-button-position{
     position: absolute;
     top: 200px;
+}
+@keyframes drawanimaton{
+    0%{
+        transform: translateX(200%);
+    }
+    100%{
+        transform: translateX(0);
+    }
+}
+.player1-card-inhand:active{
+    animation: playanimation 1s linear 1 normal forwards;
+}
+
+@keyframes playanimation {
+    0%{
+        transform: translateX(0);
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-200%);
+        position: absolute;
+    }
+    100% {
+        transform: translateY(-200%);
+        position: absolute;
+        transform: translateX(-100%);
+    }
+}
+.played-card-position{
+    position: absolute;
+    top: 500px;
+    left: 600px;
+}
+.played-card-animation{
+    animation-delay: 1s; animation: discard 1s linear 1;
+}
+
+@keyframes discard{
+    0%{
+        transform: translateX(0);
+    }
+    100%{
+        transform: translateX(80%);
+    }
+}
+
+.discardpile-position {
+    position: absolute;
+    top: 550px;
+    left: 1550px;
 }
 
 

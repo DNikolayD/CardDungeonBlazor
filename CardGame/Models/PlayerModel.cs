@@ -8,8 +8,9 @@ namespace CardGame.Models
             {
             this.Energy = 3;
             this.Health = 100;
-            this.Deck = new DeckModel();
-            this.CardsInHeand = new List<CardModel>();
+            this.Deck = new();
+            this.CardsInHeand = new();
+            this.DescardPile = new();
             }
 
         public string Name { get; set; }
@@ -25,5 +26,7 @@ namespace CardGame.Models
         public DeckModel Deck { get; set; }
 
         public List<CardModel> CardsInHeand { get; set; }
+
+        public List<CardModel> DescardPile { get; set; }
         }
     }
