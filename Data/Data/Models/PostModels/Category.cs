@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using CardDungeonBlazor.Data.Models.Common;
+using static DataConstraints.CategoryConstraints;
 
 namespace CardDungeonBlazor.Data.Models.PostModels
     {
@@ -15,9 +16,11 @@ namespace CardDungeonBlazor.Data.Models.PostModels
             }
 
         [Required]
+        [MaxLength(NameMaxLength)]
         public string Name { get; set; }
 
         [Required]
+        [MaxLength(DescriptionMaxLength)]
         public string Description { get; set; }
 
         public virtual ICollection<Post> Posts { get; set; }

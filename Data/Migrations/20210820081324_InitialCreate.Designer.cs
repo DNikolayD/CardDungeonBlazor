@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210810075226_InitialCreate")]
+    [Migration("20210820081324_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,21 +20,6 @@ namespace Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("ApplicationUserDeck", b =>
-                {
-                    b.Property<string>("CreatedDecksId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UsersId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("CreatedDecksId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("ApplicationUserDeck");
-                });
 
             modelBuilder.Entity("CardDungeonBlazor.Data.Models.CardModels.Card", b =>
                 {
@@ -58,7 +43,8 @@ namespace Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int?>("Duration")
                         .HasColumnType("int");
@@ -67,6 +53,7 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ImageUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
@@ -77,7 +64,8 @@ namespace Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("Value")
                         .HasColumnType("int");
@@ -150,7 +138,7 @@ namespace Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedByUserId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -163,7 +151,8 @@ namespace Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<DateTime?>("EditedOn")
                         .HasColumnType("datetime2");
@@ -176,9 +165,12 @@ namespace Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedByUserId");
 
                     b.ToTable("Decks");
                 });
@@ -196,7 +188,8 @@ namespace Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<DateTime?>("EditedOn")
                         .HasColumnType("datetime2");
@@ -209,7 +202,8 @@ namespace Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
@@ -251,7 +245,8 @@ namespace Data.Migrations
 
                     b.Property<string>("TextContent")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
 
                     b.HasKey("Id");
 
@@ -298,11 +293,13 @@ namespace Data.Migrations
 
                     b.Property<string>("TextContent")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
@@ -554,6 +551,9 @@ namespace Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("DeckId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
@@ -569,24 +569,11 @@ namespace Data.Migrations
                     b.Property<string>("RoleId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.HasIndex("DeckId");
+
                     b.HasIndex("RoleId");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
-                });
-
-            modelBuilder.Entity("ApplicationUserDeck", b =>
-                {
-                    b.HasOne("CardDungeonBlazor.Data.Models.CardModels.Deck", null)
-                        .WithMany()
-                        .HasForeignKey("CreatedDecksId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CardDungeonBlazor.Data.Models.User.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("CardDungeonBlazor.Data.Models.CardModels.Card", b =>
@@ -619,6 +606,16 @@ namespace Data.Migrations
                     b.Navigation("Card");
 
                     b.Navigation("Deck");
+                });
+
+            modelBuilder.Entity("CardDungeonBlazor.Data.Models.CardModels.Deck", b =>
+                {
+                    b.HasOne("CardDungeonBlazor.Data.Models.User.ApplicationUser", "CreatedByUser")
+                        .WithMany("CreatedDecks")
+                        .HasForeignKey("CreatedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("CreatedByUser");
                 });
 
             modelBuilder.Entity("CardDungeonBlazor.Data.Models.PostModels.Comment", b =>
@@ -711,6 +708,10 @@ namespace Data.Migrations
 
             modelBuilder.Entity("CardDungeonBlazor.Data.Models.User.ApplicationUser", b =>
                 {
+                    b.HasOne("CardDungeonBlazor.Data.Models.CardModels.Deck", null)
+                        .WithMany("Users")
+                        .HasForeignKey("DeckId");
+
                     b.HasOne("CardDungeonBlazor.Data.Models.User.ApplicationRole", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId");
@@ -726,6 +727,8 @@ namespace Data.Migrations
             modelBuilder.Entity("CardDungeonBlazor.Data.Models.CardModels.Deck", b =>
                 {
                     b.Navigation("Cards");
+
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("CardDungeonBlazor.Data.Models.PostModels.Category", b =>
@@ -743,6 +746,8 @@ namespace Data.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("CreatedCards");
+
+                    b.Navigation("CreatedDecks");
 
                     b.Navigation("Posts");
                 });

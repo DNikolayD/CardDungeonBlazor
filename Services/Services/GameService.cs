@@ -25,6 +25,10 @@ namespace Services.Services
             {
             PlayerModel player = GetPlayer(game, playerName);
             CardModel playedCard = player.CardsInHeand.FirstOrDefault(c => c.Id == cardId);
+            if (player.Energy < playedCard.Cost)
+                {
+                return game;
+                }
             await this.GameManager.Update(GameEvents.SelectCard, new string[] { cardId });
             game.PlayerModel1.Health = this.GameManager.player1.Health;
             game.PlayerModel2.Health = this.GameManager.player2.Health;
@@ -41,10 +45,10 @@ namespace Services.Services
                 }
             return game;
             }
-        public DecksServiceModel GetDeck ( string playerName )
+        public DecksServiceModel GetDeck ( string playerName, string id)
             {
             DecksServiceModel viewModel = new();
-            IQueryable<CardDeck> deck = this.data.CardDecks.Where(cd => cd.DeckId == this.data.Decks.FirstOrDefault().Id);
+            IQueryable<CardDeck> deck = this.data.CardDecks.Where(cd => cd.DeckId == id);
             foreach (CardDeck cardDeck in deck)
                 {
                 Card card = this.data.Cards.FirstOrDefault(c => c.Id == cardDeck.CardId);

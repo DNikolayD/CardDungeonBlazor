@@ -1,4 +1,4 @@
-﻿@page "/game/main"
+﻿@page "/game/main/{id}"
 @using BlazorAnimate
 @using CardDungeonBlazor.Areas.Cards.Models
 @using CardDungeonBlazor.Areas.Cards.Views
@@ -139,7 +139,7 @@
                     </MudCardContent>
                 </MudCard>
             </MudItem>
-            <Animate Animation ="Animations.ZoomInLeft" Duration="TimeSpan.FromMilliseconds(ofccet)" IsManual="@isDrawAnimationManual" Delay="TimeSpan.FromMilliseconds(ofccet)" @ref="hand">
+            <Animate Animation ="Animations.ZoomInLeft" Duration="TimeSpan.FromMilliseconds(ofccet)" IsManual="@isDrawAnimationManual" Delay="TimeSpan.FromMilliseconds(ofccet)">
                
             </Animate>
             

@@ -35,6 +35,11 @@ namespace CardDungeonBlazor.Data
                   .WithMany(c => c.Comments)
                   .HasForeignKey(c => c.PostId)
                   .OnDelete(DeleteBehavior.Restrict);
+            builder
+                .Entity<Deck>()
+                .HasOne(d => d.CreatedByUser)
+                .WithMany(u => u.CreatedDecks)
+                .OnDelete(DeleteBehavior.Restrict);
             base.OnModelCreating(builder);
             }
         }

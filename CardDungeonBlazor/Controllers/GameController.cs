@@ -15,6 +15,9 @@ namespace CardDungeonBlazor.Controllers
     {
     public class GameController : ComponentBase
         {
+        [Parameter]
+        public string Id { get; set; }
+
         [Inject]
         protected GameService Service { get; set; }
 
@@ -26,7 +29,6 @@ namespace CardDungeonBlazor.Controllers
 
         public GetViewModelsFromServiceModels Get;
 
-        public Animate hand;
 
         public bool cardIsPlayed = false;
 
@@ -42,8 +44,8 @@ namespace CardDungeonBlazor.Controllers
             this.Model.PlayerModel2.Name = "player2";
             GameServiceModel gameServiceModel = this.Get.GetGameServiceModel(this.Model);
             this.Service.GameManager = new GameManager(GameService.GetPlayer(gameServiceModel, this.Model.PlayerModel1.Name), GameService.GetPlayer(gameServiceModel, this.Model.PlayerModel2.Name));
-            this.Model.PlayerModel1.Deck = this.Get.GetDecksViewModel(this.Service.GetDeck(this.Model.PlayerModel1.Name));
-            this.Model.PlayerModel2.Deck = this.Get.GetDecksViewModel(this.Service.GetDeck(this.Model.PlayerModel2.Name));
+            this.Model.PlayerModel1.Deck = this.Get.GetDecksViewModel(this.Service.GetDeck(this.Model.PlayerModel1.Name, this.Id));
+            this.Model.PlayerModel2.Deck = this.Get.GetDecksViewModel(this.Service.GetDeck(this.Model.PlayerModel2.Name, this.Id));
             this.Model.PlayerModel1.CardsInHeand = this.Get.GetCardViewModels(this.Service.GetCardsInHand());
 
             }
@@ -53,20 +55,7 @@ namespace CardDungeonBlazor.Controllers
             {
             PlayerViewModel player = new();
             CardViewModel card = new();
-            if (this.Model.PlayerModel1.Name == playerName)
-                {
-                player = Model.PlayerModel1;
-                }
-            else
-                {
-                player = Model.PlayerModel2;
-                }
-            card = player.CardsInHeand.FirstOrDefault(c => c.Id == cardId);
-            if (card.Cost > player.Energy)
-                {
-                return;
-                }
-            if (player == Model.PlayerModel1)
+            if (player == this.Model.PlayerModel1)
                 {
                 this.Model.PlayedCard = this.Model.PlayerModel1.CardsInHeand.FirstOrDefault(c => c.Id == cardId);
 
@@ -75,9 +64,9 @@ namespace CardDungeonBlazor.Controllers
                 {
                 this.Model.PlayedCard = this.Model.PlayerModel2.CardsInHeand.FirstOrDefault(c => c.Id == cardId);
                 }
-            PlayedCard = this.Model.PlayedCard;
+            this.PlayedCard = this.Model.PlayedCard;
             this.Model = this.Get.GetGameViewModel(await this.Service.PlayCard(cardId, playerName, this.Get.GetGameServiceModel(this.Model)));
-            this.Model.PlayedCard = PlayedCard;
+            this.Model.PlayedCard = this.PlayedCard;
 
             await Task.Delay(20);
             if (this.Model.PlayerModel1.Name == playerName)
@@ -90,8 +79,7 @@ namespace CardDungeonBlazor.Controllers
                 this.Model.PlayedCard.Offcet = 0;
                 this.Model.PlayerModel2.DiscardPile.Add(this.Model.PlayedCard);
                 }
-            Task
-                .Delay(100);
+            _ = Task.Delay(100);
             this.Model.PlayedCard = null;
 
             }
@@ -116,8 +104,6 @@ namespace CardDungeonBlazor.Controllers
             await this.Service.EndTurn();
             if (this.Service.GameManager.player.Name == this.Model.PlayerModel2.Name)
                 {
-                this.isDrawAnimationManual = true;
-                this.hand.Run();
                 this.Model.PlayerModel2.CardsInHeand = this.Get.GetCardViewModels(this.Service.GetCardsInHand());
                 this.Model.PlayerModel1.DiscardPile = new();
                 }

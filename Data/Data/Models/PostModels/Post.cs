@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using CardDungeonBlazor.Data.Models.Common;
 using CardDungeonBlazor.Data.Models.User;
+using static DataConstraints.PostCostraints;
 
 namespace CardDungeonBlazor.Data.Models.PostModels
     {
@@ -16,9 +17,11 @@ namespace CardDungeonBlazor.Data.Models.PostModels
             }
 
         [Required]
+        [MaxLength(TitleMaxLength)]
         public string Title { get; set; }
 
         [Required]
+        [MaxLength(TextMaxLength)]
         public string TextContent { get; set; }
 
         [Required]

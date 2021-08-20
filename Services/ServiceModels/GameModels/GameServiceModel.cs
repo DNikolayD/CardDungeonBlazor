@@ -1,4 +1,6 @@
-﻿namespace Services.ServiceModels.GameModels
+﻿using Services.ServiceModels.CardsModels;
+
+namespace Services.ServiceModels.GameModels
     {
     public class GameServiceModel
         {
@@ -11,5 +13,6 @@
         public PlayerServiceModel PlayerModel1 { get; set; }
 
         public PlayerServiceModel PlayerModel2 { get; set; }
+
         }
     }

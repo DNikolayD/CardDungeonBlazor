@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using CardDungeonBlazor.Data.Models.Common;
 using CardDungeonBlazor.Data.Models.User;
+using static DataConstraints.DeckCostraints;
 
 namespace CardDungeonBlazor.Data.Models.CardModels
     {
@@ -17,9 +18,11 @@ namespace CardDungeonBlazor.Data.Models.CardModels
             }
 
         [Required]
+        [MaxLength(NameMaxLength)]
         public string Name { get; set; }
 
         [Required]
+        [MaxLength(DescriptionMaxLength)]
         public string Description { get; set; }
 
         [Required]
@@ -29,7 +32,7 @@ namespace CardDungeonBlazor.Data.Models.CardModels
 
         public string CreatedByUserId { get; set; }
 
-        // public virtual ApplicationUser CreatedByUser { get; set; }
+        public virtual ApplicationUser CreatedByUser { get; set; }
 
         public virtual ICollection<ApplicationUser> Users { get; set; }
         }
