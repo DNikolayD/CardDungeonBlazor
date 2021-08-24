@@ -85,17 +85,10 @@ namespace CardGame
                         return;
                     }
                 }
-
-            /* while (gameIsOn)
-		 {
-
-			 await Task.Delay(20);
-		 }
-		*/
             }
         private async Task Effect ( string id )
             {
-            CardModel card = this.player.Deck.Cards.FirstOrDefault(c => c.Id == id);
+            CardModel card = this.player.CardsInHeand.FirstOrDefault(c => c.Id == id);
             CardsService cardsService = new(card);
             List<PlayerModel> playerStates;
             if (this.isPlayer1sTurn)
@@ -120,10 +113,18 @@ namespace CardGame
             {
             if (this.isPlayer1sTurn)
                 {
+                if (player1.IsPoisoned)
+                    {
+                    player1.Health -= player.TurnsPoisoned;
+                    }
                 this.player = this.player1;
                 }
             else
                 {
+                if (player2.IsPoisoned)
+                    {
+                    player2.Health -= player.TurnsPoisoned;
+                    }
                 this.player = this.player2;
                 }
             PlayersService playersService = new(this.player);

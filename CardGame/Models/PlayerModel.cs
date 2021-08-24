@@ -28,5 +28,7 @@ namespace CardGame.Models
         public List<CardModel> CardsInHeand { get; set; }
 
         public List<CardModel> DescardPile { get; set; }
+
+        public int TurnsPoisoned { get; set; }
         }
     }

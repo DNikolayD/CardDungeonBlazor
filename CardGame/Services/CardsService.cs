@@ -14,6 +14,10 @@ namespace CardGame.Services
 
         public List<PlayerModel> TakeEffect ( PlayerModel player1, PlayerModel player2 )
             {
+            if (this.card == null)
+                {
+                return null;
+                }
             if (player1.Energy >= this.card.Cost)
                 {
                 switch (this.card.Type)
@@ -40,8 +44,18 @@ namespace CardGame.Services
                             }
                         break;
                     case TypeModel.Poison:
-                        player2.Health -= this.card.Value;
-                        player2.IsPoisoned = this.card.Type.Equals(TypeModel.Poison);
+                        if (!player2.IsPoisoned)
+                            {
+                            player2.Health -= this.card.Value;
+                            player2.IsPoisoned = this.card.Type.Equals(TypeModel.Poison);
+                            player2.TurnsPoisoned = this.card.Value;
+                            }
+                        else
+                            {
+                            player2.TurnsPoisoned += this.card.Value;
+                            player2.Health -= player2.TurnsPoisoned;
+                            }
+                       
                         break;
                     default:
                         break;

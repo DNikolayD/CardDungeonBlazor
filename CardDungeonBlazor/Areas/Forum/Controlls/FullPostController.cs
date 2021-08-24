@@ -41,6 +41,7 @@ namespace CardDungeonBlazor.Areas.Forum.Controlls
             {
             this.CommentModel.Username = this.HttpContext.HttpContext.User.Identity.Name;
             this.Service.AddComment(this.Id, this.Get.GetCommentServiceModel(this.CommentModel));
+            this.Model = this.Get.GetFullPostViewModel(this.Service.GetFullPost(this.Id));
             this.addingComment = false;
             }
 

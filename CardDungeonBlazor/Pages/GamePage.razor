@@ -40,6 +40,7 @@
     }
 </MudGrid>
 <MudText Class="player2-health-position">@Model.PlayerModel2.Health</MudText>
+<MudText Class="player2-armor-position">@Model.PlayerModel2.Deffence</MudText>
 <MudText Class="player2-energy-position">@Model.PlayerModel2.Energy</MudText>
 <MudButton Class="endturn-button-position" @onclick="EndTurn">End Turn</MudButton>
 <MudItem Class="discardpile-position">
@@ -98,6 +99,7 @@
 }
 
 <MudText Class="player1-health-position">@Model.PlayerModel1.Health</MudText>
+<MudText Class="player1-armor-position">@Model.PlayerModel1.Deffence</MudText>
 <MudText Class="player1-energy-position">@Model.PlayerModel1.Energy</MudText>
 <MudItem Class="player1-deck-position">
     @{ int offcet = 0;

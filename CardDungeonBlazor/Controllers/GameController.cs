@@ -53,9 +53,12 @@ namespace CardDungeonBlazor.Controllers
 
         public async Task PlayCard ( string cardId, string playerName )
             {
-            PlayerViewModel player = new();
+            PlayerViewModel player = new()
+                {
+                Name = playerName,
+            };
             CardViewModel card = new();
-            if (player == this.Model.PlayerModel1)
+            if (player.Name == this.Model.PlayerModel1.Name)
                 {
                 this.Model.PlayedCard = this.Model.PlayerModel1.CardsInHeand.FirstOrDefault(c => c.Id == cardId);
 

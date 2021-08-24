@@ -99,11 +99,21 @@ a, .btn-link {
     position:absolute;
     top: 900px;
 }
+.player1-armor-position {
+    position: absolute;
+    top: 900px;
+    left: 400px;
+}
 .player2-health-position{
     position: absolute;
     bottom: 400px;
 }
 
+.player2-armor-position {
+    position: absolute;
+    bottom: 400px;
+    left: 400px;
+}
 .player1-energy-position {
     position: absolute;
     top: 900px;

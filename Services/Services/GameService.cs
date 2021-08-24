@@ -34,6 +34,8 @@ namespace Services.Services
             game.PlayerModel2.Health = this.GameManager.player2.Health;
             game.PlayerModel1.Energy = this.GameManager.player1.Energy;
             game.PlayerModel2.Energy = this.GameManager.player2.Energy;
+            game.PlayerModel1.Deffence = this.GameManager.player1.Deffence;
+            game.PlayerModel2.Deffence = this.GameManager.player2.Deffence;
             if (game.PlayerModel1.CardsInHeand.Any(c => c.Id == cardId) && game.PlayerModel1.Name == playerName)
                 {
                 game.PlayerModel1.CardsInHeand.Remove(game.PlayerModel1.CardsInHeand.Find(c => c.Id == cardId));
@@ -59,7 +61,7 @@ namespace Services.Services
                     Id = card.Id,
                     CardType = this.data.CardTypes.FirstOrDefault(ct => ct.Id == card.CardTypeId).Name,
                     Name = card.Name,
-                    Cost = 1,
+                    Cost = card.Cost,
                     ImageUrl = card.ImageUrl,
                     Value = card.Value,
                     }
@@ -76,7 +78,7 @@ namespace Services.Services
                     {
                     model = TypeModel.Heal;
                     }
-                else if (cardService.CardType == "Deffence")
+                else if (cardService.CardType == "Defence")
                     {
                     model = TypeModel.Deffence;
                     }

@@ -86,7 +86,11 @@ namespace Services.Services
             {
             Card card = this.data.Cards.FirstOrDefault(c => c.Id == id && !c.IsDeleted);
             string createdOn = card.CreatedOn.ToShortDateString();
-            int duration = card.Duration.Value;
+            int duration = 0;
+            if (card.Duration.HasValue)
+                {
+                duration = card.Duration.Value;
+                }
 
             FullCardServiceModel viewModel = new()
                 {
