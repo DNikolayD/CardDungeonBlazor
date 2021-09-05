@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using CardDungeonBlazor.Data.Models.Common;
-using static DataConstraints.CategoryConstraints;
+using static DataConstraints.Category;
 
 namespace CardDungeonBlazor.Data.Models.PostModels
     {

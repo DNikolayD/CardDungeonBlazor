@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataConstraints
     {
-    public class PostCostraints
+    public class Post
         {
         public const int TitleMinLength = 1;
 

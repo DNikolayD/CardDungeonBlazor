@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using CardDungeonBlazor.Data.Models.Common;
-using static DataConstraints.DeckCostraints;
+using static DataConstraints.Deck;
 
 namespace CardDungeonBlazor.Areas.Cards.Models
     {

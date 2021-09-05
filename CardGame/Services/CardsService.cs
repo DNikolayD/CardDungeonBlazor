@@ -14,59 +14,70 @@ namespace CardGame.Services
 
         public List<PlayerModel> TakeEffect ( PlayerModel player1, PlayerModel player2 )
             {
-            if (this.card == null)
+            List<PlayerModel> players = new()
                 {
-                return null;
-                }
+                player1,
+                player2
+                };
             if (player1.Energy >= this.card.Cost)
                 {
                 switch (this.card.Type)
                     {
                     case TypeModel.Attack:
-                        if (player2.Deffence >= this.card.Value)
-                            {
-                            player2.Deffence -= this.card.Value;
-                            }
-                        else
-                            {
-                            int demage = this.card.Value - player2.Deffence;
-                            player2.Deffence = 0;
-                            player2.Health -= demage;
-                            }
+                        players = this.ResolveAttack(player1, player2);
                         break;
                     case TypeModel.Deffence:
-                        player1.Deffence += this.card.Value;
+                        players[0].Deffence += this.card.Value;
                         break;
                     case TypeModel.Heal:
-                        if (player1.Health != 100)
+                        if (players[0].Health != 100)
                             {
-                            player1.Health += this.card.Value;
+                            players[0].Health += this.card.Value;
                             }
                         break;
                     case TypeModel.Poison:
-                        if (!player2.IsPoisoned)
-                            {
-                            player2.Health -= this.card.Value;
-                            player2.IsPoisoned = this.card.Type.Equals(TypeModel.Poison);
-                            player2.TurnsPoisoned = this.card.Value;
-                            }
-                        else
-                            {
-                            player2.TurnsPoisoned += this.card.Value;
-                            player2.Health -= player2.TurnsPoisoned;
-                            }
-                       
+                        players[1] = this.ResolvePoison(players[1]);
                         break;
                     default:
                         break;
                     }
-                player1.Energy -= this.card.Cost;
+                players[0].Energy -= this.card.Cost;
                 }
-            return new List<PlayerModel>
+            return players;
+            }
+        private List<PlayerModel> ResolveAttack ( PlayerModel player1, PlayerModel player2 )
+            {
+            if (player2.Deffence >= this.card.Value)
+                {
+                player2.Deffence -= this.card.Value;
+                }
+            else
+                {
+                int demage = this.card.Value - player2.Deffence;
+                player2.Deffence = 0;
+                player2.Health -= demage;
+                }
+            return
+                new List<PlayerModel>
                   {
                         player1,
                         player2
                   };
+            }
+        private PlayerModel ResolvePoison ( PlayerModel player2 )
+            {
+            if (!player2.IsPoisoned)
+                {
+                player2.Health -= this.card.Value;
+                player2.IsPoisoned = this.card.Type.Equals(TypeModel.Poison);
+                player2.TurnsPoisoned = this.card.Value;
+                }
+            else
+                {
+                player2.TurnsPoisoned += this.card.Value;
+                player2.Health -= player2.TurnsPoisoned;
+                }
+            return player2;
             }
         }
     }

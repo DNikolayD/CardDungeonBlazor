@@ -2,11 +2,12 @@
 using System.Linq;
 using CardDungeonBlazor.Data;
 using CardDungeonBlazor.Data.Models.PostModels;
+using Services.Interfaces;
 using Services.ServiceModels.ForumsModels;
 
 namespace Services.Services
     {
-    public class CategoriesService
+    public class CategoriesService : ICategoriesService
         {
         private readonly ApplicationDbContext data;
 

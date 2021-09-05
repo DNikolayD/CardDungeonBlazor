@@ -4,11 +4,12 @@ using System.Linq;
 using CardDungeonBlazor.Data;
 using CardDungeonBlazor.Data.Models.CardModels;
 using Microsoft.EntityFrameworkCore;
+using Services.Interfaces;
 using Services.ServiceModels.CardsModels;
 
 namespace Services.Services
     {
-    public class CardsService
+    public class CardsService : ICardsService
         {
         private readonly ApplicationDbContext data;
 
@@ -94,7 +95,7 @@ namespace Services.Services
 
             FullCardServiceModel viewModel = new()
                 {
-                CardType = card.CardType.Name,
+                Type = card.CardType.Name,
                 CreatedOn = createdOn,
                 Description = card.Description,
                 Duration = duration,

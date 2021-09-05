@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using static DataConstraints.CardConstraints;
+using static DataConstraints.Card;
 
 namespace CardDungeonBlazor.Areas.Cards.Models
     {

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CardDungeonBlazor.Areas.Cards.Models;
 using CardDungeonBlazor.ServiceToView;
 using Microsoft.AspNetCore.Components;
+using Services.Interfaces;
 using Services.Services;
 
 namespace CardDungeonBlazor.Areas.Cards.Controlls
@@ -12,7 +13,7 @@ namespace CardDungeonBlazor.Areas.Cards.Controlls
     public class ChooseDeckController : ComponentBase
         {
         [Inject]
-        protected DecksService Service { get; set; }
+        protected IDecksService Service { get; set; }
 
         [Inject]
         protected NavigationManager Navigation { get; set; }

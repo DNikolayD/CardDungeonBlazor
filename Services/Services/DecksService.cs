@@ -4,11 +4,12 @@ using System.Linq;
 using CardDungeonBlazor.Data;
 using CardDungeonBlazor.Data.Models.CardModels;
 using Microsoft.EntityFrameworkCore;
+using Services.Interfaces;
 using Services.ServiceModels.CardsModels;
 
 namespace Services.Services
     {
-    public class DecksService
+    public class DecksService : IDecksService
         {
         private readonly ApplicationDbContext data;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using CardDungeonBlazor.Data.Models.Common;
 using CardDungeonBlazor.Data.Models.User;
-using static DataConstraints.CardConstraints;
+using static DataConstraints.Card;
 
 namespace CardDungeonBlazor.Data.Models.CardModels
     {

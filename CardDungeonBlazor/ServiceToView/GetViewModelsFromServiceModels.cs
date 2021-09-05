@@ -98,7 +98,7 @@ namespace CardDungeonBlazor.ServiceToView
                 {
                 CardAddedToTheDeckServiceModel cardAddedToTheDeckServiceModel = new()
                     {
-                    CardType = cardAddedToTheDeckViewModel.CardType,
+                    Type = cardAddedToTheDeckViewModel.Type,
                     Cost = cardAddedToTheDeckViewModel.Cost,
                     Id = cardAddedToTheDeckViewModel.Id,
                     ImageUrl = cardAddedToTheDeckViewModel.ImageUrl,
@@ -132,7 +132,7 @@ namespace CardDungeonBlazor.ServiceToView
             {
             CardViewModel cardViewModel = new()
                 {
-                CardType = cardServiceModel.CardType,
+                Type = cardServiceModel.CardType,
                 Cost = cardServiceModel.Cost,
                 Id = cardServiceModel.Id,
                 ImageUrl = cardServiceModel.ImageUrl,
@@ -174,7 +174,7 @@ namespace CardDungeonBlazor.ServiceToView
             {
             FullCardViewModel fullCardViewModel = new()
                 {
-                CardType = fullCardServiceModel.CardType,
+                Type = fullCardServiceModel.Type,
                 Cost = fullCardServiceModel.Cost,
                 CreatedOn = fullCardServiceModel.CreatedOn,
                 Description = fullCardServiceModel.Description,
@@ -249,7 +249,7 @@ namespace CardDungeonBlazor.ServiceToView
             {
             CardAddedToTheDeckViewModel cardAddedToTheDeckViewModel = new()
                 {
-                CardType = cardAddedToTheDeckServiceModel.CardType,
+                Type = cardAddedToTheDeckServiceModel.Type,
                 Cost = cardAddedToTheDeckServiceModel.Cost,
                 Id = cardAddedToTheDeckServiceModel.Id,
                 ImageUrl = cardAddedToTheDeckServiceModel.ImageUrl,
@@ -451,7 +451,7 @@ namespace CardDungeonBlazor.ServiceToView
             {
             CardServiceModel cardServiceModel = new()
                 {
-                CardType = cardViewModel.CardType,
+                CardType = cardViewModel.Type,
                 Cost = cardViewModel.Cost,
                 Id = cardViewModel.Id,
                 ImageUrl = cardViewModel.ImageUrl,

@@ -8,7 +8,7 @@
 
         public string ImageUrl { get; set; }
 
-        public string CardType { get; set; }
+        public string Type { get; set; }
 
         public int Cost { get; set; }
 

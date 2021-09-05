@@ -5,14 +5,18 @@ using CardDungeonBlazor.Data;
 using CardDungeonBlazor.Data.Models.CardModels;
 using CardGame;
 using CardGame.Models;
+using Services.Interfaces;
 using Services.ServiceModels.CardsModels;
 using Services.ServiceModels.GameModels;
 
 namespace Services.Services
     {
-    public class GameService
+    public class GameService : IGameService
         {
         private readonly ApplicationDbContext data;
+
+        private PlayerServiceModel player = new();
+        private PlayerServiceModel enemy = new();
 
         public GameService ( ApplicationDbContext data )
             {
@@ -30,12 +34,12 @@ namespace Services.Services
                 return game;
                 }
             await this.GameManager.Update(GameEvents.SelectCard, new string[] { cardId });
-            game.PlayerModel1.Health = this.GameManager.player1.Health;
-            game.PlayerModel2.Health = this.GameManager.player2.Health;
-            game.PlayerModel1.Energy = this.GameManager.player1.Energy;
-            game.PlayerModel2.Energy = this.GameManager.player2.Energy;
-            game.PlayerModel1.Deffence = this.GameManager.player1.Deffence;
-            game.PlayerModel2.Deffence = this.GameManager.player2.Deffence;
+            game.PlayerModel1.Health = this.GameManager.Player1.Health;
+            game.PlayerModel2.Health = this.GameManager.Player2.Health;
+            game.PlayerModel1.Energy = this.GameManager.Player1.Energy;
+            game.PlayerModel2.Energy = this.GameManager.Player2.Energy;
+            game.PlayerModel1.Deffence = this.GameManager.Player1.Deffence;
+            game.PlayerModel2.Deffence = this.GameManager.Player2.Deffence;
             if (game.PlayerModel1.CardsInHeand.Any(c => c.Id == cardId) && game.PlayerModel1.Name == playerName)
                 {
                 game.PlayerModel1.CardsInHeand.Remove(game.PlayerModel1.CardsInHeand.Find(c => c.Id == cardId));
@@ -43,11 +47,10 @@ namespace Services.Services
             else
                 {
                 game.PlayerModel2.CardsInHeand.Remove(game.PlayerModel2.CardsInHeand.Find(c => c.Id == cardId));
-
                 }
             return game;
             }
-        public DecksServiceModel GetDeck ( string playerName, string id)
+        public DecksServiceModel GetDeck ( string playerName, string id )
             {
             DecksServiceModel viewModel = new();
             IQueryable<CardDeck> deck = this.data.CardDecks.Where(cd => cd.DeckId == id);
@@ -86,9 +89,9 @@ namespace Services.Services
                     {
                     model = TypeModel.Poison;
                     };
-                if (playerName == this.GameManager.player1.Name)
+                if (playerName == this.GameManager.Player1.Name)
                     {
-                    this.GameManager.player1.Deck.Cards.Add(
+                    this.GameManager.Player1.Deck.Cards.Add(
                     new CardModel
                         {
                         Cost = cardService.Cost,
@@ -101,7 +104,7 @@ namespace Services.Services
                     }
                 else
                     {
-                    this.GameManager.player2.Deck.Cards.Add(
+                    this.GameManager.Player2.Deck.Cards.Add(
                     new CardModel
                         {
                         Cost = cardService.Cost,
@@ -115,8 +118,7 @@ namespace Services.Services
                 }
             return viewModel;
             }
-        public static PlayerModel GetPlayer ( GameServiceModel game,
-                                                    string playerName )
+        public static PlayerModel GetPlayer ( GameServiceModel game, string playerName )
             {
             PlayerModel player;
             PlayerServiceModel playerView;
@@ -206,31 +208,17 @@ namespace Services.Services
             {
             List<CardServiceModel> cards = new();
             this.GameManager.Update(GameEvents.StartTurn);
-            PlayerModel player = this.GameManager.player;
-            string type;
-            foreach (CardModel card in player.CardsInHeand)
+            if (this.player.Name == this.GameManager.Player1.Name)
                 {
-                if (card.Type.CompareTo(TypeModel.Attack) == TypeModel.Attack.CompareTo(card.Type))
-                    {
-                    type = "Attack";
-                    }
-                else if (card.Type == TypeModel.Deffence)
-                    {
-                    type = "Deffence";
-                    }
-                else if (card.Type == TypeModel.Heal)
-                    {
-                    type = "Heal";
-                    }
-                else
-                    {
-                    type = "Poison";
-                    }
+                this.player.Name = this.GameManager.Player1.Name;
+                }
+            foreach (CardServiceModel card in this.player.CardsInHeand)
+                {
                 cards.Add
                 (
                       new CardServiceModel
                           {
-                          CardType = type,
+                          CardType = card.CardType,
                           Cost = card.Cost,
                           Id = card.Id,
                           ImageUrl = this.data.Cards.FirstOrDefault(c => c.Id == card.Id).ImageUrl,

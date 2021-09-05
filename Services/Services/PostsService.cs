@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using CardDungeonBlazor.Data;
 using CardDungeonBlazor.Data.Models.PostModels;
+using Services.Interfaces;
 using Services.ServiceModels.ForumsModels;
 
 namespace Services.Services
     {
-    public class PostsService
+    public class PostsService : IPostsService
         {
 
         private readonly ApplicationDbContext data;

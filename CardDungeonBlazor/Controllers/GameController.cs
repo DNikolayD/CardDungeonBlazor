@@ -8,6 +8,7 @@ using CardDungeonBlazor.ServiceToView;
 using CardGame;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
+using Services.Interfaces;
 using Services.ServiceModels.GameModels;
 using Services.Services;
 
@@ -19,7 +20,7 @@ namespace CardDungeonBlazor.Controllers
         public string Id { get; set; }
 
         [Inject]
-        protected GameService Service { get; set; }
+        protected IGameService Service { get; set; }
 
         public GameViewModel Model { get; set; }
 
@@ -56,12 +57,11 @@ namespace CardDungeonBlazor.Controllers
             PlayerViewModel player = new()
                 {
                 Name = playerName,
-            };
+                };
             CardViewModel card = new();
             if (player.Name == this.Model.PlayerModel1.Name)
                 {
-                this.Model.PlayedCard = this.Model.PlayerModel1.CardsInHeand.FirstOrDefault(c => c.Id == cardId);
-
+                this.Model.PlayedCard = this.Model.PlayerModel1.CardsInHeand.FirstOrDefault(c => c.Id == cardId); 
                 }
             else
                 {
@@ -105,7 +105,8 @@ namespace CardDungeonBlazor.Controllers
         public async Task EndTurn ()
             {
             await this.Service.EndTurn();
-            if (this.Service.GameManager.player.Name == this.Model.PlayerModel2.Name)
+
+            if (this.Service.GameManager.GetPlayerName() == this.Model.PlayerModel2.Name)
                 {
                 this.Model.PlayerModel2.CardsInHeand = this.Get.GetCardViewModels(this.Service.GetCardsInHand());
                 this.Model.PlayerModel1.DiscardPile = new();

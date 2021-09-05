@@ -1,6 +1,7 @@
 ﻿using CardDungeonBlazor.Models;
 using CardDungeonBlazor.ServiceToView;
 using Microsoft.AspNetCore.Components;
+using Services.Interfaces;
 using Services.Services;
 
 namespace CardDungeonBlazor.Controllers
@@ -8,7 +9,7 @@ namespace CardDungeonBlazor.Controllers
     public class EditCategoryController : ComponentBase
         {
         [Inject]
-        protected CategoriesService Service { get; set; }
+        protected ICategoriesService Service { get; set; }
 
         [Inject]
         protected NavigationManager Navigation { get; set; }

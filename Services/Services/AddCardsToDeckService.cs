@@ -2,11 +2,12 @@
 using CardDungeonBlazor.Data;
 using CardDungeonBlazor.Data.Models.CardModels;
 using Microsoft.EntityFrameworkCore;
+using Services.Interfaces;
 using Services.ServiceModels.CardsModels;
 
 namespace Services.Services
     {
-    public class AddCardsToDeckService
+    public class AddCardsToDeckService : IAddCardsToDeckService
         {
         private readonly ApplicationDbContext data;
 
@@ -24,7 +25,7 @@ namespace Services.Services
                 CardAddedToTheDeckServiceModel model = new()
                     {
                     Id = card.Id,
-                    CardType = this.data.CardTypes.FirstOrDefault(x => x.Id == card.CardTypeId).Name,
+                    Type = this.data.CardTypes.FirstOrDefault(x => x.Id == card.CardTypeId).Name,
                     Name = card.Name,
                     ImageUrl = card.ImageUrl,
                     Value = card.Value,

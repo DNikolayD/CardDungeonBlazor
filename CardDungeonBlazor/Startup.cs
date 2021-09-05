@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MudBlazor.Services;
+using Services.Interfaces;
 using Services.Services;
 
 namespace CardDungeonBlazor
@@ -43,12 +44,12 @@ namespace CardDungeonBlazor
             services.AddControllers();
             services.AddHttpContextAccessor();
             services.AddSingleton<CardAddedToDeck>();
-            services.AddTransient<CardsService>();
-            services.AddTransient<DecksService>();
-            services.AddTransient<AddCardsToDeckService>();
-            services.AddTransient<GameService>();
-            services.AddTransient<CategoriesService>();
-            services.AddTransient<PostsService>();
+            services.AddTransient<ICardsService, CardsService>();
+            services.AddTransient<IDecksService, DecksService>();
+            services.AddTransient<IAddCardsToDeckService, AddCardsToDeckService>();
+            services.AddTransient<IGameService, GameService>();
+            services.AddTransient<ICategoriesService, CategoriesService>();
+            services.AddTransient<IPostsService, PostsService>();
             }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

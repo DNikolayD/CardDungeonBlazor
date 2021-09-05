@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataConstraints
     {
-    public class CommentConstraints
+    public class Comment
         {
         public const int TextMinLength = 1;
 

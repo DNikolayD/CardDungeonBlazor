@@ -1,6 +1,7 @@
 ﻿using CardDungeonBlazor.Areas.Cards.Models;
 using CardDungeonBlazor.ServiceToView;
 using Microsoft.AspNetCore.Components;
+using Services.Interfaces;
 using Services.Services;
 
 namespace CardDungeonBlazor.Areas.Cards.Controlls
@@ -8,7 +9,7 @@ namespace CardDungeonBlazor.Areas.Cards.Controlls
     public class AddCardsController : ComponentBase
         {
         [Inject]
-        protected CardsService Service { get; set; }
+        protected ICardsService Service { get; set; }
 
         [Inject]
         protected NavigationManager NavigationManager { get; set; }

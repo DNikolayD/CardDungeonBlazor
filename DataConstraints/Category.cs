@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataConstraints
     {
-    public class DeckCostraints
+    public class Category
         {
         public const int NameMinLength = 3;
 
@@ -14,6 +14,6 @@ namespace DataConstraints
 
         public const int DescriptionMinLength = 5;
 
-        public const int DescriptionMaxLength = 200;
+        public const int DescriptionMaxLength = 20;
         }
     }

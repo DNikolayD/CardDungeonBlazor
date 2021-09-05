@@ -2,6 +2,7 @@
 using CardDungeonBlazor.ServiceToView;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http;
+using Services.Interfaces;
 using Services.Services;
 
 namespace CardDungeonBlazor.Areas.Forum.Controlls
@@ -9,11 +10,10 @@ namespace CardDungeonBlazor.Areas.Forum.Controlls
     public class FullPostController : ComponentBase
         {
         [Inject]
-        protected PostsService Service { get; set; }
+        protected IPostsService Service { get; set; }
 
         [Inject]
         protected IHttpContextAccessor HttpContext { get; set; }
-
 
         [Inject]
         protected NavigationManager Navigation { get; set; }

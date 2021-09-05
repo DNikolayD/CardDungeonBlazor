@@ -8,20 +8,31 @@ namespace CardGame
     {
     public class GameManager
         {
-        public PlayerModel player1;
-        public PlayerModel player2;
 
-        public PlayerModel player = new();
+        private PlayerModel player = new();
+        private PlayerModel enemy = new();
+
         private bool gameIsOn = true;
         private bool isPlayer1sTurn = true;
 
         private GameEvents events;
         public GameManager ( PlayerModel player1, PlayerModel player2 )
             {
-            this.player1 = player1;
-            this.player2 = player2;
+            this.Player1 = player1;
+            this.Player2 = player2;
             }
 
+        public PlayerModel Player1 { get; set; }
+        public PlayerModel Player2 { get; set; }
+
+        public string GetPlayerName ()
+            {
+            return this.player.Name;
+            }
+        public string GetEnemyName ()
+            {
+            return this.enemy.Name;
+            }
 
         public async Task Update ( GameEvents events, params string[] paramsAray )
             {
@@ -42,40 +53,13 @@ namespace CardGame
                             }
                         break;
                     case GameEvents.EndTurn:
-                        this.player1.Energy = 3;
-                        this.player2.Energy = 3;
-                        if (this.isPlayer1sTurn)
-                            {
-                            this.player1.Deck.Cards.AddRange(this.player1.DescardPile);
-                            this.player1.DescardPile.RemoveRange(0, this.player1.DescardPile.Count);
-                            this.player = this.player2;
-                            }
-                        else
-                            {
-                            this.player2.Deck.Cards.AddRange(this.player2.DescardPile);
-                            this.player2.DescardPile.RemoveRange(0, this.player2.DescardPile.Count);
-                            this.player = this.player1;
-                            }
-                        this.isPlayer1sTurn = !this.isPlayer1sTurn;
-
+                        this.EndTurn();
                         break;
                     case GameEvents.StartTurn:
-                        if (this.player.CardsInHeand.Count == 5)
-                            {
-                            return;
-                            }
                         this.StartTurn();
                         break;
                     case GameEvents.TookEffect:
-                        if (this.events != events)
-                            {
-                            this.events = events;
-                            this.CheckIfDead();
-                            }
-                        else
-                            {
-                            return;
-                            }
+                        this.CheckIfDead();
                         break;
                     case GameEvents.Died:
                         this.gameIsOn = !this.gameIsOn;
@@ -90,74 +74,77 @@ namespace CardGame
             {
             CardModel card = this.player.CardsInHeand.FirstOrDefault(c => c.Id == id);
             CardsService cardsService = new(card);
-            List<PlayerModel> playerStates;
-            if (this.isPlayer1sTurn)
-                {
-                this.player1.CardsInHeand.Remove(card);
-                this.player1.DescardPile.Add(card);
-                playerStates = cardsService.TakeEffect(this.player1, this.player2);
-
-                }
-            else
-                {
-                this.player2.CardsInHeand.Remove(card);
-                this.player2.DescardPile.Add(card);
-                playerStates = cardsService.TakeEffect(this.player2, this.player1);
-                }
-            this.player1 = playerStates.FirstOrDefault(x => x.Name == this.player1.Name);
-            this.player2 = playerStates.FirstOrDefault(x => x.Name == this.player2.Name);
+            List<PlayerModel> players;
+            this.player.CardsInHeand.Remove(card);
+            this.player.DescardPile.Add(card);
+            players = cardsService.TakeEffect(this.player, this.enemy);
+            this.UpdatePlayersStatus();
             await this.Update(GameEvents.TookEffect);
+            }
+
+        private void EndTurn ()
+            {
+            this.player.Energy = 3;
+            this.player.Deck.Cards.AddRange(this.player.DescardPile);
+            this.player.DescardPile.RemoveRange(0, this.player.DescardPile.Count);
+            this.UpdatePlayersStatus();
+            this.isPlayer1sTurn = !this.isPlayer1sTurn;
             }
 
         private void StartTurn ()
             {
-            if (this.isPlayer1sTurn)
-                {
-                if (player1.IsPoisoned)
-                    {
-                    player1.Health -= player.TurnsPoisoned;
-                    }
-                this.player = this.player1;
-                }
-            else
-                {
-                if (player2.IsPoisoned)
-                    {
-                    player2.Health -= player.TurnsPoisoned;
-                    }
-                this.player = this.player2;
-                }
+            this.AssignPlayer();
+            this.PoisonEffect();
             PlayersService playersService = new(this.player);
             while (this.player.CardsInHeand.Count != 5)
                 {
                 this.player = playersService.Draw();
                 }
-            if (this.player.Name == this.player1.Name)
-                {
-                this.player1 = this.player;
-                }
-            else if (this.player.Name == this.player2.Name)
-                {
-                this.player2 = this.player;
-                }
+            this.UpdatePlayersStatus();
             }
 
-        public async void CheckIfDead ()
+        private async void CheckIfDead ()
             {
-            if (this.player1.Health <= 0 || this.player2.Health <= 0)
+            if (this.Player1.Health <= 0 || this.Player2.Health <= 0)
                 {
                 await this.Update(GameEvents.Died);
                 }
-            else
+            }
+        private void PoisonEffect ()
+            {
+            if (this.player.IsPoisoned)
                 {
-                await this.Update(this.events);
+                this.player.Health -= this.player.TurnsPoisoned;
+                this.player.TurnsPoisoned--;
+                this.player.IsPoisoned = this.player.TurnsPoisoned != 0;
+                this.UpdatePlayersStatus();
                 }
             }
-
-        public void AssignDecks ( DeckModel deckModel1, DeckModel deckModel2 )
+        private void AssignPlayer ()
             {
-            this.player1.Deck = deckModel1;
-            this.player2.Deck = deckModel2;
+            if (this.isPlayer1sTurn)
+                {
+                this.player = this.Player1;
+                this.enemy = this.Player2;
+                }
+            else
+                {
+                this.player = this.Player2;
+                this.enemy = this.Player1;
+                }
+            }
+        private void UpdatePlayersStatus ()
+            {
+            if (this.isPlayer1sTurn)
+                {
+                this.Player1 = this.player;
+                this.Player2 = this.enemy;
+                }
+            else
+                {
+                this.Player2 = this.player;
+                this.Player1 = this.enemy;
+                }
             }
         }
     }

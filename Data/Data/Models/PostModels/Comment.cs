@@ -2,13 +2,12 @@
 using System.ComponentModel.DataAnnotations;
 using CardDungeonBlazor.Data.Models.Common;
 using CardDungeonBlazor.Data.Models.User;
-using static DataConstraints.CommentConstraints;
+using static DataConstraints.Comment;
 
 namespace CardDungeonBlazor.Data.Models.PostModels
     {
     public class Comment : BaseModel<string>
         {
-
         public Comment ()
             {
             this.Id = Guid.NewGuid().ToString();

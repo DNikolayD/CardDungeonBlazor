@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Services.Interfaces;
 using Services.Services;
 
 namespace CardDungeonBlazor.Areas.Cards.Controlls
@@ -6,7 +7,7 @@ namespace CardDungeonBlazor.Areas.Cards.Controlls
     public class AddCardsToDeckController : ComponentBase
         {
         [Inject]
-        protected AddCardsToDeckService Service { get; set; }
+        protected IAddCardsToDeckService Service { get; set; }
 
         [Inject]
         protected NavigationManager Navigation { get; set; }
