@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using CardGame.Models;
+using CardGame;
 using Services.ServiceModels.CardsModels;
 using Services.ServiceModels.GameModels;
 
@@ -15,7 +12,10 @@ namespace Services.Interfaces
 
         DecksServiceModel GetDeck ( string playerName, string id );
 
-        List<CardServiceModel> GetCardsInHand ();
+        Task<List<CardServiceModel>> GetCardsInHand ();
+
+        public GameManager GameManager { get; set; }
+        public EnemyScript Enemy { get; set; }
 
         Task EndTurn ();
         }

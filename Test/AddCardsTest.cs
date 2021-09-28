@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Bunit;
+using CardDungeonBlazor.Areas.Cards.Views;
+using CardDungeonBlazor.Data;
 using Microsoft.AspNetCore.Components;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Services.ServiceModels.CardsModels;
 using Services.Services;
 using Xunit;
-using Microsoft.Extensions.DependencyInjection;
-using CardDungeonBlazor.Areas.Cards.Views;
-using Microsoft.EntityFrameworkCore;
-using CardDungeonBlazor.Data;
-using Microsoft.Extensions.Configuration;
 
 namespace Test
     {

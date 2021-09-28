@@ -3,7 +3,6 @@ using CardDungeonBlazor.ServiceToView;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http;
 using Services.Interfaces;
-using Services.Services;
 
 namespace CardDungeonBlazor.Areas.Forum.Controlls
     {

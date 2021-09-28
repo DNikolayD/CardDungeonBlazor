@@ -1,5 +1,6 @@
 ﻿using CardDungeonBlazor.Data.Models.CardModels;
 using CardDungeonBlazor.Data.Models.PostModels;
+using CardDungeonBlazor.Data.Models.User;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,7 @@ namespace CardDungeonBlazor.Data
         public ApplicationDbContext ( DbContextOptions<ApplicationDbContext> options )
               : base(options)
             {
+            this.SetUsers(users);
             }
 
         public DbSet<Card> Cards { get; set; }
@@ -26,6 +28,17 @@ namespace CardDungeonBlazor.Data
 
         public DbSet<Post> Posts { get; set; }
 
+        private DbSet<ApplicationUser> users;
+
+        public DbSet<ApplicationUser> GetUsers ()
+            {
+            return this.users;
+            }
+
+        public void SetUsers ( DbSet<ApplicationUser> value )
+            {
+            this.users = value;
+            }
 
         protected override void OnModelCreating ( ModelBuilder builder )
             {
@@ -39,6 +52,20 @@ namespace CardDungeonBlazor.Data
                 .Entity<Deck>()
                 .HasOne(d => d.CreatedByUser)
                 .WithMany(u => u.CreatedDecks)
+                .OnDelete(DeleteBehavior.Restrict);
+            base.OnModelCreating(builder);
+
+            builder
+                .Entity<Comment>()
+                .HasOne(d => d.PostedByUser)
+                .WithMany(u => u.Comments)
+                .OnDelete(DeleteBehavior.Restrict);
+            base.OnModelCreating(builder);
+
+            builder
+                .Entity<Post>()
+                .HasOne(d => d.PostedByUser)
+                .WithMany(u => u.Posts)
                 .OnDelete(DeleteBehavior.Restrict);
             base.OnModelCreating(builder);
             }

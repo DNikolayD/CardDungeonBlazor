@@ -12,14 +12,17 @@ namespace CardGame
         private PlayerModel player = new();
         private PlayerModel enemy = new();
 
-        private bool gameIsOn = true;
+
+        public int level = 0;
+        public bool gameIsOn = true;
         private bool isPlayer1sTurn = true;
 
         private GameEvents events;
-        public GameManager ( PlayerModel player1, PlayerModel player2 )
+        public GameManager ( PlayerModel player1, PlayerModel player2, int level )
             {
             this.Player1 = player1;
             this.Player2 = player2;
+            this.level = level;
             }
 
         public PlayerModel Player1 { get; set; }
@@ -42,15 +45,8 @@ namespace CardGame
                     {
 
                     case GameEvents.SelectCard:
-                        if (this.events != events)
-                            {
-                            this.events = events;
-                            await this.Effect(paramsAray.FirstOrDefault());
-                            }
-                        else
-                            {
-                            return;
-                            }
+                        this.events = events;
+                        await this.Effect(paramsAray.FirstOrDefault());
                         break;
                     case GameEvents.EndTurn:
                         this.EndTurn();

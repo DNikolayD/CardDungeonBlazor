@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Services.ServiceModels.UserModels;
 
 namespace Services.ServiceModels.CardsModels
     {
@@ -16,6 +17,8 @@ namespace Services.ServiceModels.CardsModels
         public string ImageUrl { get; set; }
 
         public int CardTypeId { get; set; }
+
+        public string UserName { get; set; }
 
         public virtual List<CardTypeServiceModel> CardTypes { get; set; }
 

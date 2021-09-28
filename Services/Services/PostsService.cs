@@ -20,7 +20,7 @@ namespace Services.Services
 
         public string GetUserId ( string name )
             {
-            return this.data.Users.FirstOrDefault(u => u.UserName == name).Id;
+            return this.data.GetUsers().FirstOrDefault(u => u.UserName == name).Id;
             }
 
         public void AddPost ( AddPostServiceModel model )
@@ -110,7 +110,7 @@ namespace Services.Services
             FullPostServiceModel model = new()
                 {
                 Comments = commentServices,
-                Username = this.data.Users.FirstOrDefault(u => u.Id == post.PostedByUserId).UserName,
+                Username = this.data.GetUsers().FirstOrDefault(u => u.Id == post.PostedByUserId).UserName,
                 CreatedOn = post.CreatedOn.ToShortDateString(),
                 Text = post.TextContent,
                 Image = post.Images,
@@ -128,7 +128,7 @@ namespace Services.Services
                 Image = model.Image,
                 Likes = model.Likes,
                 PostId = id,
-                PostedByUserId = this.data.Users.FirstOrDefault(u => u.UserName == model.Username).Id,
+                PostedByUserId = this.data.GetUsers().FirstOrDefault(u => u.UserName == model.Username).Id,
                 TextContent = model.Text,
                 };
             this.data.Comments.Add(comment);

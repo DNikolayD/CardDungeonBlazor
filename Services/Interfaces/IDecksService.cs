@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Services.ServiceModels.CardsModels;
 
 namespace Services.Interfaces
@@ -18,6 +14,8 @@ namespace Services.Interfaces
         string GetId ( string name );
 
         AddDecksServiceModel GetDeck ( string id );
+
+        void Delete ( string id );
 
         void Edit ( string id, AddDecksServiceModel model );
 

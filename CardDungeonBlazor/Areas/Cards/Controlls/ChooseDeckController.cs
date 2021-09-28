@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CardDungeonBlazor.Areas.Cards.Models;
+﻿using CardDungeonBlazor.Areas.Cards.Models;
 using CardDungeonBlazor.ServiceToView;
 using Microsoft.AspNetCore.Components;
 using Services.Interfaces;
-using Services.Services;
 
 namespace CardDungeonBlazor.Areas.Cards.Controlls
     {

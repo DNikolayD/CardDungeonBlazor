@@ -29,6 +29,7 @@ namespace Services.Services
                 Value = model.Value,
                 CreatedOn = DateTime.UtcNow,
                 Cost = model.Cost,
+                CreatedByUserId = this.data.GetUsers().FirstOrDefault(x => x.NormalizedUserName == model.UserName).Id,
                 };
             this.data.Cards.Add(dbCard);
             this.data.SaveChanges();

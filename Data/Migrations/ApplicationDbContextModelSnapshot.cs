@@ -213,6 +213,9 @@ namespace Data.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -248,6 +251,8 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ApplicationUserId");
+
                     b.HasIndex("PostId");
 
                     b.HasIndex("PostedByUserId");
@@ -258,6 +263,9 @@ namespace Data.Migrations
             modelBuilder.Entity("CardDungeonBlazor.Data.Models.PostModels.Post", b =>
                 {
                     b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CategoryId")
@@ -301,11 +309,53 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ApplicationUserId");
+
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("PostedByUserId");
 
                     b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("Data.Data.Models.Common.Image", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("EditedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte[]>("Img")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEdited")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
+
+                    b.ToTable("Image");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -564,8 +614,17 @@ namespace Data.Migrations
                     b.Property<bool>("IsEdited")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("Loses")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NickName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("RoleId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("Wins")
+                        .HasColumnType("int");
 
                     b.HasIndex("DeckId");
 
@@ -618,6 +677,10 @@ namespace Data.Migrations
 
             modelBuilder.Entity("CardDungeonBlazor.Data.Models.PostModels.Comment", b =>
                 {
+                    b.HasOne("CardDungeonBlazor.Data.Models.User.ApplicationUser", null)
+                        .WithMany("LikedComments")
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("CardDungeonBlazor.Data.Models.PostModels.Post", "Post")
                         .WithMany("Comments")
                         .HasForeignKey("PostId")
@@ -626,7 +689,7 @@ namespace Data.Migrations
                     b.HasOne("CardDungeonBlazor.Data.Models.User.ApplicationUser", "PostedByUser")
                         .WithMany("Comments")
                         .HasForeignKey("PostedByUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Post");
@@ -636,6 +699,10 @@ namespace Data.Migrations
 
             modelBuilder.Entity("CardDungeonBlazor.Data.Models.PostModels.Post", b =>
                 {
+                    b.HasOne("CardDungeonBlazor.Data.Models.User.ApplicationUser", null)
+                        .WithMany("LikedPosts")
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("CardDungeonBlazor.Data.Models.PostModels.Category", "Category")
                         .WithMany("Posts")
                         .HasForeignKey("CategoryId")
@@ -645,12 +712,21 @@ namespace Data.Migrations
                     b.HasOne("CardDungeonBlazor.Data.Models.User.ApplicationUser", "PostedByUser")
                         .WithMany("Posts")
                         .HasForeignKey("PostedByUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Category");
 
                     b.Navigation("PostedByUser");
+                });
+
+            modelBuilder.Entity("Data.Data.Models.Common.Image", b =>
+                {
+                    b.HasOne("CardDungeonBlazor.Data.Models.User.ApplicationUser", "User")
+                        .WithOne("ProfilePhoto")
+                        .HasForeignKey("Data.Data.Models.Common.Image", "UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -747,7 +823,13 @@ namespace Data.Migrations
 
                     b.Navigation("CreatedDecks");
 
+                    b.Navigation("LikedComments");
+
+                    b.Navigation("LikedPosts");
+
                     b.Navigation("Posts");
+
+                    b.Navigation("ProfilePhoto");
                 });
 #pragma warning restore 612, 618
         }

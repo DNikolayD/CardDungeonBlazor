@@ -1,6 +1,4 @@
-﻿using Services.ServiceModels.CardsModels;
-
-namespace Services.ServiceModels.GameModels
+﻿namespace Services.ServiceModels.GameModels
     {
     public class GameServiceModel
         {

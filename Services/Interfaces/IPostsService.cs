@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Services.ServiceModels.ForumsModels;
+﻿using Services.ServiceModels.ForumsModels;
 
 namespace Services.Interfaces
     {
@@ -14,6 +9,8 @@ namespace Services.Interfaces
         AllPostsServiceModel GetPosts ( string id );
 
         void Delete ( string id );
+
+        void AddPost ( AddPostServiceModel model );
 
         AddPostServiceModel GetPostsForm ( string id );
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CardDungeonBlazor.Data.Models.CardModels;
 using CardDungeonBlazor.Data.Models.Common;
 using CardDungeonBlazor.Data.Models.PostModels;
+using Data.Data.Models.Common;
 using Microsoft.AspNetCore.Identity;
 
 
@@ -18,7 +19,13 @@ namespace CardDungeonBlazor.Data.Models.User
             this.CreatedDecks = new HashSet<Deck>();
             this.Posts = new HashSet<Post>();
             this.Comments = new HashSet<Comment>();
+            this.LikedPosts = new HashSet<Post>();
+            this.LikedComments = new HashSet<Comment>();
             }
+
+        public string? NickName { get; set; }
+
+        public Image? ProfilePhoto { get; set; }
 
         public DateTime CreatedOn { get; set; }
 
@@ -33,6 +40,10 @@ namespace CardDungeonBlazor.Data.Models.User
 
         public virtual ApplicationRole Role { get; set; }
 
+        public int? Wins { get; set; }
+
+        public int? Loses { get; set; }
+
         public virtual ICollection<Card> CreatedCards { get; set; }
 
         public virtual ICollection<Deck> CreatedDecks { get; set; }
@@ -40,6 +51,10 @@ namespace CardDungeonBlazor.Data.Models.User
         public virtual ICollection<Post> Posts { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
+
+        public virtual ICollection<Post> LikedPosts { get; set; }
+
+        public virtual ICollection<Comment> LikedComments { get; set; }
 
         }
     }

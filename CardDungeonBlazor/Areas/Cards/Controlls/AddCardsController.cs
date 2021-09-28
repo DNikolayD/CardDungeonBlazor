@@ -1,8 +1,8 @@
 ﻿using CardDungeonBlazor.Areas.Cards.Models;
 using CardDungeonBlazor.ServiceToView;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Http;
 using Services.Interfaces;
-using Services.Services;
 
 namespace CardDungeonBlazor.Areas.Cards.Controlls
     {
@@ -10,6 +10,9 @@ namespace CardDungeonBlazor.Areas.Cards.Controlls
         {
         [Inject]
         protected ICardsService Service { get; set; }
+
+        [Inject]
+        protected IHttpContextAccessor HttpContext { get; set; }
 
         [Inject]
         protected NavigationManager NavigationManager { get; set; }
@@ -28,6 +31,7 @@ namespace CardDungeonBlazor.Areas.Cards.Controlls
 
         public void Submit ()
             {
+            string userName = this.HttpContext.HttpContext.User.Identity.Name;
             this.Service.Add(this.Get.GetAddCardsServiceModel(this.Model));
             this.NavigationManager.NavigateTo("/cards/all");
             }

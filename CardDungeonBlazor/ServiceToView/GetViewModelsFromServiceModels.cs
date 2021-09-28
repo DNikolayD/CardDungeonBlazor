@@ -48,7 +48,7 @@ namespace CardDungeonBlazor.ServiceToView
                 };
             return serviceModel;
             }
-        public AddCardsServiceModel GetAddCardsServiceModel ( AddCardFormModel formModel )
+        public AddCardsServiceModel GetAddCardsServiceModel ( AddCardFormModel formModel)
             {
             AddCardsServiceModel serviceModel = new()
                 {

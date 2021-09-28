@@ -15,8 +15,8 @@ namespace Services.Services
         {
         private readonly ApplicationDbContext data;
 
-        private PlayerServiceModel player = new();
-        private PlayerServiceModel enemy = new();
+        private readonly PlayerServiceModel player = new();
+        private readonly PlayerServiceModel enemy = new();
 
         public GameService ( ApplicationDbContext data )
             {
@@ -24,6 +24,8 @@ namespace Services.Services
             }
 
         public GameManager GameManager { get; set; }
+
+        public EnemyScript Enemy { get; set; }
 
         public async Task<GameServiceModel> PlayCard ( string cardId, string playerName, GameServiceModel game )
             {
@@ -204,28 +206,49 @@ namespace Services.Services
             return player;
             }
 
-        public List<CardServiceModel> GetCardsInHand ()
+        public async Task<List<CardServiceModel>> GetCardsInHand ()
             {
             List<CardServiceModel> cards = new();
-            this.GameManager.Update(GameEvents.StartTurn);
-            if (this.player.Name == this.GameManager.Player1.Name)
+            await this.GameManager.Update(GameEvents.StartTurn);
+            if (this.GameManager.GetPlayerName() == this.GameManager.Player1.Name)
                 {
                 this.player.Name = this.GameManager.Player1.Name;
+                foreach (CardModel card in this.GameManager.Player1.CardsInHeand)
+                    {
+                    cards.Add
+                    (
+                          new CardServiceModel
+                              {
+                              CardType = card.Type.ToString(),
+                              Cost = card.Cost,
+                              Id = card.Id,
+                              ImageUrl = this.data.Cards.FirstOrDefault(c => c.Id == card.Id).ImageUrl,
+                              Name = card.Name,
+                              Value = card.Value,
+                              }
+                    );
+                    }
+
                 }
-            foreach (CardServiceModel card in this.player.CardsInHeand)
+            if (this.GameManager.GetPlayerName() == this.GameManager.Player2.Name)
                 {
-                cards.Add
-                (
-                      new CardServiceModel
-                          {
-                          CardType = card.CardType,
-                          Cost = card.Cost,
-                          Id = card.Id,
-                          ImageUrl = this.data.Cards.FirstOrDefault(c => c.Id == card.Id).ImageUrl,
-                          Name = card.Name,
-                          Value = card.Value,
-                          }
-                );
+                this.player.Name = this.GameManager.Player2.Name;
+                foreach (CardModel card in this.GameManager.Player2.CardsInHeand)
+                    {
+                    cards.Add
+                    (
+                          new CardServiceModel
+                              {
+                              CardType = card.Type.ToString(),
+                              Cost = card.Cost,
+                              Id = card.Id,
+                              ImageUrl = this.data.Cards.FirstOrDefault(c => c.Id == card.Id).ImageUrl,
+                              Name = card.Name,
+                              Value = card.Value,
+                              }
+                    );
+                    }
+
                 }
             return cards;
             }
@@ -233,6 +256,14 @@ namespace Services.Services
         public async Task EndTurn ()
             {
             await this.GameManager.Update(GameEvents.EndTurn);
+
+            if (this.GameManager.GetPlayerName() != "bot")
+                {
+
+                }
+            else
+                {
+                }
             }
         }
     }

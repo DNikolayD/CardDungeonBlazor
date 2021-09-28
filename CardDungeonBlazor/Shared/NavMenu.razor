@@ -4,6 +4,18 @@
 @inject UserManager<ApplicationUser> UserManager
 <MudPaper Width="250px" Class="d-inline-flex py-3" Square="true">
     <MudNavMenu Class="mud-width-full">
+        <AuthorizeView>
+    <Authorized>
+        <MudNavLink Href="/profile/show/">Hello, @context.User.Identity.Name!</MudNavLink>
+        <form method="post" action="Identity/Account/LogOut">
+            <MudButton type="submit">Log out</MudButton>
+        </form>
+    </Authorized>
+    <NotAuthorized>
+        <MudLink Href="Identity/Account/Register">Register</MudLink>
+        <MudLink Href="Identity/Account/Login">Log in</MudLink>
+    </NotAuthorized>
+</AuthorizeView>
         <MudNavGroup Title="Cards" Icon="@Icons.Filled.Pages" IconColor="Color.Primary" Expanded="false">
             <MudNavLink Href="/cards/all" Icon="@Icons.Filled.Pages">All</MudNavLink>
             <MudNavLink Href="/cards/add" Icon="@Icons.Filled.Add">Add</MudNavLink>

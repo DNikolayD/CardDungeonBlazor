@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Linq.Queryable" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CardGame\CardGame.csproj" />
     <ProjectReference Include="..\Data\Data.csproj" />
   </ItemGroup>
