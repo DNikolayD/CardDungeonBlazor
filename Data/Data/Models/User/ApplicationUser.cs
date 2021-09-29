@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using CardDungeonBlazor.Data.Models.CardModels;
 using CardDungeonBlazor.Data.Models.Common;
 using CardDungeonBlazor.Data.Models.PostModels;
@@ -23,10 +24,11 @@ namespace CardDungeonBlazor.Data.Models.User
             this.LikedComments = new HashSet<Comment>();
             }
 
-        public string? NickName { get; set; }
+        public string NickName { get; set; }
 
-        public Image? ProfilePhoto { get; set; }
+        public Image ProfilePhoto { get; set; }
 
+        [Required]
         public DateTime CreatedOn { get; set; }
 
         public bool IsDeleted { get; set; }
@@ -40,9 +42,9 @@ namespace CardDungeonBlazor.Data.Models.User
 
         public virtual ApplicationRole Role { get; set; }
 
-        public int? Wins { get; set; }
+        public int Wins { get; set; }
 
-        public int? Loses { get; set; }
+        public int Loses { get; set; }
 
         public virtual ICollection<Card> CreatedCards { get; set; }
 

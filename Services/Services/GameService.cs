@@ -67,7 +67,7 @@ namespace Services.Services
                     CardType = this.data.CardTypes.FirstOrDefault(ct => ct.Id == card.CardTypeId).Name,
                     Name = card.Name,
                     Cost = card.Cost,
-                    ImageUrl = card.ImageUrl,
+                    // ImageUrl = card.ImageUrl,
                     Value = card.Value,
                     }
                 );
@@ -222,7 +222,7 @@ namespace Services.Services
                               CardType = card.Type.ToString(),
                               Cost = card.Cost,
                               Id = card.Id,
-                              ImageUrl = this.data.Cards.FirstOrDefault(c => c.Id == card.Id).ImageUrl,
+                              // ImageUrl = this.data.Cards.FirstOrDefault(c => c.Id == card.Id).ImageUrl,
                               Name = card.Name,
                               Value = card.Value,
                               }
@@ -242,7 +242,7 @@ namespace Services.Services
                               CardType = card.Type.ToString(),
                               Cost = card.Cost,
                               Id = card.Id,
-                              ImageUrl = this.data.Cards.FirstOrDefault(c => c.Id == card.Id).ImageUrl,
+                              // ImageUrl = this.data.Cards.FirstOrDefault(c => c.Id == card.Id).ImageUrl,
                               Name = card.Name,
                               Value = card.Value,
                               }

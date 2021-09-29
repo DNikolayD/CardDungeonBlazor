@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using CardDungeonBlazor.Data.Models.Common;
 using Microsoft.AspNetCore.Identity;
 
@@ -18,6 +19,7 @@ namespace CardDungeonBlazor.Data.Models.User
             this.CreatedOn = DateTime.UtcNow;
             }
 
+        [Required]
         public DateTime CreatedOn { get; set; }
         public bool IsDeleted { get; set; }
         public DateTime? DeletedOn { get; set; }

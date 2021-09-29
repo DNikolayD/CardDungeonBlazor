@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using CardDungeonBlazor.Data.Models.Common;
 using CardDungeonBlazor.Data.Models.User;
+using Data.Data.Models.Common;
 using static DataConstraints.Post;
 
 namespace CardDungeonBlazor.Data.Models.PostModels
@@ -39,6 +40,6 @@ namespace CardDungeonBlazor.Data.Models.PostModels
 
         public virtual ICollection<Comment> Comments { get; set; }
 
-        public string Images { get; set; }
+        public virtual List<Image> Images { get; set; }
         }
     }

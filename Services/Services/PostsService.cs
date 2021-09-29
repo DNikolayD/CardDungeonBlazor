@@ -29,7 +29,7 @@ namespace Services.Services
                 {
                 Title = model.Title,
                 CategoryId = model.CategoryId,
-                Images = model.Image,
+                // Images = model.Image,
                 TextContent = model.TextContent,
                 PostedByUserId = model.UserId
                 };
@@ -69,7 +69,7 @@ namespace Services.Services
             AddPostServiceModel model = new()
                 {
                 CategoryId = post.CategoryId,
-                Image = post.Images,
+                // Image = post.Images,
                 Likes = post.Likes,
                 TextContent = post.TextContent,
                 Title = post.Title,
@@ -81,7 +81,7 @@ namespace Services.Services
         public void Edit ( AddPostServiceModel model, string id )
             {
             Post post = this.data.Posts.FirstOrDefault(p => p.Id == id);
-            post.Images = model.Image;
+            // post.Images = model.Image;
             post.Title = model.Title;
             post.TextContent = model.TextContent;
             post.Likes = 0;
@@ -100,7 +100,7 @@ namespace Services.Services
                     new CommentServiceModel
                         {
                         CreatedOn = comment.CreatedOn.ToShortDateString(),
-                        Image = comment.Image,
+                        // Image = comment.Image,
                         Likes = comment.Likes,
                         Text = comment.TextContent,
                         Username = comment.PostedByUser.UserName,
@@ -113,7 +113,7 @@ namespace Services.Services
                 Username = this.data.GetUsers().FirstOrDefault(u => u.Id == post.PostedByUserId).UserName,
                 CreatedOn = post.CreatedOn.ToShortDateString(),
                 Text = post.TextContent,
-                Image = post.Images,
+                // Image = post.Images,
                 Likes = post.Likes,
                 Title = post.Title,
 
@@ -125,7 +125,7 @@ namespace Services.Services
             Comment comment = new()
                 {
                 CreatedOn = DateTime.UtcNow,
-                Image = model.Image,
+                // Image = model.Image,
                 Likes = model.Likes,
                 PostId = id,
                 PostedByUserId = this.data.GetUsers().FirstOrDefault(u => u.UserName == model.Username).Id,

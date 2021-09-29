@@ -28,8 +28,10 @@ namespace CardDungeonBlazor.Data.Models.CardModels
         [Required]
         public DeckType DeckType { get; set; }
 
+        [Required]
         public virtual List<CardDeck> Cards { get; set; }
 
+        [Required]
         public string CreatedByUserId { get; set; }
 
         public virtual ApplicationUser CreatedByUser { get; set; }

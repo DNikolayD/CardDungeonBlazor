@@ -1,7 +1,10 @@
-﻿namespace CardDungeonBlazor.Data.Models.CardModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace CardDungeonBlazor.Data.Models.CardModels
     {
     public class CardDeck
         {
+        [Key]
         public int Id { get; set; }
 
         public string CardId { get; set; }

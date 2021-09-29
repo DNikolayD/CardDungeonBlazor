@@ -59,7 +59,7 @@ namespace Services.Services
                 cards = this.data.CardDecks.Where(x => x.DeckId == deck.Id);
                 CardDeck cardDeck = cards.FirstOrDefault();
                 card = this.data.Cards.FirstOrDefault(c => c.Id == cardDeck.CardId);
-                cardImage = card.ImageUrl;
+                // cardImage = card.ImageUrl;
                 DeckServiceModel model = new()
                     {
                     Id = deck.Id,

@@ -7,6 +7,5 @@ namespace CardDungeonBlazor.Data.Models.CardModels
         {
         [Required]
         public string Name { get; set; }
-
         }
     }

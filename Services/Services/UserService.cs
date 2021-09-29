@@ -50,7 +50,7 @@ namespace Services.Services
                 {
                 CommentServiceModel comment = new();
                 comment.CreatedOn = dbComment.CreatedOn.ToString();
-                comment.Image = dbComment.Image;
+                // comment.Image = dbComment.Image;
                 comment.Likes = dbComment.Likes;
                 comment.Text = dbComment.TextContent;
                 comment.Username = dbComment.PostedByUser.NickName;
@@ -62,7 +62,7 @@ namespace Services.Services
                 card.CardType = dbCard.CardType.Name;
                 card.Cost = dbCard.Cost;
                 card.Id = dbCard.Id;
-                card.ImageUrl = dbCard.ImageUrl;
+                // card.ImageUrl = dbCard.ImageUrl;
                 card.Name = dbCard.Name;
                 card.Value = dbCard.Value;
                 card.IsHidden = false;
@@ -71,11 +71,11 @@ namespace Services.Services
                 }
             foreach (Deck dbDeck in dbDecks)
                 {
-                string cardId = applicationDbContext.CardDecks.FirstOrDefault(x => x.DeckId == dbDeck.Id).CardId;
+                string cardId = this.applicationDbContext.CardDecks.FirstOrDefault(x => x.DeckId == dbDeck.Id).CardId;
                 DeckServiceModel deck = new();
                 deck.Cards = dbDeck.Cards.Count;
                 deck.Id = dbDeck.Id;
-                deck.ImageUrl = applicationDbContext.Cards.FirstOrDefault(x => x.Id == cardId).ImageUrl;
+                // deck.ImageUrl = applicationDbContext.Cards.FirstOrDefault(x => x.Id == cardId).ImageUrl;
                 deck.Name = dbDeck.Name;
                 deck.Type = dbDeck.DeckType.ToString();
                 }
@@ -83,7 +83,7 @@ namespace Services.Services
                 {
                 CommentServiceModel comment = new();
                 comment.CreatedOn = dbLikedComment.CreatedOn.ToString();
-                comment.Image = dbLikedComment.Image;
+                // comment.Image = dbLikedComment.Image;
                 comment.Likes = dbLikedComment.Likes;
                 comment.Text = dbLikedComment.TextContent;
                 comment.Username = dbLikedComment.PostedByUser.NickName;

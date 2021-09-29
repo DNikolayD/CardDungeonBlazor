@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using CardDungeonBlazor.Data.Models.Common;
 using CardDungeonBlazor.Data.Models.User;
+using Data.Data.Models.Common;
 using static DataConstraints.Card;
 
 namespace CardDungeonBlazor.Data.Models.CardModels
@@ -36,14 +37,16 @@ namespace CardDungeonBlazor.Data.Models.CardModels
         [Range(MinCost, MaxCost)]
         public int Cost { get; set; }
 
-        public int? Duration { get; set; }
+        public int Duration { get; set; }
 
         [Required]
-        [Url]
-        public string ImageUrl { get; set; }
+        public string ImageId { get; set; }
+
+        public virtual Image Image { get; set; }
 
         public ICollection<CardDeck> Decks { get; set; }
 
+        [Required]
         public string CreatedByUserId { get; set; }
 
         public virtual ApplicationUser CreatedByUser { get; set; }

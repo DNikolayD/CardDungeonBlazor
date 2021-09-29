@@ -27,7 +27,7 @@ namespace Services.Services
                     Id = card.Id,
                     Type = this.data.CardTypes.FirstOrDefault(x => x.Id == card.CardTypeId).Name,
                     Name = card.Name,
-                    ImageUrl = card.ImageUrl,
+                    // ImageUrl = card.ImageUrl,
                     Value = card.Value,
                     TimesAdded = 0,
                     };

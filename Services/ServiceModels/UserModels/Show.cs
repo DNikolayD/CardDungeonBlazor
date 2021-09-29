@@ -25,9 +25,9 @@ namespace Services.ServiceModels.UserModels
 
         public string Id { get; set; }
 
-        public string? NickName { get; set; }
+        public string NickName { get; set; }
 
-        public ImageServiceModel? ProfilePhoto { get; set; }
+        public ImageServiceModel ProfilePhoto { get; set; }
 
         public DateTime CreatedOn { get; set; }
 

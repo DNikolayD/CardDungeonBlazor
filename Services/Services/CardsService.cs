@@ -23,7 +23,7 @@ namespace Services.Services
             Card dbCard = new()
                 {
                 Name = model.Name,
-                ImageUrl = model.ImageUrl,
+                // ImageUrl = model.ImageUrl,
                 CardTypeId = model.CardTypeId,
                 Description = model.Description,
                 Value = model.Value,
@@ -66,7 +66,7 @@ namespace Services.Services
                     Id = card.Id,
                     CardType = cardType.Name,
                     Name = card.Name,
-                    ImageUrl = card.ImageUrl,
+                    // ImageUrl = card.ImageUrl,
                     Value = card.Value,
                     Cost = card.Cost,
                     };
@@ -89,18 +89,13 @@ namespace Services.Services
             Card card = this.data.Cards.FirstOrDefault(c => c.Id == id && !c.IsDeleted);
             string createdOn = card.CreatedOn.ToShortDateString();
             int duration = 0;
-            if (card.Duration.HasValue)
-                {
-                duration = card.Duration.Value;
-                }
-
             FullCardServiceModel viewModel = new()
                 {
                 Type = card.CardType.Name,
                 CreatedOn = createdOn,
                 Description = card.Description,
                 Duration = duration,
-                ImageUrl = card.ImageUrl,
+                // ImageUrl = card.ImageUrl,
                 Name = card.Name,
                 Value = card.Value,
                 Cost = card.Cost,
@@ -118,7 +113,7 @@ namespace Services.Services
                 {
                 Name = card.Name,
                 Description = card.Description,
-                ImageUrl = card.ImageUrl,
+                // ImageUrl = card.ImageUrl,
                 CardTypeId = card.CardTypeId,
                 CardTypes = cardTypeViewModel,
                 Value = card.Value,
@@ -132,7 +127,7 @@ namespace Services.Services
             Card dbCard = this.data.Cards.FirstOrDefault(x => x.Id == id && !x.IsDeleted);
             dbCard.CardTypeId = cardModel.CardTypeId;
             dbCard.Description = cardModel.Description;
-            dbCard.ImageUrl = cardModel.ImageUrl;
+            // dbCard.ImageUrl = cardModel.ImageUrl;
             dbCard.Name = cardModel.Name;
             dbCard.Value = cardModel.Value;
             dbCard.Cost = cardModel.Cost;

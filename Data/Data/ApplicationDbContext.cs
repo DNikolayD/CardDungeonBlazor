@@ -1,6 +1,7 @@
 ﻿using CardDungeonBlazor.Data.Models.CardModels;
 using CardDungeonBlazor.Data.Models.PostModels;
 using CardDungeonBlazor.Data.Models.User;
+using Data.Data.Models.Common;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +12,7 @@ namespace CardDungeonBlazor.Data
         public ApplicationDbContext ( DbContextOptions<ApplicationDbContext> options )
               : base(options)
             {
-            this.SetUsers(users);
+            this.SetUsers(this.users);
             }
 
         public DbSet<Card> Cards { get; set; }
@@ -27,6 +28,8 @@ namespace CardDungeonBlazor.Data
         public DbSet<Comment> Comments { get; set; }
 
         public DbSet<Post> Posts { get; set; }
+
+        public DbSet<Image> Images { get; set; }
 
         private DbSet<ApplicationUser> users;
 
@@ -53,20 +56,37 @@ namespace CardDungeonBlazor.Data
                 .HasOne(d => d.CreatedByUser)
                 .WithMany(u => u.CreatedDecks)
                 .OnDelete(DeleteBehavior.Restrict);
-            base.OnModelCreating(builder);
 
             builder
                 .Entity<Comment>()
-                .HasOne(d => d.PostedByUser)
-                .WithMany(u => u.Comments)
+                .HasOne(c => c.PostedByUser)
+                .WithMany(p => p.Comments)
                 .OnDelete(DeleteBehavior.Restrict);
-            base.OnModelCreating(builder);
 
             builder
                 .Entity<Post>()
-                .HasOne(d => d.PostedByUser)
-                .WithMany(u => u.Posts)
+                .HasOne(p => p.PostedByUser)
+                .WithMany(p => p.Posts)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .Entity<Card>()
+                .HasOne(c => c.Image)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .Entity<Comment>()
+                .HasMany(c => c.Images)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .Entity<Post>()
+                .HasMany(p => p.Images)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Restrict);
+
             base.OnModelCreating(builder);
             }
         }

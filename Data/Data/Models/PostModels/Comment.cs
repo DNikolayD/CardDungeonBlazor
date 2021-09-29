@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using CardDungeonBlazor.Data.Models.Common;
 using CardDungeonBlazor.Data.Models.User;
+using Data.Data.Models.Common;
 using static DataConstraints.Comment;
 
 namespace CardDungeonBlazor.Data.Models.PostModels
@@ -25,10 +27,11 @@ namespace CardDungeonBlazor.Data.Models.PostModels
 
         public virtual ApplicationUser PostedByUser { get; set; }
 
+        [Required]
         public string PostId { get; set; }
 
         public virtual Post Post { get; set; }
 
-        public string Image { get; set; }
+        public virtual List<Image> Images { get; set; }
         }
     }
