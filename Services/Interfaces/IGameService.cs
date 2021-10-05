@@ -8,13 +8,13 @@ namespace Services.Interfaces
     {
     public interface IGameService
         {
-        Task<GameServiceModel> PlayCard ( string cardId, string playerName, GameServiceModel game );
+        Task<GameServiceModel> PlayCard ( string cardId, string playerName,);
 
         DecksServiceModel GetDeck ( string playerName, string id );
 
         Task<List<CardServiceModel>> GetCardsInHand ();
 
-        public GameManager GameManager { get; set; }
+        public GameServiceModel GameServiceModel { get; set; }
         public EnemyScript Enemy { get; set; }
 
         Task EndTurn ();

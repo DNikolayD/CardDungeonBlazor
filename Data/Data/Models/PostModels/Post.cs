@@ -14,7 +14,7 @@ namespace CardDungeonBlazor.Data.Models.PostModels
         public Post ()
             {
             this.Id = Guid.NewGuid().ToString();
-            this.Comments = new HashSet<Comment>();
+            this.Comments = new List<Comment>();
             }
 
         [Required]
@@ -38,7 +38,7 @@ namespace CardDungeonBlazor.Data.Models.PostModels
 
         public virtual ApplicationUser PostedByUser { get; set; }
 
-        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual List<Comment> Comments { get; set; }
 
         public virtual List<Image> Images { get; set; }
         }

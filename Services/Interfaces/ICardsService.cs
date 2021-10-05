@@ -5,7 +5,7 @@ namespace Services.Interfaces
     {
     public interface ICardsService
         {
-        void Add ( AddCardsServiceModel model);
+        void Add ( AddCardsServiceModel model );
         List<CardTypeServiceModel> GetCardTypeViewModels ();
 
         AllCardsServiceModel GetAllCards ();

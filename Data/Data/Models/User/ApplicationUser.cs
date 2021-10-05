@@ -26,7 +26,9 @@ namespace CardDungeonBlazor.Data.Models.User
 
         public string NickName { get; set; }
 
-        public Image ProfilePhoto { get; set; }
+        public string ProfilePhotoId { get; set; }
+
+        public virtual Image ProfilePhoto { get; set; }
 
         [Required]
         public DateTime CreatedOn { get; set; }

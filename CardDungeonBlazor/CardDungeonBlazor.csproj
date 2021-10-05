@@ -33,7 +33,6 @@
 		<ProjectReference Include="..\CardGame\CardGame.csproj" />
 		<ProjectReference Include="..\DataConstraints\DataConstraints.csproj" />
 		<ProjectReference Include="..\Data\Data.csproj" />
-		<ProjectReference Include="..\Services\Services.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
