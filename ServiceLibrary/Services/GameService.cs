@@ -30,7 +30,7 @@ namespace ServiceLibrary.Services
                 {
                 if (CheckIfDead(this.Game.Player1, this.Game.Player1.TurnsPoisoned))
                     {
-                    this.dbContext.GetUsers().FirstOrDefault(x => x.NickName == this.Game.Player1.Name).Loses++;
+                    this.dbContext.Users.FirstOrDefault(x => x.NickName == this.Game.Player1.Name).Loses++;
                     }
                 else
                     {
@@ -44,7 +44,7 @@ namespace ServiceLibrary.Services
                 {
                 if (CheckIfDead(this.Game.Player2, this.Game.Player2.TurnsPoisoned))
                     {
-                    this.dbContext.GetUsers().FirstOrDefault(x => x.NickName == this.Game.Player1.Name).Wins++;
+                    this.dbContext.Users.FirstOrDefault(x => x.NickName == this.Game.Player1.Name).Wins++;
                     }
                 else
                     {
@@ -102,7 +102,7 @@ namespace ServiceLibrary.Services
                             this.Game.Player2.Armor = 0;
                             if (CheckIfDead(this.Game.Player2, value))
                                 {
-                                this.dbContext.GetUsers().FirstOrDefault(x => x.NickName == this.Game.ActivePlayerName).Wins++;
+                                this.dbContext.Users.FirstOrDefault(x => x.NickName == this.Game.ActivePlayerName).Wins++;
                                 }
                             else
                                 {
@@ -123,7 +123,7 @@ namespace ServiceLibrary.Services
                             this.Game.Player1.Armor = 0;
                             if (CheckIfDead(this.Game.Player1, value))
                                 {
-                                this.dbContext.GetUsers().FirstOrDefault(x => x.NickName == this.Game.Player1.Name).Loses++;
+                                this.dbContext.Users.FirstOrDefault(x => x.NickName == this.Game.Player1.Name).Loses++;
                                 }
                             else
                                 {

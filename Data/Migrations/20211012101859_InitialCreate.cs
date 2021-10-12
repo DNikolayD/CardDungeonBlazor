@@ -109,6 +109,7 @@ namespace Data.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NickName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProfilePhotoId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: true),
                     DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -169,8 +170,8 @@ namespace Data.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -190,8 +191,8 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -316,8 +317,7 @@ namespace Data.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Img = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    UploadedByUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Img = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CommentId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     PostId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -329,12 +329,6 @@ namespace Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Images", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Images_AspNetUsers_UploadedByUserId",
-                        column: x => x.UploadedByUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Images_Comments_CommentId",
                         column: x => x.CommentId,
@@ -455,6 +449,13 @@ namespace Data.Migrations
                 column: "DeckId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_ProfilePhotoId",
+                table: "AspNetUsers",
+                column: "ProfilePhotoId",
+                unique: true,
+                filter: "[ProfilePhotoId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_RoleId",
                 table: "AspNetUsers",
                 column: "RoleId");
@@ -523,12 +524,6 @@ namespace Data.Migrations
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Images_UploadedByUserId",
-                table: "Images",
-                column: "UploadedByUserId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Posts_ApplicationUserId",
                 table: "Posts",
                 column: "ApplicationUserId");
@@ -558,6 +553,14 @@ namespace Data.Migrations
                 principalTable: "Decks",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AspNetUsers_Images_ProfilePhotoId",
+                table: "AspNetUsers",
+                column: "ProfilePhotoId",
+                principalTable: "Images",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -567,8 +570,24 @@ namespace Data.Migrations
                 table: "AspNetUsers");
 
             migrationBuilder.DropForeignKey(
+                name: "FK_Comments_AspNetUsers_ApplicationUserId",
+                table: "Comments");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Comments_AspNetUsers_PostedByUserId",
+                table: "Comments");
+
+            migrationBuilder.DropForeignKey(
                 name: "FK_Decks_AspNetUsers_CreatedByUserId",
                 table: "Decks");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Posts_AspNetUsers_ApplicationUserId",
+                table: "Posts");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Posts_AspNetUsers_PostedByUserId",
+                table: "Posts");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -595,6 +614,15 @@ namespace Data.Migrations
                 name: "CardTypes");
 
             migrationBuilder.DropTable(
+                name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Decks");
+
+            migrationBuilder.DropTable(
                 name: "Images");
 
             migrationBuilder.DropTable(
@@ -605,15 +633,6 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Categories");
-
-            migrationBuilder.DropTable(
-                name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Decks");
         }
     }
 }

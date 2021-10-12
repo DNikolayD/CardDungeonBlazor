@@ -8,6 +8,7 @@ using CardDungeonBlazor.Data.Models.CardModels;
 using CardDungeonBlazor.Data.Models.PostModels;
 using CardDungeonBlazor.Data.Models.User;
 using Data.Data.Models.Common;
+using Microsoft.AspNetCore.Identity;
 using ServiceLibrary.Models.CardModels;
 using ServiceLibrary.Models.CommonModels;
 using ServiceLibrary.Models.ForumModels;
@@ -30,7 +31,6 @@ namespace ServiceLibrary.MannualMapping
             cardServiceModel.Duration = dbCard.Duration;
             cardServiceModel.IsEdited = dbCard.IsEdited;
             cardServiceModel.EditedOn = dbCard.EditedOn;
-            cardServiceModel.CardType = CardTypeMapping(dbCard.CardType);
             return cardServiceModel;
             }
         public static CardTypeServiceModel CardTypeMapping ( CardType dbCardType )
@@ -73,7 +73,10 @@ namespace ServiceLibrary.MannualMapping
             userServiceModel.Name = dbUser.NickName;
             userServiceModel.Wins = dbUser.Wins;
             userServiceModel.Loses = dbUser.Loses;
-            userServiceModel.Role = RoleMapping(dbUser.Role);
+            if (dbUser.Role != null)
+                {
+                userServiceModel.Role = RoleMapping(dbUser.Role);
+                }
             return userServiceModel;
             }
         public static RoleServiceModel RoleMapping ( ApplicationRole dbRole )

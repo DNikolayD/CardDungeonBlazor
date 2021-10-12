@@ -11,8 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MudBlazor.Services;
-using Services.Interfaces;
-using Services.Services;
+using ServiceLibrary.Interfaces;
+using ServiceLibrary.Services;
 
 namespace CardDungeonBlazor
     {
@@ -32,9 +32,10 @@ namespace CardDungeonBlazor
             services.AddDbContext<ApplicationDbContext>(options =>
                   options.UseSqlServer(
                         this.Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                  .AddRoles<ApplicationRole>()
-                  .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                  .AddEntityFrameworkStores<ApplicationDbContext>()
+                  .AddDefaultTokenProviders()
+                  .AddDefaultUI();
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddMudServices();
@@ -43,10 +44,8 @@ namespace CardDungeonBlazor
             services.AddControllersWithViews();
             services.AddControllers();
             services.AddHttpContextAccessor();
-            services.AddSingleton<CardAddedToDeck>();
             services.AddTransient<ICardsService, CardsService>();
             services.AddTransient<IDecksService, DecksService>();
-            services.AddTransient<IAddCardsToDeckService, AddCardsToDeckService>();
             services.AddTransient<IGameService, GameService>();
             services.AddTransient<ICategoriesService, CategoriesService>();
             services.AddTransient<IPostsService, PostsService>();

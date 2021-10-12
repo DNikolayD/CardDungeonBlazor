@@ -33,9 +33,12 @@
 		<ProjectReference Include="..\CardGame\CardGame.csproj" />
 		<ProjectReference Include="..\DataConstraints\DataConstraints.csproj" />
 		<ProjectReference Include="..\Data\Data.csproj" />
+		<ProjectReference Include="..\ServiceLibrary\ServiceLibrary.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="MannualMappers\" />
+	  <Folder Include="Areas\Forum\Controlls\" />
+	  <Folder Include="Areas\Forum\Views\" />
+	  <Folder Include="Controllers\" />
 	</ItemGroup>
 </Project>

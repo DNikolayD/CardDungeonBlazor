@@ -19,14 +19,16 @@ namespace ServiceLibrary.MannualMapping
         public static Card CardMapping ( CardServiceModel cardServiceModel )
             {
             Card card = new();
-            card.Id = cardServiceModel.Id;
+            if (cardServiceModel.Id!=null)
+                {
+                card.Id = cardServiceModel.Id;
+                }
             card.Name = cardServiceModel.Name;
             card.Value = cardServiceModel.Value;
             card.Cost = cardServiceModel.Cost;
             card.Description = cardServiceModel.Description;
             card.Duration = cardServiceModel.Duration;
             card.CardTypeId = cardServiceModel.CardType.Id;
-            card.CardType = CardTypeMapping(cardServiceModel.CardType);
             card.CreatedOn = cardServiceModel.CreatedOn;
             card.IsEdited = cardServiceModel.IsEdited;
             card.EditedOn = cardServiceModel.EditedOn;
@@ -37,7 +39,6 @@ namespace ServiceLibrary.MannualMapping
         public static CardType CardTypeMapping ( CardTypeServiceModel cardTypeServiceModel )
             {
             CardType cardType = new();
-            cardType.Id = cardTypeServiceModel.Id;
             cardType.Name = cardTypeServiceModel.Name;
             cardType.CreatedOn = cardTypeServiceModel.CreatedOn;
             cardType.IsEdited = cardTypeServiceModel.IsEdited;
@@ -47,7 +48,11 @@ namespace ServiceLibrary.MannualMapping
         public static Deck DeckMapping ( DeckServiceModel deckServiceModel )
             {
             Deck deck = new();
-            deck.Id = deckServiceModel.Id;
+            if (deckServiceModel.Id != null)
+                {
+                deck.Id = deckServiceModel.Id;
+                }
+
             deck.Name = deckServiceModel.Name;
             deck.Description = deckServiceModel.Description;
             deck.DeckType = deckServiceModel.DeckType;
@@ -60,13 +65,16 @@ namespace ServiceLibrary.MannualMapping
         public static Image ImageMapping ( ImageServiceModel imageServiceModel )
             {
             Image image = new();
-            image.Id = imageServiceModel.Id;
+            if(imageServiceModel.Id != null)
+                {
+                image.Id = imageServiceModel.Id;
+                }
+
             image.Name = imageServiceModel.Name;
             image.Img = imageServiceModel.Img;
             image.CreatedOn = imageServiceModel.CreatedOn;
             image.IsEdited = imageServiceModel.IsEdited;
             image.EditedOn = imageServiceModel.EditedOn;
-            image.UploadedByUserId = imageServiceModel.UploadedByUser.Id;
             return image;
             }
         public static ApplicationUser UserMapping ( UserServiceModel userServiceModel )

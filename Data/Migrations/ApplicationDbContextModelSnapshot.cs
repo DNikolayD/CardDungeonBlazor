@@ -335,9 +335,9 @@ namespace Data.Migrations
                     b.Property<DateTime?>("EditedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<byte[]>("Img")
+                    b.Property<string>("Img")
                         .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -352,18 +352,11 @@ namespace Data.Migrations
                     b.Property<string>("PostId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("UploadedByUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CommentId");
 
                     b.HasIndex("PostId");
-
-                    b.HasIndex("UploadedByUserId")
-                        .IsUnique();
 
                     b.ToTable("Images");
                 });
@@ -523,12 +516,10 @@ namespace Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -565,12 +556,10 @@ namespace Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -630,6 +619,9 @@ namespace Data.Migrations
                     b.Property<string>("NickName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ProfilePhotoId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("RoleId")
                         .HasColumnType("nvarchar(450)");
 
@@ -637,6 +629,10 @@ namespace Data.Migrations
                         .HasColumnType("int");
 
                     b.HasIndex("DeckId");
+
+                    b.HasIndex("ProfilePhotoId")
+                        .IsUnique()
+                        .HasFilter("[ProfilePhotoId] IS NOT NULL");
 
                     b.HasIndex("RoleId");
 
@@ -753,14 +749,6 @@ namespace Data.Migrations
                         .WithMany("Images")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("CardDungeonBlazor.Data.Models.User.ApplicationUser", "UploadedByUser")
-                        .WithOne("ProfilePhoto")
-                        .HasForeignKey("Data.Data.Models.Common.Image", "UploadedByUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("UploadedByUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -820,9 +808,16 @@ namespace Data.Migrations
                         .WithMany("Users")
                         .HasForeignKey("DeckId");
 
+                    b.HasOne("Data.Data.Models.Common.Image", "ProfilePhoto")
+                        .WithOne("UploadedByUser")
+                        .HasForeignKey("CardDungeonBlazor.Data.Models.User.ApplicationUser", "ProfilePhotoId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("CardDungeonBlazor.Data.Models.User.ApplicationRole", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId");
+
+                    b.Navigation("ProfilePhoto");
 
                     b.Navigation("Role");
                 });
@@ -856,6 +851,12 @@ namespace Data.Migrations
                     b.Navigation("Images");
                 });
 
+            modelBuilder.Entity("Data.Data.Models.Common.Image", b =>
+                {
+                    b.Navigation("UploadedByUser")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("CardDungeonBlazor.Data.Models.User.ApplicationUser", b =>
                 {
                     b.Navigation("Comments");
@@ -869,8 +870,6 @@ namespace Data.Migrations
                     b.Navigation("LikedPosts");
 
                     b.Navigation("Posts");
-
-                    b.Navigation("ProfilePhoto");
                 });
 #pragma warning restore 612, 618
         }

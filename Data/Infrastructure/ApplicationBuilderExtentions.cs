@@ -33,7 +33,7 @@ namespace CardDungeonBlazor.Infrastructure
             data.CardTypes.AddRange(new[]
             {
                         new CardType { Name = "Attack"},
-                        new CardType { Name = "Defence"},
+                        new CardType { Name = "Deffence"},
                         new CardType { Name = "Heal"},
                         new CardType { Name = "Poison"}
             });

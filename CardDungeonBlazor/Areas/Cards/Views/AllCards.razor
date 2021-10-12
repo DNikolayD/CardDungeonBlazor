@@ -1,17 +1,17 @@
 ﻿@page "/cards/all"
-@using CardDungeonBlazor.Areas.Cards.Controlls
+@using CardDungeonBlazor.Areas.Cards.Controllers
 @inherits AllCardsController
 <MudText Typo="Typo.h3">AllCards</MudText>
 
 <MudGrid>
-    @foreach (var card in Model.Cards)
+    @foreach (var card in Models)
     {
                 <MudItem Class="d-flex align-center justify-center mud-width-full py-8" xs=3>
             <MudCard>
-                <MudCardMedia Image="@card.ImageUrl" />
+                <MudCardMedia Image="@card.Image.Img" />
                 <MudCardContent>
                     <MudText Typo="Typo.h5">Card with name @card.Name</MudText>
-                    <MudText Typo="Typo.body2">With a value of @card.Value @card.Type and a cost of @card.Cost energy</MudText>
+                    <MudText Typo="Typo.body2">With a value of @card.Value @card.CardType.Name and a cost of @card.Cost energy</MudText>
                 </MudCardContent>
                 <MudCardActions>
                     <MudButton Variant="Variant.Text" Color="Color.Info" @onclick="() => RedirectToFullView(card.Id)">See More</MudButton>

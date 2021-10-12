@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using CardDungeonBlazor.Areas.Cards.Models;
 
-namespace CardDungeonBlazor.Areas.Cards
+namespace CardDungeonBlazor.Models
     {
     public class PlayerViewModel
         {
@@ -9,8 +9,8 @@ namespace CardDungeonBlazor.Areas.Cards
             {
             this.Energy = 3;
             this.Health = 100;
-            this.Deck = new DecksViewModel();
-            this.CardsInHeand = new List<CardViewModel>();
+            this.Deck = new();
+            this.CardsInHeand = new();
             this.DiscardPile = new();
             }
 
@@ -20,11 +20,11 @@ namespace CardDungeonBlazor.Areas.Cards
 
         public int Health { get; set; }
 
-        public int Deffence { get; set; }
+        public int Armor { get; set; }
 
-        public bool IsPoisoned { get; set; }
+        public int TurnsPoisoned { get; set; }
 
-        public DecksViewModel Deck { get; set; }
+        public DeckViewModel Deck { get; set; }
 
         public List<CardViewModel> CardsInHeand { get; set; }
 

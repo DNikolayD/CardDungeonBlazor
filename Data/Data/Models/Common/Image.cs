@@ -21,11 +21,9 @@ namespace Data.Data.Models.Common
         public string Name { get; set; }
 
         [Required]
-        public byte[] Img { get; set; }
+        public string Img { get; set; }
 
         [Required]
-        public string UploadedByUserId { get; set; }
-
         public virtual ApplicationUser UploadedByUser { get; set; }
         }
     }

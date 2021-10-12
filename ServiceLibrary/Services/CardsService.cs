@@ -7,9 +7,11 @@ using CardDungeonBlazor.Data;
 using CardDungeonBlazor.Data.Models.CardModels;
 using CardDungeonBlazor.Data.Models.User;
 using Data.Data.Models.Common;
+using Microsoft.AspNetCore.Identity;
 using ServiceLibrary.Interfaces;
 using ServiceLibrary.MannualMapping;
 using ServiceLibrary.Models.CardModels;
+using ServiceLibrary.Models.UserModels;
 
 namespace ServiceLibrary.Services
     {
@@ -26,6 +28,10 @@ namespace ServiceLibrary.Services
         public bool Add ( CardServiceModel cardServiceModel )
             {
             Card card = MappingFromServiceToDb.CardMapping(cardServiceModel);
+            Image image = MappingFromServiceToDb.ImageMapping(cardServiceModel.Image);
+            this.dbContext.Images.Add(image);
+            this.dbContext.SaveChanges();
+            card.ImageId = image.Id;
             this.dbContext.Cards.Add(card);
             this.dbContext.SaveChanges();
             return this.dbContext.Cards.Contains(card);
@@ -71,7 +77,7 @@ namespace ServiceLibrary.Services
         public List<CardServiceModel> Show ( string userName )
             {
             List<CardServiceModel> cardServiceModels = new();
-            IQueryable<Card> cards = this.dbContext.Cards.Where(x => x.CreatedByUserId == this.dbContext.GetUsers().FirstOrDefault(x => x.NickName == userName).Id);
+            IQueryable<Card> cards = this.dbContext.Cards.Where(x => x.CreatedByUserId == this.dbContext.Users.FirstOrDefault(x => x.UserName == userName).Id);
             foreach (Card card in cards)
                 {
                 List<DeckServiceModel> deckServiceModels = new();
@@ -83,7 +89,7 @@ namespace ServiceLibrary.Services
                     }
                 CardServiceModel cardServiceModel = MappingFromDbToService.CardMapping(card);
                 cardServiceModel.Decks = deckServiceModels;
-                ApplicationUser applicationUser = this.dbContext.GetUsers().FirstOrDefault(x => x.Id == card.CreatedByUserId);
+                ApplicationUser applicationUser = this.dbContext.Users.FirstOrDefault(x => x.Id == card.CreatedByUserId);
                 Image image = this.dbContext.Images.FirstOrDefault(x => x.Id == card.ImageId);
                 cardServiceModel.Image = MappingFromDbToService.ImageMapping(image);
                 cardServiceModel.CreatedByUser = MappingFromDbToService.UserMapping(applicationUser);
@@ -104,7 +110,7 @@ namespace ServiceLibrary.Services
                 }
             CardServiceModel cardServiceModel = MappingFromDbToService.CardMapping(card);
             cardServiceModel.Decks = deckServiceModels;
-            ApplicationUser applicationUser = this.dbContext.GetUsers().FirstOrDefault(x => x.Id == card.CreatedByUserId);
+            ApplicationUser applicationUser = this.dbContext.Users.FirstOrDefault(x => x.Id == card.CreatedByUserId);
             Image image = this.dbContext.Images.FirstOrDefault(x => x.Id == card.ImageId);
             cardServiceModel.Image = MappingFromDbToService.ImageMapping(image);
             cardServiceModel.CreatedByUser = MappingFromDbToService.UserMapping(applicationUser);
@@ -121,6 +127,13 @@ namespace ServiceLibrary.Services
                 cardTypeServiceModels.Add(cardTypeServiceModel);
                 }
             return cardTypeServiceModels;
+            }
+        public UserServiceModel GetUserByName ( string name )
+            {
+            ApplicationUser applicationUser = this.dbContext.Users.First();
+            string UserName = applicationUser.NormalizedUserName;
+            UserServiceModel userServiceModel = MappingFromDbToService.UserMapping(applicationUser);
+            return userServiceModel;
             }
         }
     }

@@ -27,17 +27,17 @@ namespace ServiceLibrary.Services
 
         public bool Edit ( UserServiceModel userServiceModel )
             {
-            ApplicationUser user = this.dbContext.GetUsers().FirstOrDefault(x => x.UserName == userServiceModel.Name);
+            ApplicationUser user = this.dbContext.Users.FirstOrDefault(x => x.UserName == userServiceModel.Name);
             user.ProfilePhotoId = userServiceModel.ProfilePhoto.Id;
             user.NickName = userServiceModel.Name;
             this.dbContext.Users.Update(user);
             this.dbContext.SaveChanges();
-            return this.dbContext.GetUsers().Contains(user);
+            return this.dbContext.Users.Contains(user);
             }
 
         public UserServiceModel Show ( string userName )
             {
-            ApplicationUser user = this.dbContext.GetUsers().FirstOrDefault(x => x.UserName == userName);
+            ApplicationUser user = this.dbContext.Users.FirstOrDefault(x => x.UserName == userName);
             UserServiceModel userServiceModel = MappingFromDbToService.UserMapping(user);
             List<CardServiceModel> createdCards = new();
             List<DeckServiceModel> createdDecks = new();

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CardDungeonBlazor.Data;
 using ServiceLibrary.Models.CardModels;
+using ServiceLibrary.Models.UserModels;
 
 namespace ServiceLibrary.Interfaces
     {
@@ -12,7 +13,7 @@ namespace ServiceLibrary.Interfaces
         {
         bool Add ( CardServiceModel cardServiceModel );
 
-        List<CardServiceModel> Show ( string userId );
+        List<CardServiceModel> Show ( string userName );
 
         bool Edit ( CardServiceModel cardServiceModel );
 
@@ -23,5 +24,7 @@ namespace ServiceLibrary.Interfaces
         CardServiceModel ShowFull ( string cardId );
 
         bool AddCardToDeck ( string cardId, string deckId );
+
+        public UserServiceModel GetUserByName ( string name );
         }
     }

@@ -12,7 +12,6 @@ namespace CardDungeonBlazor.Data
         public ApplicationDbContext ( DbContextOptions<ApplicationDbContext> options )
               : base(options)
             {
-            this.SetUsers(this.users);
             }
 
         public DbSet<Card> Cards { get; set; }
@@ -31,17 +30,8 @@ namespace CardDungeonBlazor.Data
 
         public DbSet<Image> Images { get; set; }
 
-        private DbSet<ApplicationUser> users;
 
-        public DbSet<ApplicationUser> GetUsers ()
-            {
-            return this.users;
-            }
-
-        public void SetUsers ( DbSet<ApplicationUser> value )
-            {
-            this.users = value;
-            }
+        public DbSet<ApplicationUser> Users { get; set; } 
 
         protected override void OnModelCreating ( ModelBuilder builder )
             {
@@ -86,6 +76,13 @@ namespace CardDungeonBlazor.Data
                 .HasMany(p => p.Images)
                 .WithOne()
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .Entity<ApplicationUser>()
+                .HasOne(u => u.ProfilePhoto)
+                .WithOne(i => i.UploadedByUser)
+                .OnDelete(DeleteBehavior.Restrict);
+
 
             base.OnModelCreating(builder);
             }

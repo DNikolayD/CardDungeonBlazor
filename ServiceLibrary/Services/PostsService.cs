@@ -80,7 +80,7 @@ namespace ServiceLibrary.Services
                 PostServiceModel postServiceModel = MappingFromDbToService.PostMapping(post);
                 Category category = this.dbContext.Categories.Find(categoryId);
                 postServiceModel.Category = MappingFromDbToService.CategoryMapping(category);
-                ApplicationUser user = this.dbContext.GetUsers().Find(post.PostedByUserId);
+                ApplicationUser user = this.dbContext.Users.Find(post.PostedByUserId);
                 postServiceModel.PostedByUser = MappingFromDbToService.UserMapping(user);
                 List<CommentServiceModel> commentServiceModels = new();
                 foreach (Comment comment in post.Comments)

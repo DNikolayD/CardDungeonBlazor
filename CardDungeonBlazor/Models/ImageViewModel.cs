@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using ServiceLibrary.Models.UserModels;
 
-namespace ServiceLibrary.Models.CommonModels
+namespace CardDungeonBlazor.Models
     {
-    public class ImageServiceModel : BaseServiceModel<string>
+    public class ImageViewModel : BaseViewModel<string>
         {
         [Required]
         public string Name { get; set; }
@@ -17,6 +15,6 @@ namespace ServiceLibrary.Models.CommonModels
         public string Img { get; set; }
 
         [Required]
-        public UserServiceModel UploadedByUser { get; set; }
+        public UserViewModel UploadedByUser { get; set; }
         }
     }

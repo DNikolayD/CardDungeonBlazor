@@ -1,21 +1,21 @@
 ﻿using CardDungeonBlazor.Areas.Cards.Models;
 
-namespace CardDungeonBlazor.Areas.Cards
+namespace CardDungeonBlazor.Models
     {
     public class GameViewModel
         {
 
         public GameViewModel ()
             {
-            this.PlayerModel1 = new PlayerViewModel();
-            this.PlayerModel2 = new PlayerViewModel();
+            this.Player1 = new();
+            this.Player2 = new();
 
             }
 
-        public PlayerViewModel PlayerModel1 { get; set; }
+        public PlayerViewModel Player1 { get; set; }
 
-        public PlayerViewModel PlayerModel2 { get; set; }
+        public PlayerViewModel Player2 { get; set; }
 
-        public CardViewModel PlayedCard { get; set; }
+        public string ActivePlayerName { get; set; }
         }
     }

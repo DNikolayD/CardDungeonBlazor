@@ -79,7 +79,7 @@ namespace ServiceLibrary.Services
                 CommentServiceModel commentServiceModel = MappingFromDbToService.CommentMapping(comment);
                 Post post = this.dbContext.Posts.Find(postId);
                 commentServiceModel.Post = MappingFromDbToService.PostMapping(post);
-                ApplicationUser user = this.dbContext.GetUsers().FirstOrDefault(x => x.Id == comment.PostedByUserId);
+                ApplicationUser user = this.dbContext.Users.FirstOrDefault(x => x.Id == comment.PostedByUserId);
                 commentServiceModel.PostedByUser = MappingFromDbToService.UserMapping(user);
                 List<ImageServiceModel> imageServiceModels = new();
                 foreach (Image image in comment.Images)

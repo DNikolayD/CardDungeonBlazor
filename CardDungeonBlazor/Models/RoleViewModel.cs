@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace CardDungeonBlazor.Models
     {
-    public class ProfileViewModel
+    public class RoleViewModel : BaseViewModel<string>
         {
+        public string Name { get; set; }
         }
     }

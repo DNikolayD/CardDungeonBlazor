@@ -54,7 +54,7 @@ namespace ServiceLibrary.Services
         public List<DeckServiceModel> Show ( string userName )
             {
             List<DeckServiceModel> deckServiceModels = new();
-            IQueryable<Deck> Decks = this.dbContext.Decks.Where(x => x.CreatedByUserId == this.dbContext.GetUsers().FirstOrDefault(x => x.NickName == userName).Id);
+            IQueryable<Deck> Decks = this.dbContext.Decks.Where(x => x.CreatedByUserId == this.dbContext.Users.FirstOrDefault(x => x.NickName == userName).Id);
             foreach (Deck deck in Decks)
                 {
                 DeckServiceModel deckServiceModel = MappingFromDbToService.DeckMapping(deck);
@@ -66,7 +66,7 @@ namespace ServiceLibrary.Services
                     cardServiceModels.Add(cardServiceModel);
                     }
                 deckServiceModel.Cards = cardServiceModels;
-                ApplicationUser user = this.dbContext.GetUsers().FirstOrDefault(x => x.NickName == userName);
+                ApplicationUser user = this.dbContext.Users.FirstOrDefault(x => x.NickName == userName);
                 UserServiceModel userServiceModel = MappingFromDbToService.UserMapping(user);
                 deckServiceModel.CreatedByUser = userServiceModel;
                 deckServiceModels.Add(deckServiceModel);
