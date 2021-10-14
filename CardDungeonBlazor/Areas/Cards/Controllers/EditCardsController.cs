@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CardDungeonBlazor.Areas.Cards.Models;
 using CardDungeonBlazor.MannualMapping;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
-using MudBlazor;
 using ServiceLibrary.Interfaces;
 using ServiceLibrary.Models.CardModels;
 
 namespace CardDungeonBlazor.Areas.Cards.Controllers
     {
-    public class AddCardController : ComponentBase
+    public class EditCardsController : ComponentBase
         {
         [Inject]
-        protected ICardsService CardsService { get; set; }
+        protected ICardsService Service { get; set; }
 
         [Inject]
         protected NavigationManager Navigation { get; set; }
@@ -23,27 +23,27 @@ namespace CardDungeonBlazor.Areas.Cards.Controllers
         [Inject]
         protected IHttpContextAccessor HttpContext { get; set; }
 
-        [Inject]
-        private IDialogService DialogService { get; set; }
+        [Parameter]
+        public string Id { get; set; }
 
         public CardViewModel Model { get; set; }
 
         public List<CardTypeViewModel> CardTypes { get; set; }
 
-        public MudMessageBox mbox { get; set; }
-
-        public bool isVisible { get; set; }
-
         protected override void OnInitialized ()
             {
-            this.Model = new();
+            CardServiceModel cardServiceModel = this.Service.ShowFull(this.Id);
+            this.Model = MappingFromServiceToView.CardMapping(cardServiceModel);
+            this.Model.Image = MappingFromServiceToView.ImageMapping(cardServiceModel.Image);
+            this.Model.CardType = MappingFromServiceToView.CardTypeMapping(cardServiceModel.CardType);
             this.CardTypes = new();
-            List<CardTypeServiceModel> cardTypeServiceModels = this.CardsService.ShowTypes();
+            List<CardTypeServiceModel> cardTypeServiceModels = this.Service.ShowTypes();
             foreach (CardTypeServiceModel cardTypeServiceModel in cardTypeServiceModels)
                 {
                 CardTypeViewModel cardTypeViewModel = MappingFromServiceToView.CardTypeMapping(cardTypeServiceModel);
                 this.CardTypes.Add(cardTypeViewModel);
                 }
+            base.OnInitialized();
             }
 
         public async Task UploadFiles ( InputFileChangeEventArgs e )
@@ -55,21 +55,22 @@ namespace CardDungeonBlazor.Areas.Cards.Controllers
             this.Model.Image.Name = this.Model.Image.Img;
 
             }
+
         public void Submit ()
             {
             CardServiceModel cardServiceModel = MappingFromViewToService.CardMapping(this.Model);
             cardServiceModel.Image = MappingFromViewToService.ImageMapping(this.Model.Image);
-            cardServiceModel.CreatedByUser = this.CardsService.GetUserByName(this.HttpContext.HttpContext.User.Identity.Name);
-            bool succsses = this.CardsService.Add(cardServiceModel);
+            cardServiceModel.CreatedByUser = this.Service.GetUserByName(this.HttpContext.HttpContext.User.Identity.Name);
+            bool succsses = this.Service.Add(cardServiceModel);
             if (succsses)
                 {
                 this.Navigation.NavigateTo("/cards/all");
                 }
             else
                 {
-                this.DialogService.ShowMessageBox("Fail", "You have failed to add a card");
                 this.Navigation.NavigateTo("/");
                 }
             }
+
         }
     }

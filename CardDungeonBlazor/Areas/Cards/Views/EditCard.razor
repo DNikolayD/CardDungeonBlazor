@@ -1,0 +1,60 @@
+﻿@page "/cards/edit/{id}"
+@using CardDungeonBlazor.Areas.Cards.Controllers
+@inherits EditCardsController
+
+<MudText Typo="Typo.h3">Edit the card </MudText>
+<InputFile id="fileInput112" OnChange="UploadFiles" hidden multiple accept=".jpg, .jpeg, .png" />
+
+<MudButton HtmlTag="label"
+           Variant="Variant.Filled"
+           Color="Color.Primary"
+           StartIcon="@Icons.Filled.CloudUpload"
+           for="fileInput112">
+    Change image
+</MudButton>
+
+<MudCard>
+    <MudCardMedia Image ="@Model.Image.Img"></MudCardMedia>
+</MudCard>
+
+    <EditForm Model="@Model" OnValidSubmit="Submit">
+        <DataAnnotationsValidator />
+
+        <MudCard Class="pa-4">
+            <MudCardContent>
+                <MudTextField Label="Name" Class="mt-3"
+                              @bind-Value="Model.Name" For="@(() => Model.Name)" />
+                <MudTextField Label="Description" Class="mt-3"
+                              @bind-Value="Model.Description" For="@(() => Model.Description)" />
+                <MudTextField Label="Value" Class="mt-3"
+                              @bind-Value="Model.Value" For="@(() => Model.Value)" InputType="InputType.Number" />
+                <MudTextField Label="Cost" Class="mt-3"
+                              @bind-Value="Model.Cost" For="@(() => Model.Cost)" InputType="InputType.Number" />
+                <MudItem xs="12" sm="6" md="4" Class="mt-3">
+                    <MudSelect T="int" Label="Type" Strict="true" Variant="Variant.Outlined" Format="F2" @bind-Value="Model.CardType.Id">
+                        @foreach (var cardType in CardTypes)
+                        {
+                            <MudSelectItem T="int" Value="cardType.Id">@cardType.Name</MudSelectItem>
+
+                        }
+                    </MudSelect>
+                </MudItem>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Add Card</MudButton>
+            </MudCardActions>
+        </MudCard>
+        
+                                   <MudMessageBox Title="Warning" CancelText="Cancel" IsVisible ="true" >
+    <MessageContent>
+        Deleting can <b><i>not</i></b> be undone!
+    </MessageContent>
+    <YesButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Error" StartIcon="@Icons.Material.Filled.DeleteForever">Delete!</MudButton>
+    </YesButton>
+</MudMessageBox>
+
+        
+
+            
+    </EditForm>

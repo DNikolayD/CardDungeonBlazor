@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using CardDungeonBlazor.Areas.Cards.Models;
 using CardDungeonBlazor.Areas.Forum.Models;
 using CardDungeonBlazor.Models;
@@ -27,6 +24,7 @@ namespace CardDungeonBlazor.MannualMapping
             cardViewModel.CreatedOn = cardServiceModel.CreatedOn;
             cardViewModel.IsEdited = cardServiceModel.IsEdited;
             cardViewModel.EditedOn = cardServiceModel.EditedOn;
+            cardViewModel.IsDeleted = cardServiceModel.IsDeleted;
             return cardViewModel;
             }
         public static CardTypeViewModel CardTypeMapping ( CardTypeServiceModel cardTypeServiceModel )
@@ -37,6 +35,7 @@ namespace CardDungeonBlazor.MannualMapping
             cardTypeViewModel.CreatedOn = cardTypeServiceModel.CreatedOn;
             cardTypeViewModel.IsEdited = cardTypeServiceModel.IsEdited;
             cardTypeViewModel.EditedOn = cardTypeServiceModel.EditedOn;
+            cardTypeViewModel.IsDeleted = cardTypeServiceModel.IsDeleted;
             return cardTypeViewModel;
             }
         public static ImageViewModel ImageMapping ( ImageServiceModel imageServiceModel )
@@ -48,6 +47,7 @@ namespace CardDungeonBlazor.MannualMapping
             imageViewModel.CreatedOn = imageServiceModel.CreatedOn;
             imageViewModel.IsEdited = imageServiceModel.IsEdited;
             imageViewModel.EditedOn = imageServiceModel.EditedOn;
+            imageViewModel.IsDeleted = imageServiceModel.IsDeleted;
             return imageViewModel;
             }
         public static DeckViewModel DeckMapping ( DeckServiceModel deckServiceModel )
@@ -60,6 +60,7 @@ namespace CardDungeonBlazor.MannualMapping
             deckViewModel.CreatedOn = deckServiceModel.CreatedOn;
             deckViewModel.IsEdited = deckServiceModel.IsEdited;
             deckViewModel.EditedOn = deckServiceModel.EditedOn;
+            deckViewModel.IsDeleted = deckServiceModel.IsDeleted;
             return deckViewModel;
             }
         public static CategoryViewModel CategoryMapping ( CategoryServiceModel categoryServiceModel )
@@ -71,6 +72,7 @@ namespace CardDungeonBlazor.MannualMapping
             categoryViewModel.CreatedOn = categoryServiceModel.CreatedOn;
             categoryViewModel.IsEdited = categoryServiceModel.IsEdited;
             categoryViewModel.EditedOn = categoryServiceModel.EditedOn;
+            categoryViewModel.IsDeleted = categoryServiceModel.IsDeleted;
             return categoryViewModel;
             }
         public static PostViewModel PostMapping ( PostServiceModel postServiceModel )
@@ -84,6 +86,7 @@ namespace CardDungeonBlazor.MannualMapping
             postViewModel.CreatedOn = postServiceModel.CreatedOn;
             postViewModel.IsEdited = postServiceModel.IsEdited;
             postViewModel.EditedOn = postServiceModel.EditedOn;
+            postViewModel.IsDeleted = postServiceModel.IsDeleted;
             return postViewModel;
             }
         public static CommentViewModel CommentMapping ( CommentServiceModel commentServiceModel )
@@ -96,6 +99,7 @@ namespace CardDungeonBlazor.MannualMapping
             commentViewModel.IsEdited = commentServiceModel.IsEdited;
             commentViewModel.EditedOn = commentServiceModel.EditedOn;
             commentViewModel.Post = PostMapping(commentServiceModel.Post);
+            commentViewModel.IsDeleted = commentServiceModel.IsDeleted;
             return commentViewModel;
             }
         public static UserViewModel UserMapping ( UserServiceModel userServiceModel )
@@ -109,6 +113,7 @@ namespace CardDungeonBlazor.MannualMapping
             userViewModel.CreatedOn = userServiceModel.CreatedOn;
             userViewModel.IsEdited = userServiceModel.IsEdited;
             userViewModel.EditedOn = userServiceModel.EditedOn;
+            userViewModel.IsDeleted = userServiceModel.IsDeleted;
             return userViewModel;
             }
         public static RoleViewModel RoleMapping ( RoleServiceModel roleServiceModel )
@@ -119,6 +124,7 @@ namespace CardDungeonBlazor.MannualMapping
             roleViewModel.CreatedOn = roleServiceModel.CreatedOn;
             roleViewModel.IsEdited = roleServiceModel.IsEdited;
             roleViewModel.EditedOn = roleServiceModel.EditedOn;
+            roleViewModel.IsDeleted = roleServiceModel.IsDeleted;
             return roleViewModel;
             }
         public static GameViewModel GameMapping ( GameServiceModel gameServiceModel )

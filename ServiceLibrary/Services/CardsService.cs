@@ -57,9 +57,10 @@ namespace ServiceLibrary.Services
         public bool Delete ( string cardId )
             {
             Card card = this.dbContext.Cards.FirstOrDefault(x => x.Id == cardId);
-            card.IsDeleted = true;
             card.DeletedOn = DateTime.UtcNow;
+            card.IsDeleted = true;
             this.dbContext.Cards.Update(card);
+            this.dbContext.SaveChanges();
             card = this.dbContext.Cards.FirstOrDefault(x => x.Id == cardId);
             return card.IsDeleted;
             }
@@ -77,7 +78,7 @@ namespace ServiceLibrary.Services
         public List<CardServiceModel> Show ( string userName )
             {
             List<CardServiceModel> cardServiceModels = new();
-            IQueryable<Card> cards = this.dbContext.Cards.Where(x => x.CreatedByUserId == this.dbContext.Users.FirstOrDefault(x => x.UserName == userName).Id);
+            IQueryable<Card> cards = this.dbContext.Cards.Where(x => x.CreatedByUserId == this.dbContext.Users.FirstOrDefault(x => x.UserName == userName).Id).Where(x => x.IsDeleted == false);
             foreach (Card card in cards)
                 {
                 List<DeckServiceModel> deckServiceModels = new();
@@ -93,6 +94,8 @@ namespace ServiceLibrary.Services
                 Image image = this.dbContext.Images.FirstOrDefault(x => x.Id == card.ImageId);
                 cardServiceModel.Image = MappingFromDbToService.ImageMapping(image);
                 cardServiceModel.CreatedByUser = MappingFromDbToService.UserMapping(applicationUser);
+                CardType cardType = this.dbContext.CardTypes.Find(card.CardTypeId);
+                cardServiceModel.CardType = MappingFromDbToService.CardTypeMapping(cardType);
                 cardServiceModels.Add(cardServiceModel);
                 }
             return cardServiceModels;
@@ -109,6 +112,8 @@ namespace ServiceLibrary.Services
                 deckServiceModels.Add(deckServiceModel);
                 }
             CardServiceModel cardServiceModel = MappingFromDbToService.CardMapping(card);
+            CardType cardType = this.dbContext.CardTypes.Find(card.CardTypeId);
+            cardServiceModel.CardType = MappingFromDbToService.CardTypeMapping(cardType);
             cardServiceModel.Decks = deckServiceModels;
             ApplicationUser applicationUser = this.dbContext.Users.FirstOrDefault(x => x.Id == card.CreatedByUserId);
             Image image = this.dbContext.Images.FirstOrDefault(x => x.Id == card.ImageId);
@@ -131,7 +136,6 @@ namespace ServiceLibrary.Services
         public UserServiceModel GetUserByName ( string name )
             {
             ApplicationUser applicationUser = this.dbContext.Users.First();
-            string UserName = applicationUser.NormalizedUserName;
             UserServiceModel userServiceModel = MappingFromDbToService.UserMapping(applicationUser);
             return userServiceModel;
             }

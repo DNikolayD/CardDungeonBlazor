@@ -31,6 +31,7 @@ namespace ServiceLibrary.MannualMapping
             cardServiceModel.Duration = dbCard.Duration;
             cardServiceModel.IsEdited = dbCard.IsEdited;
             cardServiceModel.EditedOn = dbCard.EditedOn;
+            cardServiceModel.IsDeleted = dbCard.IsDeleted;
             return cardServiceModel;
             }
         public static CardTypeServiceModel CardTypeMapping ( CardType dbCardType )
@@ -40,6 +41,7 @@ namespace ServiceLibrary.MannualMapping
             cardTypeServiceModel.CreatedOn = dbCardType.CreatedOn;
             cardTypeServiceModel.EditedOn = dbCardType.EditedOn;
             cardTypeServiceModel.Name = dbCardType.Name;
+            cardTypeServiceModel.IsDeleted = dbCardType.IsDeleted;
             return cardTypeServiceModel;
             }
         public static ImageServiceModel ImageMapping ( Image dbImage )
@@ -48,6 +50,7 @@ namespace ServiceLibrary.MannualMapping
             imageServiceModel.Id = dbImage.Id;
             imageServiceModel.Name = dbImage.Name;
             imageServiceModel.Img = dbImage.Img;
+            imageServiceModel.IsDeleted = dbImage.IsDeleted;
             return imageServiceModel;
             }
         public static DeckServiceModel DeckMapping ( Deck dbDeck )
@@ -60,6 +63,7 @@ namespace ServiceLibrary.MannualMapping
             deckServiceModel.CreatedOn = dbDeck.CreatedOn;
             deckServiceModel.IsEdited = dbDeck.IsEdited;
             deckServiceModel.EditedOn = dbDeck.EditedOn;
+            deckServiceModel.IsDeleted = dbDeck.IsDeleted;
             return deckServiceModel;
             }
 
@@ -73,6 +77,7 @@ namespace ServiceLibrary.MannualMapping
             userServiceModel.Name = dbUser.NickName;
             userServiceModel.Wins = dbUser.Wins;
             userServiceModel.Loses = dbUser.Loses;
+            userServiceModel.IsDeleted = dbUser.IsDeleted;
             if (dbUser.Role != null)
                 {
                 userServiceModel.Role = RoleMapping(dbUser.Role);
@@ -87,6 +92,7 @@ namespace ServiceLibrary.MannualMapping
             roleServiceModel.IsEdited = dbRole.IsEdited;
             roleServiceModel.Id = dbRole.Id;
             roleServiceModel.Name = dbRole.Name;
+            roleServiceModel.IsDeleted = dbRole.IsDeleted;
             return roleServiceModel;
             }
         public static CategoryServiceModel CategoryMapping ( Category dbCategory )
@@ -98,6 +104,7 @@ namespace ServiceLibrary.MannualMapping
             categoryServiceModel.CreatedOn = dbCategory.CreatedOn;
             categoryServiceModel.IsEdited = dbCategory.IsEdited;
             categoryServiceModel.EditedOn = dbCategory.EditedOn;
+            categoryServiceModel.IsDeleted = dbCategory.IsDeleted;
             return categoryServiceModel;
             }
         public static PostServiceModel PostMapping ( Post dbPost )
@@ -110,6 +117,7 @@ namespace ServiceLibrary.MannualMapping
             postServiceModel.CreatedOn = dbPost.CreatedOn;
             postServiceModel.IsEdited = dbPost.IsEdited;
             postServiceModel.EditedOn = dbPost.EditedOn;
+            postServiceModel.IsDeleted = dbPost.IsDeleted;
             return postServiceModel;
             }
         public static CommentServiceModel CommentMapping ( Comment dbComment )
@@ -121,6 +129,7 @@ namespace ServiceLibrary.MannualMapping
             commentServiceModel.CreatedOn = dbComment.CreatedOn;
             commentServiceModel.IsEdited = dbComment.IsEdited;
             commentServiceModel.EditedOn = dbComment.EditedOn;
+            commentServiceModel.IsDeleted = dbComment.IsDeleted;
             return commentServiceModel;
             }
         }

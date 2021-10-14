@@ -1,6 +1,4 @@
-﻿using CardDungeonBlazor.Areas.Cards.Models;
-
-namespace CardDungeonBlazor.Models
+﻿namespace CardDungeonBlazor.Models
     {
     public class GameViewModel
         {
