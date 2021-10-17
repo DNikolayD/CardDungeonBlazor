@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using CardDungeonBlazor.Areas.Cards.Models;
 using CardDungeonBlazor.MannualMapping;
 using Microsoft.AspNetCore.Components;
@@ -67,7 +65,7 @@ namespace CardDungeonBlazor.Areas.Cards.Controllers
 
         public void Redirect ()
             {
-            Navigation.NavigateTo("/decks/all");
+            this.Navigation.NavigateTo("/decks/all");
             }
 
         }

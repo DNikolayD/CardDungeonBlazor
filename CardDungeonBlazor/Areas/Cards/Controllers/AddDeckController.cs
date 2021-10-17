@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CardDungeonBlazor.Areas.Cards.Models;
+﻿using CardDungeonBlazor.Areas.Cards.Models;
 using CardDungeonBlazor.MannualMapping;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http;
@@ -38,7 +34,7 @@ namespace CardDungeonBlazor.Areas.Cards.Controllers
             UserServiceModel userServiceModel = this.Service.GetUserByName(this.HttpContext.HttpContext.User.Identity.Name);
             deckServiceModel.CreatedByUser = userServiceModel;
             this.Model = MappingFromServiceToView.DeckMapping(this.Service.Add(deckServiceModel));
-            Navigation.NavigateTo($"/deck/addCards/{this.Model.Id}");
+            this.Navigation.NavigateTo($"/deck/addCards/{this.Model.Id}");
             }
 
         }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CardDungeonBlazor.Areas.Cards.Models;
+﻿using CardDungeonBlazor.Areas.Cards.Models;
 using CardDungeonBlazor.MannualMapping;
 using Microsoft.AspNetCore.Components;
 using ServiceLibrary.Interfaces;

@@ -30,9 +30,9 @@ namespace CardDungeonBlazor.Areas.Cards.Controllers
 
         public List<CardTypeViewModel> CardTypes { get; set; }
 
-        public MudMessageBox mbox { get; set; }
+        public MudMessageBox Mbox { get; set; }
 
-        public bool isVisible { get; set; }
+        public bool IsVisible { get; set; }
 
         protected override void OnInitialized ()
             {
