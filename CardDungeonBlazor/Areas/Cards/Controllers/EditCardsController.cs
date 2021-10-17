@@ -53,7 +53,6 @@ namespace CardDungeonBlazor.Areas.Cards.Controllers
             await file.OpenReadStream().ReadAsync(buffer);
             this.Model.Image.Img = $"data:image/png;base64,{Convert.ToBase64String(buffer)}";
             this.Model.Image.Name = this.Model.Image.Img;
-
             }
 
         public void Submit ()

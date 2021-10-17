@@ -23,12 +23,12 @@ namespace ServiceLibrary.Services
             this.dbContext = dbContext;
             }
 
-        public bool Add ( DeckServiceModel deckServiceModel )
+        public DeckServiceModel Add ( DeckServiceModel deckServiceModel )
             {
             Deck deck = MappingFromServiceToDb.DeckMapping(deckServiceModel);
             this.dbContext.Decks.Add(deck);
             this.dbContext.SaveChanges();
-            return this.dbContext.Decks.Contains(deck);
+            return MappingFromDbToService.DeckMapping(deck);
             }
 
         public bool Delete ( string deckId )
@@ -49,6 +49,13 @@ namespace ServiceLibrary.Services
             this.dbContext.Decks.Update(deck);
             this.dbContext.SaveChanges();
             return this.dbContext.Decks.Contains(deck);
+            }
+
+        public UserServiceModel GetUserByName ( string name )
+            {
+            ApplicationUser applicationUser = this.dbContext.Users.First(x => x.UserName == name);
+            UserServiceModel userServiceModel = MappingFromDbToService.UserMapping(applicationUser);
+            return userServiceModel;
             }
 
         public List<DeckServiceModel> Show ( string userName )
@@ -72,6 +79,24 @@ namespace ServiceLibrary.Services
                 deckServiceModels.Add(deckServiceModel);
                 }
             return deckServiceModels;
+            }
+
+        public DeckServiceModel ShowFull ( string deckId )
+            {
+            Deck deck = this.dbContext.Decks.Find(deckId);
+            DeckServiceModel deckServiceModel = MappingFromDbToService.DeckMapping(deck);
+            List<CardServiceModel> cardServiceModels = new();
+            foreach (CardDeck cardDeck in deck.Cards)
+                {
+                Card card = this.dbContext.Cards.First(x => x.Id == cardDeck.CardId);
+                CardServiceModel cardServiceModel = MappingFromDbToService.CardMapping(card);
+                cardServiceModels.Add(cardServiceModel);
+                }
+            deckServiceModel.Cards = cardServiceModels;
+            ApplicationUser user = this.dbContext.Users.FirstOrDefault(x => x.Id == deck.CreatedByUserId);
+            UserServiceModel userServiceModel = MappingFromDbToService.UserMapping(user);
+            deckServiceModel.CreatedByUser = userServiceModel;
+            return deckServiceModel;
             }
         }
     }

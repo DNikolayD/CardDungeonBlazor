@@ -1,0 +1,28 @@
+﻿@page "/decks/cards/edit/{id}"
+@using CardDungeonBlazor.Areas.Cards.Controllers
+@inherits ChangeCardsInTheDeckController
+
+<h3>Chanege cards to the Deck</h3>
+<MudGrid>
+    @foreach (var card in Model)
+    {
+        <MudItem Class="d-flex align-center justify-center mud-width-full py-8" xs=3>
+            <MudCard>
+                <MudCardMedia Image="@card.Image.Img" />
+                <MudCardContent>
+                    <MudText Typo="Typo.h5">Card with name @card.Name</MudText>
+                    <MudText Typo="Typo.body2">With a value of @card.Value @card.CardType.Name and a cost of @card.Cost energy</MudText>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudText Typo="Typo.body2">@card.TimesAddedInADeck</MudText>
+                    <MudButton Variant="Variant.Text" StartIcon="@Icons.Filled.Add" Color="Color.Info" @onclick="() => Add(card.Id)">Add card</MudButton>
+                    @if(card.TimesAddedInADeck > 0)
+                    {
+                    <MudButton Variant="Variant.Text" StartIcon="@Icons.Filled.Add" Color="Color.Info" @onclick="() => Remove(card.Id)">Remove card</MudButton>
+                    }
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+    }
+</MudGrid>
+<MudButton Variant="Variant.Text" Color="Color.Primary" @onclick="() => Redirect()">Finish editing the deck</MudButton>

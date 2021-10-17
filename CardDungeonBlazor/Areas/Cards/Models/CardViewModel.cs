@@ -45,5 +45,7 @@ namespace CardDungeonBlazor.Areas.Cards.Models
 
         [Required]
         public UserViewModel CreatedByUser { get; set; }
+
+        public int TimesAddedInADeck { get; set; }
         }
     }

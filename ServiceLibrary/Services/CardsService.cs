@@ -135,9 +135,45 @@ namespace ServiceLibrary.Services
             }
         public UserServiceModel GetUserByName ( string name )
             {
-            ApplicationUser applicationUser = this.dbContext.Users.First();
+            ApplicationUser applicationUser = this.dbContext.Users.First(x => x.UserName == name);
             UserServiceModel userServiceModel = MappingFromDbToService.UserMapping(applicationUser);
             return userServiceModel;
+            }
+
+        public List<CardServiceModel> ShowCardsInTheDeck ( string deckId )
+            {
+            List<CardServiceModel> cardServiceModels = new();
+            Deck deck = this.dbContext.Decks.Find(deckId);
+            foreach (CardDeck cardDeck in deck.Cards)
+                {
+                Card card = this.dbContext.Cards.First(x => x.Id == cardDeck.CardId);
+                CardServiceModel cardServiceModel = MappingFromDbToService.CardMapping(card);
+                CardType cardType = this.dbContext.CardTypes.Find(card.CardTypeId);
+                cardServiceModel.CardType = MappingFromDbToService.CardTypeMapping(cardType);
+                ApplicationUser applicationUser = this.dbContext.Users.FirstOrDefault(x => x.Id == card.CreatedByUserId);
+                Image image = this.dbContext.Images.FirstOrDefault(x => x.Id == card.ImageId);
+                cardServiceModel.Image = MappingFromDbToService.ImageMapping(image);
+                cardServiceModel.CreatedByUser = MappingFromDbToService.UserMapping(applicationUser);
+                cardServiceModels.Add(cardServiceModel);
+                }
+            return cardServiceModels;
+            }
+
+        public bool RemoveCardFromDeck ( string cardId, string deckId )
+            {
+            Card card = this.dbContext.Cards.FirstOrDefault(x => x.Id == cardId);
+            Deck deck = this.dbContext.Decks.FirstOrDefault(x => x.Id == deckId);
+            CardDeck cardDeck = new();
+            cardDeck.CardId = cardId;
+            cardDeck.DeckId = deckId;
+            card.Decks.Remove(cardDeck);
+            deck.Cards.Remove(cardDeck);
+            this.dbContext.SaveChanges();
+            this.dbContext.CardDecks.Remove(cardDeck);
+            this.dbContext.SaveChanges();
+            card = this.dbContext.Cards.FirstOrDefault(x => x.Id == cardId);
+            deck = this.dbContext.Decks.FirstOrDefault(x => x.Id == deckId);
+            return deck.Cards.Contains(cardDeck) && card.Decks.Contains(cardDeck);
             }
         }
     }

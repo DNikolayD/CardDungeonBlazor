@@ -25,6 +25,10 @@ namespace ServiceLibrary.Interfaces
 
         bool AddCardToDeck ( string cardId, string deckId );
 
+        bool RemoveCardFromDeck ( string cardId, string deckId );
+
         public UserServiceModel GetUserByName ( string name );
+
+        List<CardServiceModel> ShowCardsInTheDeck ( string deckId );
         }
     }

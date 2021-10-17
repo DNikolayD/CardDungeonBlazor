@@ -1,0 +1,25 @@
+﻿@page "/decks/edit/{id}"
+@using CardDungeonBlazor.Areas.Cards.Controllers
+@using CardDungeonBlazor.Data.Models.Common
+@inherits EditDeckController
+
+<MudText Typo="Typo.h3">Edit the deck</MudText>
+    <EditForm Model="@Model" OnValidSubmit="Submit">
+        <MudCard Class="pa-4">
+            <MudCardContent>
+                <MudTextField Label="Name" Class="mt-3"
+                              @bind-Value="Model.Name" For="@(() => Model.Name)" />
+                <MudTextField Label="Description" Class="mt-3"
+                              @bind-Value="Model.Description" For="@(() => Model.Description)" />
+                <MudItem xs="12" sm="6" md="4" Class="mt-3">
+                    <MudSelect T="DeckType" Label="Type" Strict="true" Variant="Variant.Outlined" Format="F2" @bind-Value="Model.DeckType">
+                        <MudSelectItem T="DeckType" Value="DeckType.Private">@DeckType.Private.ToString()</MudSelectItem>
+                        <MudSelectItem T="DeckType" Value="DeckType.Public">@DeckType.Public.ToString()</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Finish editing the deck and change the cards in it</MudButton>
+            </MudCardActions>
+        </MudCard>
+    </EditForm>
