@@ -1,8 +1,10 @@
 ﻿using CardDungeonBlazor.Areas.Cards.Models;
 using CardDungeonBlazor.MannualMapping;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Http;
 using ServiceLibrary.Interfaces;
 using ServiceLibrary.Models.CardModels;
+using ServiceLibrary.Models.UserModels;
 
 namespace CardDungeonBlazor.Areas.Cards.Controllers
     {
@@ -11,6 +13,9 @@ namespace CardDungeonBlazor.Areas.Cards.Controllers
 
         [Inject]
         protected IDecksService Service { get; set; }
+
+        [Inject]
+        protected IHttpContextAccessor HttpContextAccessor { get; set; }
 
         [Inject]
         protected NavigationManager Navigation { get; set; }
@@ -24,11 +29,14 @@ namespace CardDungeonBlazor.Areas.Cards.Controllers
             {
             DeckServiceModel deckServiceModel = this.Service.ShowFull(this.Id);
             this.Model = MappingFromServiceToView.DeckMapping(deckServiceModel);
+            UserServiceModel userServiceModel = this.Service.GetUserByName(HttpContextAccessor.HttpContext.User.Identity.Name);
+            this.Model.CreatedByUser = MappingFromServiceToView.UserMapping(userServiceModel);
             base.OnInitialized();
             }
         public void Submit ()
             {
             DeckServiceModel deckServiceModel = MappingFromViewToService.DeckMapping(this.Model);
+            deckServiceModel.CreatedByUser = MappingFromViewToService.UserMapping(this.Model.CreatedByUser);
             this.Service.Edit(deckServiceModel);
             this.Navigation.NavigateTo($"/decks/cards/edit/{this.Id}");
             }

@@ -1,0 +1,164 @@
+﻿@page "/game/main/{id}"
+@using CardDungeonBlazor.Areas.Cards.Models
+@using CardDungeonBlazor.Areas.Cards.Views
+@using CardDungeonBlazor.Controllers
+@inherits GameController
+                        
+<MudGrid>
+    <MudItem xs="12">
+        <MudGrid Justify="Justify.SpaceBetween">
+            <MudItem xs = "8">
+                <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+                    @foreach(var card in Model.Player2.Hand)
+                    {
+            <MudItem Class="d-flex align-center justify-center mud-width-full py-8" xs=3>
+            <MudCard @onclick="() => PlayCard(card.Id)" Class="mud-width-full">
+                <MudCardMedia Image="@card.Image.Img" />
+                <MudCardContent>
+                    <MudText Typo="Typo.h5">@card.Name</MudText>
+                    <MudText Typo="Typo.body2">@card.Value @card.CardType.Name @card.Cost energy</MudText>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        }
+                </MudPaper>
+            </MudItem>
+            <MudItem xs = "4">
+                <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+                    <MudItem Class="d-flex align-center justify-center mud-width-full py-8">
+            <MudCard Class="mud-width-full">
+                <MudCardMedia Image="https://i.pinimg.com/originals/9b/57/35/9b5735855008bb6f95f6e66c4f2f0fa6.jpg" />
+                <MudCardContent>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs = "2">
+                <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+                    <MudGrid>
+                        <MudItem xs ="12">
+                                                <MudText Typo="Typo.h5">Health @Model.Player2.Health</MudText>
+
+                        </MudItem>
+                                                <MudItem xs ="12">
+                                                <MudText Typo="Typo.h5">Armor @Model.Player2.Armor</MudText>
+
+                        </MudItem>
+                                                <MudItem xs ="12">
+                                                <MudText Typo="Typo.h5">Energy @Model.Player2.Energy</MudText>
+
+                        </MudItem>
+                                                <MudItem xs ="12">
+                            @if (this.Model.ActivePlayerName == this.Model.Player1.Name)
+                    {
+                        <MudButton Variant="Variant.Text" Color="Color.Primary" @onclick="() => EndTurn()">End Turn</MudButton>
+                    }
+                    else
+                    {
+                        <MudButton Variant="Variant.Text" Color="Color.Primary">End Turn</MudButton>
+                    }
+                        </MudItem>
+                                                <MudItem xs ="12">
+                                                <MudText Typo="Typo.h5">Energy @Model.Player1.Energy</MudText>
+
+                        </MudItem>
+                                                <MudItem xs ="12">
+                                                <MudText Typo="Typo.h5">Armor @Model.Player1.Armor</MudText>
+
+                        </MudItem>
+                                                <MudItem xs ="12">
+                                                <MudText Typo="Typo.h5">Health @Model.Player1.Health</MudText>
+
+                        </MudItem>
+                    </MudGrid>
+                    
+                </MudPaper>
+            </MudItem>
+            <MudItem xs = "6">
+                <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+                    @if (this.PlayedCard != null)
+                    {
+                        CardViewModel card = this.PlayedCard;
+                        <MudItem Class="d-flex align-center justify-center mud-width-full py-8" xs=3>
+            <MudCard @onclick="() => PlayCard(card.Id)" Class="mud-width-full">
+                <MudCardMedia Image="@card.Image.Img" />
+                <MudCardContent>
+                    <MudText Typo="Typo.h5">@card.Name</MudText>
+                    <MudText Typo="Typo.body2">@card.Value @card.CardType.Name @card.Cost energy</MudText>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+                    }
+                    else
+                    {
+                        <MudText Typo="Typo.h5">Field</MudText>   
+                    }
+                </MudPaper>
+            </MudItem>
+            <MudItem xs = "4">
+                <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+                    @if (this.Model.Player1.Name == Model.ActivePlayerName && this.Model.Player1.DiscardPile.Count > 0)
+                    {
+                        CardViewModel card = this.Model.Player1.DiscardPile.Last();
+                        <MudItem Class="d-flex align-center justify-center mud-width-full py-8" xs=3>
+            <MudCard @onclick="() => PlayCard(card.Id)" Class="mud-width-full">
+                <MudCardMedia Image="@card.Image.Img" />
+                <MudCardContent>
+                    <MudText Typo="Typo.h5">@card.Name</MudText>
+                    <MudText Typo="Typo.body2">@card.Value @card.CardType.Name @card.Cost energy</MudText>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+                    }
+                    else if (this.Model.Player2.Name == Model.ActivePlayerName && this.Model.Player2.DiscardPile.Count > 0)
+                    {
+                        CardViewModel card = this.Model.Player2.DiscardPile.Last();
+                       <MudItem Class="d-flex align-center justify-center mud-width-full py-8" xs=3>
+            <MudCard @onclick="() => PlayCard(card.Id)" Class="mud-width-full">
+                <MudCardMedia Image="@card.Image.Img" />
+                <MudCardContent>
+                    <MudText Typo="Typo.h5">@card.Name</MudText>
+                    <MudText Typo="Typo.body2">@card.Value @card.CardType.Name @card.Cost energy</MudText>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+                    }
+                    else
+                    {
+                        <MudText Typo="Typo.h5">Discard Pile</MudText>   
+                    }
+                </MudPaper>
+            </MudItem>
+            <MudItem xs = "8">
+                <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+                    @foreach(var card in Model.Player1.Hand)
+                    {
+            <MudItem Class="d-flex align-center justify-center mud-width-full py-8" xs=3>
+            <MudCard @onclick="() => PlayCard(card.Id)" Class="mud-width-full">
+                <MudCardMedia Image="@card.Image.Img" />
+                <MudCardContent>
+                    <MudText Typo="Typo.h5">@card.Name</MudText>
+                    <MudText Typo="Typo.body2">@card.Value @card.CardType.Name @card.Cost energy</MudText>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        }
+                </MudPaper>
+            </MudItem>
+            <MudItem xs = "4">
+                <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+                    <MudItem Class="d-flex align-center justify-center mud-width-full py-8">
+            <MudCard Class="mud-width-full">
+                <MudCardMedia Image="https://i.pinimg.com/originals/9b/57/35/9b5735855008bb6f95f6e66c4f2f0fa6.jpg" />
+                <MudCardContent>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+                    
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+    </MudItem>
+</MudGrid>
+												 

@@ -7,7 +7,6 @@
             {
             this.Player1 = new();
             this.Player2 = new();
-
             }
 
         public PlayerViewModel Player1 { get; set; }

@@ -110,7 +110,6 @@ namespace CardDungeonBlazor.MannualMapping
             userServiceModel.Name = userViewModel.Name;
             userServiceModel.Wins = userViewModel.Wins;
             userServiceModel.Loses = userViewModel.Loses;
-            userServiceModel.Role = RoleMapping(userViewModel.Role);
             userServiceModel.CreatedOn = userViewModel.CreatedOn;
             userServiceModel.IsEdited = userViewModel.IsEdited;
             userServiceModel.EditedOn = userViewModel.EditedOn;
@@ -141,7 +140,7 @@ namespace CardDungeonBlazor.MannualMapping
             PlayerServiceModel playerServiceModel = new();
             List<CardServiceModel> cardsInHand = new();
             List<CardServiceModel> discardPile = new();
-            foreach (CardViewModel card in playerViewModel.CardsInHeand)
+            foreach (CardViewModel card in playerViewModel.Hand)
                 {
                 CardServiceModel cardServiceModel = CardMapping(card);
                 cardsInHand.Add(cardServiceModel);

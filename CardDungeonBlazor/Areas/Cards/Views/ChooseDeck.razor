@@ -1,0 +1,23 @@
+﻿@page "/decks/choose"
+@using CardDungeonBlazor.Areas.Cards.Controllers
+@inherits ChooseDecksController
+
+<MudText Typo="Typo.h3">Choose Decks</MudText>
+
+<MudGrid>
+    @foreach (var deck in Model)
+    {
+        <MudItem Class="d-flex align-center justify-center mud-width-full py-8" xs=3>
+            <MudCard>
+                <MudCardMedia Image="@deck.Cards.FirstOrDefault().Image.Img" />
+                <MudCardContent>
+                    <MudText Typo="Typo.h5">Deck with name @deck.Name</MudText>
+                    <MudText Typo="Typo.body2">With a type of @deck.DeckType and it has @deck.Cards.Count cards</MudText>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Variant="Variant.Text" Color="Color.Info" @onclick="() => StartGame(deck.Id)">Choose</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+    }
+</MudGrid>

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CardDungeonBlazor.Data;
 using CardDungeonBlazor.Data.Models.CardModels;
 using CardDungeonBlazor.Data.Models.User;
+using Data.Data.Models.Common;
 using ServiceLibrary.Interfaces;
 using ServiceLibrary.MannualMapping;
 using ServiceLibrary.Models.CardModels;
@@ -44,9 +45,11 @@ namespace ServiceLibrary.Services
         public bool Edit ( DeckServiceModel deckServiceModel )
             {
             Deck deck = MappingFromServiceToDb.DeckMapping(deckServiceModel);
+            Deck originaldeck = this.dbContext.Decks.Find(deckServiceModel.Id);
             IQueryable<CardDeck> cards = this.dbContext.CardDecks.Where(x => x.DeckId == deck.Id);
             deck.Cards = cards.ToList();
-            this.dbContext.Decks.Update(deck);
+            originaldeck.Name = deck.Name;
+            originaldeck.Description = deck.Description;
             this.dbContext.SaveChanges();
             return this.dbContext.Decks.Contains(deck);
             }
@@ -61,19 +64,26 @@ namespace ServiceLibrary.Services
         public List<DeckServiceModel> Show ( string userName )
             {
             List<DeckServiceModel> deckServiceModels = new();
-            IQueryable<Deck> Decks = this.dbContext.Decks.Where(x => x.CreatedByUserId == this.dbContext.Users.FirstOrDefault(x => x.NickName == userName).Id);
+            IQueryable<Deck> Decks = this.dbContext.Decks.Where(x => x.CreatedByUserId == this.dbContext.Users.FirstOrDefault(x => x.UserName == userName).Id);
             foreach (Deck deck in Decks)
                 {
                 DeckServiceModel deckServiceModel = MappingFromDbToService.DeckMapping(deck);
                 List<CardServiceModel> cardServiceModels = new();
-                foreach (CardDeck cardDeck in deck.Cards)
+                List<CardDeck> cardDecks = this.dbContext.CardDecks.Where(x => x.DeckId == deck.Id).ToList();
+                foreach (CardDeck cardDeck in cardDecks)
                     {
                     Card card = this.dbContext.Cards.First(x => x.Id == cardDeck.CardId);
                     CardServiceModel cardServiceModel = MappingFromDbToService.CardMapping(card);
+                    Image image = this.dbContext.Images.Find(card.ImageId);
+                    CardType cardType = this.dbContext.CardTypes.Find(card.CardTypeId);
+                    ApplicationUser applicationUser = this.dbContext.Users.Find(card.CreatedByUserId);
+                    cardServiceModel.Image = MappingFromDbToService.ImageMapping(image);
+                    cardServiceModel.CardType = MappingFromDbToService.CardTypeMapping(cardType);
+                    cardServiceModel.CreatedByUser = MappingFromDbToService.UserMapping(applicationUser);
                     cardServiceModels.Add(cardServiceModel);
                     }
                 deckServiceModel.Cards = cardServiceModels;
-                ApplicationUser user = this.dbContext.Users.FirstOrDefault(x => x.NickName == userName);
+                ApplicationUser user = this.dbContext.Users.FirstOrDefault(x => x.UserName == userName);
                 UserServiceModel userServiceModel = MappingFromDbToService.UserMapping(user);
                 deckServiceModel.CreatedByUser = userServiceModel;
                 deckServiceModels.Add(deckServiceModel);

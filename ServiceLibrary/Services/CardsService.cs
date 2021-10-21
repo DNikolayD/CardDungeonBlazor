@@ -46,9 +46,6 @@ namespace ServiceLibrary.Services
             cardDeck.DeckId = deckId;
             this.dbContext.CardDecks.Add(cardDeck);
             this.dbContext.SaveChanges();
-            card.Decks.Add(cardDeck);
-            deck.Cards.Add(cardDeck);
-            this.dbContext.SaveChanges();
             card = this.dbContext.Cards.FirstOrDefault(x => x.Id == cardId);
             deck = this.dbContext.Decks.FirstOrDefault(x => x.Id == deckId);
             return deck.Cards.Contains(cardDeck) && card.Decks.Contains(cardDeck);
@@ -163,14 +160,11 @@ namespace ServiceLibrary.Services
             {
             Card card = this.dbContext.Cards.FirstOrDefault(x => x.Id == cardId);
             Deck deck = this.dbContext.Decks.FirstOrDefault(x => x.Id == deckId);
-            CardDeck cardDeck = new();
-            cardDeck.CardId = cardId;
-            cardDeck.DeckId = deckId;
+            CardDeck cardDeck = this.dbContext.CardDecks.FirstOrDefault(x => x.CardId == cardId && x.DeckId == deckId);
             card.Decks.Remove(cardDeck);
             deck.Cards.Remove(cardDeck);
             this.dbContext.SaveChanges();
-            this.dbContext.CardDecks.Remove(cardDeck);
-            this.dbContext.SaveChanges();
+            this.dbContext.Remove(cardDeck);
             card = this.dbContext.Cards.FirstOrDefault(x => x.Id == cardId);
             deck = this.dbContext.Decks.FirstOrDefault(x => x.Id == deckId);
             return deck.Cards.Contains(cardDeck) && card.Decks.Contains(cardDeck);

@@ -1,0 +1,15 @@
+﻿@using CardDungeonBlazor.Areas.Cards.Models
+
+
+
+@code {
+    [Parameter]
+	public DeckViewModel Model { get; set; }
+
+    int i = 0;
+
+    protected override void OnInitialized ()
+    {
+        List<CardViewModel> cardViewModels = Model.Cards;
+    }
+    }

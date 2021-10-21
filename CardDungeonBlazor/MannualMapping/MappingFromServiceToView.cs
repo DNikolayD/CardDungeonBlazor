@@ -109,7 +109,6 @@ namespace CardDungeonBlazor.MannualMapping
             userViewModel.Name = userServiceModel.Name;
             userViewModel.Wins = userServiceModel.Wins;
             userViewModel.Loses = userServiceModel.Loses;
-            userViewModel.Role = RoleMapping(userServiceModel.Role);
             userViewModel.CreatedOn = userServiceModel.CreatedOn;
             userViewModel.IsEdited = userServiceModel.IsEdited;
             userViewModel.EditedOn = userServiceModel.EditedOn;
@@ -137,26 +136,32 @@ namespace CardDungeonBlazor.MannualMapping
             }
         public static PlayerViewModel PlayerMapping ( PlayerServiceModel playerServiceModel )
             {
+            
             PlayerViewModel playerViewModel = new();
             List<CardViewModel> cardsInHand = new();
             List<CardViewModel> discardPile = new();
             foreach (CardServiceModel card in playerServiceModel.Hand)
                 {
                 CardViewModel cardViewModel = CardMapping(card);
+                cardViewModel.Image = ImageMapping(card.Image);
+                cardViewModel.CardType = CardTypeMapping(card.CardType);
                 cardsInHand.Add(cardViewModel);
                 }
             foreach (CardServiceModel card in playerServiceModel.DiscardPile)
                 {
                 CardViewModel cardViewModel = CardMapping(card);
+                cardViewModel.Image = ImageMapping(card.Image);
+                cardViewModel.CardType = CardTypeMapping(card.CardType);
                 discardPile.Add(cardViewModel);
                 }
             playerViewModel.Name = playerServiceModel.Name;
             playerViewModel.Energy = playerServiceModel.Energy;
             playerViewModel.Armor = playerServiceModel.Armor;
             playerViewModel.TurnsPoisoned = playerServiceModel.TurnsPoisoned;
-            playerViewModel.CardsInHeand = cardsInHand;
+            playerViewModel.Hand = cardsInHand;
             playerViewModel.DiscardPile = discardPile;
             playerViewModel.Deck = DeckMapping(playerServiceModel.Deck);
+            playerViewModel.Health = playerServiceModel.Health;
             return playerViewModel;
             }
         }

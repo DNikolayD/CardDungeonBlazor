@@ -10,7 +10,7 @@ namespace CardDungeonBlazor.Models
             this.Energy = 3;
             this.Health = 100;
             this.Deck = new();
-            this.CardsInHeand = new();
+            this.Hand = new();
             this.DiscardPile = new();
             }
 
@@ -26,7 +26,7 @@ namespace CardDungeonBlazor.Models
 
         public DeckViewModel Deck { get; set; }
 
-        public List<CardViewModel> CardsInHeand { get; set; }
+        public List<CardViewModel> Hand { get; set; }
 
         public List<CardViewModel> DiscardPile { get; set; }
         }

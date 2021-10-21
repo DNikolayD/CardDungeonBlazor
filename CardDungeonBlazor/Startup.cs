@@ -31,7 +31,7 @@ namespace CardDungeonBlazor
             {
             services.AddDbContext<ApplicationDbContext>(options =>
                   options.UseSqlServer(
-                        this.Configuration.GetConnectionString("DefaultConnection")));
+                        this.Configuration.GetConnectionString("DefaultConnection")).EnableSensitiveDataLogging());
             services.AddIdentity<ApplicationUser, IdentityRole>()
                   .AddEntityFrameworkStores<ApplicationDbContext>()
                   .AddDefaultTokenProviders()

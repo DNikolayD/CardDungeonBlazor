@@ -17,6 +17,6 @@ namespace ServiceLibrary.Interfaces
 
         void PlayCard ( string playerName, string cardId );
 
-        void EndTurn ();
+        Task EndTurn ();
         }
     }

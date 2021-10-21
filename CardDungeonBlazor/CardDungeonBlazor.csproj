@@ -39,6 +39,5 @@
 	<ItemGroup>
 	  <Folder Include="Areas\Forum\Controlls\" />
 	  <Folder Include="Areas\Forum\Views\" />
-	  <Folder Include="Controllers\" />
 	</ItemGroup>
 </Project>
