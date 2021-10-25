@@ -1,0 +1,8 @@
+﻿@page "/game/win/{id}/{enemyDeck}/{draw}/{energy}/{health}"
+@using CardDungeonBlazor.Controllers
+@inherits RewardController
+<h3>Reward</h3>
+                        <MudButton Variant="Variant.Text" Color="Color.Primary" @onclick="() => ChooseDraw()">Draw</MudButton>
+                        <MudButton Variant="Variant.Text" Color="Color.Primary" @onclick="() => ChooseEnergy()">Energy</MudButton>
+                        <MudButton Variant="Variant.Text" Color="Color.Primary" @onclick="() => ChooseHealth()">Health</MudButton>
+

@@ -137,7 +137,7 @@ namespace CardDungeonBlazor.MannualMapping
             }
         public static PlayerServiceModel PlayerMapping ( PlayerViewModel playerViewModel )
             {
-            PlayerServiceModel playerServiceModel = new();
+            PlayerServiceModel playerServiceModel = new(0, 0, 0);
             List<CardServiceModel> cardsInHand = new();
             List<CardServiceModel> discardPile = new();
             foreach (CardViewModel card in playerViewModel.Hand)
@@ -156,6 +156,7 @@ namespace CardDungeonBlazor.MannualMapping
             playerServiceModel.TurnsPoisoned = playerViewModel.TurnsPoisoned;
             playerServiceModel.Hand = cardsInHand;
             playerServiceModel.DiscardPile = discardPile;
+            playerServiceModel.Draw = playerViewModel.Draw;
             playerServiceModel.Deck = DeckMapping(playerViewModel.Deck);
             return playerServiceModel;
             }

@@ -77,7 +77,7 @@ namespace ServiceLibrary.Services
 
             }
 
-        public void LoadGame ( string playerName, string deckId )
+        public void LoadGame ( string playerName, string deckId, int enemyDeck, int draw, int health, int energy )
             {
             this.Game.ActivePlayerName = playerName;
             Deck deck = this.dbContext.Decks.Find(deckId);
@@ -97,15 +97,26 @@ namespace ServiceLibrary.Services
                 cardServiceModels.Add(cardServiceModel);
                 }
             deckServiceModel.Cards = cardServiceModels;
-            PlayerServiceModel playerServiceModel = new();
+            PlayerServiceModel playerServiceModel = new(health, energy, draw);
             playerServiceModel.Name = this.Game.ActivePlayerName;
             playerServiceModel.Deck = deckServiceModel;
             playerServiceModel = Draw(playerServiceModel);
             this.Game.Player1 = playerServiceModel;
-            PlayerServiceModel bot = new();
+            PlayerServiceModel bot = new(0,0,0);
             Deck botDeck = this.dbContext.Decks.FirstOrDefault(x=> x.Name == "EditDeck");
             List<CardServiceModel> botCardServiceModels = new();
-            List<CardDeck> botCardDecks = this.dbContext.CardDecks.Where(x => x.DeckId == botDeck.Id).ToList();
+            Deck[] botDecksData = this.dbContext.Decks.ToArray();
+            Deck botDeckData = new();
+            if (enemyDeck < botDecksData.Length)
+                {
+                botDeckData = botDecksData[enemyDeck];
+                }
+            else
+                {
+                botDeckData = botDecksData.Last();
+
+                }
+            List<CardDeck> botCardDecks = this.dbContext.CardDecks.Where(x => x.DeckId == botDeckData.Id).ToList();
             foreach (CardDeck cardDeck in botCardDecks)
                 {
                 Card card = this.dbContext.Cards.First(x => x.Id == cardDeck.CardId);
@@ -258,15 +269,15 @@ namespace ServiceLibrary.Services
         private static PlayerServiceModel Draw ( PlayerServiceModel playerServiceModel )
             {
             List<CardServiceModel> hand = new();
-            if (playerServiceModel.Deck.Cards.Count < 5)
+            if (playerServiceModel.Deck.Cards.Count < playerServiceModel.Draw)
                 {
                 hand = playerServiceModel.Deck.Cards.GetRange(0, playerServiceModel.Deck.Cards.Count);
                 playerServiceModel.Deck.Cards.RemoveRange(0, playerServiceModel.Deck.Cards.Count);
                 }
             else
                 {
-                hand = playerServiceModel.Deck.Cards.GetRange(0, 5);
-                playerServiceModel.Deck.Cards.RemoveRange(0, 5);
+                hand = playerServiceModel.Deck.Cards.GetRange(0, playerServiceModel.Draw);
+                playerServiceModel.Deck.Cards.RemoveRange(0, playerServiceModel.Draw);
                 }
             playerServiceModel.Hand = hand;
             return playerServiceModel;

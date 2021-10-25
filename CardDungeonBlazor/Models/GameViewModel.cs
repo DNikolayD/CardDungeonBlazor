@@ -5,8 +5,8 @@
 
         public GameViewModel ()
             {
-            this.Player1 = new();
-            this.Player2 = new();
+            this.Player1 = new(0, 0, 0);
+            this.Player2 = new(0, 0, 0);
             }
 
         public PlayerViewModel Player1 { get; set; }

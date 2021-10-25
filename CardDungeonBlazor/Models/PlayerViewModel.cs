@@ -5,12 +5,13 @@ namespace CardDungeonBlazor.Models
     {
     public class PlayerViewModel
         {
-        public PlayerViewModel ()
+        public PlayerViewModel ( int bonusHealth, int bonusEnergy, int bonusDraw )
             {
-            this.Energy = 3;
-            this.Health = 100;
-            this.Deck = new();
+            this.Health = 100 + bonusHealth;
+            this.Energy = 3 + bonusEnergy;
+            this.Draw = 5 + bonusDraw;
             this.Hand = new();
+            this.Deck = new();
             this.DiscardPile = new();
             }
 
@@ -29,5 +30,7 @@ namespace CardDungeonBlazor.Models
         public List<CardViewModel> Hand { get; set; }
 
         public List<CardViewModel> DiscardPile { get; set; }
+
+        public int Draw { get; set; }
         }
     }

@@ -13,7 +13,7 @@ namespace ServiceLibrary.Interfaces
 
         GameServiceModel Game { get; set; }
 
-        void LoadGame ( string playerName, string deckId );
+        void LoadGame ( string playerName, string deckId, int enemyDeck, int draw, int health, int energy );
 
         void PlayCard ( string playerName, string cardId );
 

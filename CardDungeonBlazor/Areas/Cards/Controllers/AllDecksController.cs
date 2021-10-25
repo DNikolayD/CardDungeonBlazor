@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using CardDungeonBlazor.Areas.Cards.Models;
 using CardDungeonBlazor.MannualMapping;
 using Microsoft.AspNetCore.Components;

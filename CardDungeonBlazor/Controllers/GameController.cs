@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CardDungeonBlazor.Areas.Cards.Models;
@@ -9,7 +8,6 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http;
 using ServiceLibrary.Interfaces;
 using ServiceLibrary.Models.CardModels;
-using ServiceLibrary.Models.GameModels;
 
 namespace CardDungeonBlazor.Controllers
     {
@@ -17,6 +15,18 @@ namespace CardDungeonBlazor.Controllers
         {
         [Parameter]
         public string Id { get; set; }
+
+        [Parameter]
+        public string EnemyDeck { get; set; }
+
+        [Parameter]
+        public string Energy { get; set; }
+
+        [Parameter]
+        public string Draw { get; set; }
+
+        [Parameter]
+        public string Health { get; set; }
 
         [Inject]
         protected IGameService Service { get; set; }
@@ -31,25 +41,25 @@ namespace CardDungeonBlazor.Controllers
 
         public CardViewModel PlayedCard { get; set; }
 
-        int delay = 1000;
+        readonly int delay = 1000;
 
         string playerName;
 
         protected override void OnInitialized ()
             {
             this.playerName = this.HttpContextAccessor.HttpContext.User.Identity.Name;
-            this.Service.LoadGame(this.playerName, this.Id);
+            this.Service.LoadGame(this.playerName, this.Id, int.Parse(this.EnemyDeck), int.Parse(this.Draw), int.Parse(this.Health), int.Parse(this.Energy));
             this.Model = MappingFromServiceToView.GameMapping(this.Service.Game);
             List<CardViewModel> playerCards = new();
             List<CardViewModel> botCards = new();
-            foreach (CardServiceModel cardServiceModel in Service.Game.Player1.Deck.Cards)
+            foreach (CardServiceModel cardServiceModel in this.Service.Game.Player1.Deck.Cards)
                 {
                 CardViewModel cardViewModel = MappingFromServiceToView.CardMapping(cardServiceModel);
                 cardViewModel.CardType = MappingFromServiceToView.CardTypeMapping(cardServiceModel.CardType);
                 cardViewModel.Image = MappingFromServiceToView.ImageMapping(cardServiceModel.Image);
                 playerCards.Add(cardViewModel);
                 }
-            foreach (CardServiceModel cardServiceModel in Service.Game.Player2.Deck.Cards)
+            foreach (CardServiceModel cardServiceModel in this.Service.Game.Player2.Deck.Cards)
                 {
                 CardViewModel cardViewModel = MappingFromServiceToView.CardMapping(cardServiceModel);
                 cardViewModel.CardType = MappingFromServiceToView.CardTypeMapping(cardServiceModel.CardType);
@@ -65,7 +75,7 @@ namespace CardDungeonBlazor.Controllers
             {
             if (this.playerName == this.Model.ActivePlayerName)
                 {
-                CardViewModel cardViewModel = Model.Player1.Hand.FirstOrDefault(x => x.Id == cardId);
+                CardViewModel cardViewModel = this.Model.Player1.Hand.FirstOrDefault(x => x.Id == cardId);
                 if (cardViewModel.Cost <= this.Model.Player1.Energy)
                     {
                     this.PlayedCard = cardViewModel;
@@ -73,7 +83,7 @@ namespace CardDungeonBlazor.Controllers
                 }
             else
                 {
-                CardViewModel cardViewModel = Model.Player2.Hand.FirstOrDefault(x => x.Id == cardId);
+                CardViewModel cardViewModel = this.Model.Player2.Hand.FirstOrDefault(x => x.Id == cardId);
                 if (cardViewModel.Cost <= this.Model.Player1.Energy)
                     {
                     this.PlayedCard = cardViewModel;
@@ -81,18 +91,18 @@ namespace CardDungeonBlazor.Controllers
                 }
             this.StateHasChanged();
             this.Service.PlayCard(this.Model.ActivePlayerName, cardId);
-            await Task.Delay(delay);
+            await Task.Delay(this.delay);
             this.Model = MappingFromServiceToView.GameMapping(this.Service.Game);
             this.PlayedCard = null;
             this.StateHasChanged();
-            await Task.Delay(delay);
+            await Task.Delay(this.delay);
             }
 
         public async Task EndTurn ()
             {
             await this.Service.EndTurn();
             this.Model = MappingFromServiceToView.GameMapping(this.Service.Game);
-            await Task.Delay(delay);
+            await Task.Delay(this.delay);
             if (this.Model.ActivePlayerName == this.Model.Player2.Name)
                 {
                 await this.BotScript();
@@ -106,6 +116,10 @@ namespace CardDungeonBlazor.Controllers
                 if (this.Model.Player2.Energy >= cardViewModel.Cost)
                     {
                     await this.PlayCard(cardViewModel.Id);
+                    }
+                if (this.Model.Player2.Health == 0)
+                    {
+                    this.Navigation.NavigateTo($"/game/win/{this.Id}/{this.EnemyDeck}/{this.Draw}/{this.Energy}/{this.Health}");
                     }
                 }
             await this.EndTurn();

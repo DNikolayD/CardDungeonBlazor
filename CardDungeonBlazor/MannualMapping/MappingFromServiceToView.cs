@@ -136,8 +136,8 @@ namespace CardDungeonBlazor.MannualMapping
             }
         public static PlayerViewModel PlayerMapping ( PlayerServiceModel playerServiceModel )
             {
-            
-            PlayerViewModel playerViewModel = new();
+
+            PlayerViewModel playerViewModel = new(0, 0, 0);
             List<CardViewModel> cardsInHand = new();
             List<CardViewModel> discardPile = new();
             foreach (CardServiceModel card in playerServiceModel.Hand)
@@ -162,6 +162,7 @@ namespace CardDungeonBlazor.MannualMapping
             playerViewModel.DiscardPile = discardPile;
             playerViewModel.Deck = DeckMapping(playerServiceModel.Deck);
             playerViewModel.Health = playerServiceModel.Health;
+            playerViewModel.Draw = playerServiceModel.Draw;
             return playerViewModel;
             }
         }

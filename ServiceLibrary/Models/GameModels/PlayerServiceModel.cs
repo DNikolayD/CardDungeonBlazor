@@ -10,10 +10,11 @@ namespace ServiceLibrary.Models.GameModels
     public class PlayerServiceModel
         {
 
-        public PlayerServiceModel ()
+        public PlayerServiceModel (int bonusHealth, int bonusEnergy, int bonusDraw)
             {
-            this.Health = 100;
-            this.Energy = 3;
+            this.Health = 100 + bonusHealth;
+            this.Energy = 3 + bonusEnergy;
+            this.Draw = 5 + bonusDraw;
             this.Hand = new();
             this.Deck = new();
             this.DiscardPile = new();
@@ -34,5 +35,7 @@ namespace ServiceLibrary.Models.GameModels
         public List<CardServiceModel> DiscardPile { get; set; }
 
         public int TurnsPoisoned { get; set; }
+
+        public int Draw { get; set; }
         }
     }

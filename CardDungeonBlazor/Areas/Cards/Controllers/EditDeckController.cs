@@ -29,7 +29,7 @@ namespace CardDungeonBlazor.Areas.Cards.Controllers
             {
             DeckServiceModel deckServiceModel = this.Service.ShowFull(this.Id);
             this.Model = MappingFromServiceToView.DeckMapping(deckServiceModel);
-            UserServiceModel userServiceModel = this.Service.GetUserByName(HttpContextAccessor.HttpContext.User.Identity.Name);
+            UserServiceModel userServiceModel = this.Service.GetUserByName(this.HttpContextAccessor.HttpContext.User.Identity.Name);
             this.Model.CreatedByUser = MappingFromServiceToView.UserMapping(userServiceModel);
             base.OnInitialized();
             }
