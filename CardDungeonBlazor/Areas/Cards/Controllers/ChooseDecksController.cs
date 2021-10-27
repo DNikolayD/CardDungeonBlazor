@@ -43,7 +43,7 @@ namespace CardDungeonBlazor.Areas.Cards.Controllers
 
         public void StartGame ( string deckId )
             {
-            this.Navigation.NavigateTo($"game/main/{deckId}/{1}/{0}/{0}/{0}");
+            this.Navigation.NavigateTo($"game/main/{deckId}/{0}/{0}/{0}/{0}");
             }
 
         }

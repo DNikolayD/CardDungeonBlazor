@@ -15,6 +15,7 @@ namespace ServiceLibrary.Models.GameModels
             this.Health = 100 + bonusHealth;
             this.Energy = 3 + bonusEnergy;
             this.Draw = 5 + bonusDraw;
+            this.MaxEnergy = this.Energy;
             this.Hand = new();
             this.Deck = new();
             this.DiscardPile = new();
@@ -25,6 +26,8 @@ namespace ServiceLibrary.Models.GameModels
         public int Health { get; set; }
 
         public int Energy { get; set; }
+
+        public int MaxEnergy { get; set; }
 
         public int Armor { get; set; }
 

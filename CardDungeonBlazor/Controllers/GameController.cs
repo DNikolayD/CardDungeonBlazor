@@ -73,6 +73,10 @@ namespace CardDungeonBlazor.Controllers
 
         public async Task PlayCard ( string cardId )
             {
+            if (this.Model.Player2.Health == 0)
+                {
+                this.Navigation.NavigateTo($"/game/win/{this.Id}/{this.EnemyDeck}/{this.Draw}/{this.Energy}/{this.Health}");
+                }
             if (this.playerName == this.Model.ActivePlayerName)
                 {
                 CardViewModel cardViewModel = this.Model.Player1.Hand.FirstOrDefault(x => x.Id == cardId);
@@ -96,6 +100,10 @@ namespace CardDungeonBlazor.Controllers
             this.PlayedCard = null;
             this.StateHasChanged();
             await Task.Delay(this.delay);
+            if (this.Model.Player2.Health == 0)
+                {
+                this.Navigation.NavigateTo($"/game/win/{this.Id}/{this.EnemyDeck}/{this.Draw}/{this.Energy}/{this.Health}");
+                }
             }
 
         public async Task EndTurn ()
@@ -111,6 +119,10 @@ namespace CardDungeonBlazor.Controllers
 
         private async Task BotScript ()
             {
+            if (this.Model.Player2.Health == 0)
+                {
+                this.Navigation.NavigateTo($"/game/win/{this.Id}/{this.EnemyDeck}/{this.Draw}/{this.Energy}/{this.Health}");
+                }
             foreach (CardViewModel cardViewModel in this.Model.Player2.Hand)
                 {
                 if (this.Model.Player2.Energy >= cardViewModel.Cost)
@@ -123,7 +135,12 @@ namespace CardDungeonBlazor.Controllers
                     }
                 }
             await this.EndTurn();
+            if (this.Model.Player2.Health == 0)
+                {
+                this.Navigation.NavigateTo($"/game/win/{this.Id}/{this.EnemyDeck}/{this.Draw}/{this.Energy}/{this.Health}");
+                }
             }
+        }
 
         }
-    }
+    

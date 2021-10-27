@@ -44,7 +44,7 @@ namespace ServiceLibrary.Services
                         this.Game.Player1.TurnsPoisoned--;
                         }
                     }
-                this.Game.Player1.Energy = 3;
+                this.Game.Player1.Energy = this.Game.Player1.MaxEnergy;
                 this.Game.Player1.DiscardPile.InsertRange(Game.Player1.DiscardPile.Count, Game.Player1.Hand);
                 this.Game.Player1.Deck.Cards.InsertRange(this.Game.Player1.Deck.Cards.Count, this.Game.Player1.DiscardPile);
                 this.Game.Player1.DiscardPile = new();
@@ -68,7 +68,7 @@ namespace ServiceLibrary.Services
                     }
                 this.Game.Player2.DiscardPile.InsertRange(Game.Player2.DiscardPile.Count, Game.Player2.Hand);
 
-                this.Game.Player2.Energy = 3;
+                this.Game.Player2.Energy = this.Game.Player2.MaxEnergy;
                 this.Game.Player2.Deck.Cards.InsertRange(this.Game.Player2.Deck.Cards.Count, this.Game.Player2.DiscardPile);
                 this.Game.Player2.DiscardPile = new();
                 this.Game.ActivePlayerName = this.Game.Player1.Name;
@@ -103,9 +103,9 @@ namespace ServiceLibrary.Services
             playerServiceModel = Draw(playerServiceModel);
             this.Game.Player1 = playerServiceModel;
             PlayerServiceModel bot = new(0,0,0);
-            Deck botDeck = this.dbContext.Decks.FirstOrDefault(x=> x.Name == "EditDeck");
+            Deck botDeck = this.dbContext.Decks.FirstOrDefault(x => x.Name == "EditDeck");
             List<CardServiceModel> botCardServiceModels = new();
-            Deck[] botDecksData = this.dbContext.Decks.ToArray();
+            Deck[] botDecksData = this.dbContext.Decks.ToArray().Reverse().ToArray();
             Deck botDeckData = new();
             if (enemyDeck < botDecksData.Length)
                 {
